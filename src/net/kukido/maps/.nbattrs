@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="GpsLocation.java">
+        <attr name="class_dependency_java.lang.Comparable" stringvalue="GpsLocation"/>
+    </fileobject>
+    <fileobject name="GpsTrack.java">
+        <attr name="class_dependency_java.util.ArrayList" stringvalue="GpsTrack"/>
+    </fileobject>
+    <fileobject name="GpxParser.java">
+        <attr name="class_dependency_org.xml.sax.helpers.DefaultHandler" stringvalue="GpxParser"/>
+    </fileobject>
+</attributes>

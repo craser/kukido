@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="ActionServlet.java">
+        <attr name="NbAttrURI" stringvalue="/servlet/net.kukido.blog.servlet.ActionServlet"/>
+        <attr name="class_dependency_org.apache.struts.action.ActionServlet" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+        <attr name="org.netbeans.modules.web.IsServletFile" boolvalue="true"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="CacheServlet.java">
+        <attr name="NbAttrURI" stringvalue="/servlet/net.kukido.blog.servlet.CacheServlet"/>
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+        <attr name="org.netbeans.modules.web.IsServletFile" boolvalue="true"/>
+    </fileobject>
+    <fileobject name="CommentCookie.java">
+        <attr name="class_dependency_javax.servlet.http.Cookie" stringvalue="CommentCookie"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+</attributes>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+ "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+ "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <data-sources>
+    
+        <data-source type="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" key="dataSource">
+            <set-property property="driverClass" value="com.mysql.jdbc.Driver" />
+            <set-property property="url"         value="jdbc:mysql://localhost/dreade2_web?user=dreade2_webuser&amp;password=spiderman" />
+            <set-property property="description" value="Connection to MySQL Database" />
+        </data-source>
+        
+    </data-sources>
+    
+    <!-- == Form Bean Definitions ========================================== -->
+    <form-beans>
+    
+        <form-bean 
+            name="loginForm" 
+            type="net.kukido.blog.forms.LoginForm"
+            />
+        
+        <form-bean 
+            name="logUpdateForm" 
+            type="net.kukido.blog.forms.LogUpdateForm"
+            />
+            
+        <form-bean
+            name="logEditForm"
+            type="net.kukido.blog.forms.LogEditForm"
+            />
+            
+        <form-bean
+            name="commentForm"
+            type="net.kukido.blog.forms.CommentForm"
+            />
+            
+        <form-bean
+            name="dropBoxUploadForm"
+            type="net.kukido.blog.forms.DropBoxUploadForm"
+            />
+
+	<form-bean
+	    name="attachmentForm"
+	    type="net.kukido.blog.forms.AttachmentForm"
+	    />
+            
+        <form-bean
+            name="searchForm"
+            type="net.kukido.blog.forms.SearchForm"
+            />
+            
+        <form-bean
+            name="entryListingForm"
+            type="net.kukido.blog.forms.EntryListingForm"
+            />
+            
+        <form-bean
+            name="mophoUploadForm"
+            type="net.kukido.blog.forms.MophoUploadForm"
+            />
+            
+	<form-bean
+	    name="mophoListingForm"
+	    type="net.kukido.blog.forms.MophoListingForm"
+	    />
+            
+        <form-bean
+            name="commentSearchForm"
+            type="net.kukido.blog.forms.CommentSelectionForm"
+            />
+            
+        <form-bean
+            name="trackbackForm"
+            type="net.kukido.blog.forms.TrackbackForm"
+            />
+            
+        <form-bean
+            name="userSettingsForm"
+            type="net.kukido.blog.forms.UserSettingsForm"
+            />
+       
+        <form-bean
+            name="batchGeotagForm"
+            type="net.kukido.blog.forms.BatchGeotagForm"
+            />
+                 
+    </form-beans>
+
+    <!-- == Action Mappings ===============================================  -->
+    <action-mappings>
+        
+        <action 
+            path="/LogUpdateForm"
+            name="logUpdateForm"
+            scope="session"
+            validate="false"
+            input="/jsp/pages/LogUpdateForm.jsp"
+            forward="/jsp/pages/LogUpdateForm.jsp"
+            />  
+
+        <action
+            path="/LogEditForm"
+	    name="logEditForm"
+	    scope="session"
+	    validate="true"
+            forward="/jsp/pages/LogEditForm.jsp"
+            />
+                
+        <action
+            path="/LogEntryListing"
+            type="net.kukido.blog.action.LogEntryListing"
+            name="entryListingForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/EntryListing.jsp"/>
+        </action>
+        
+        <action
+            path="/SearchLogEntries"
+            type="net.kukido.blog.action.Search"
+            name="searchForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/SearchResults.jsp"/>
+        </action>
+        
+        <action
+            path="/JSONLogEntries"
+            type="net.kukido.blog.action.LogEntryListing"
+            name="entryListingForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/json/EntryListing.jsp"/>
+        </action>  
+        
+        <action
+            path="/JSONAttachments"
+            type="net.kukido.blog.action.AttachmentsByGeoBounds"
+            >
+          <forward name="success" path="/jsp/json/Attachments.jsp" />
+        </action>
+             
+	<action
+	    path="/JsonGpsTrack"
+            type="net.kukido.blog.action.GpxGmap"
+	    >
+          <forward name="success" path="/jsp/json/GpsTrack.jsp" />
+        </action>
+        
+
+	<!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
+	<action
+	    path="/Monkeyfeed"
+	    type="net.kukido.blog.action.LogEntryListing"
+	    name="entryListingForm"
+	    validate="false"
+	    scope="request"
+	    >
+	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+	</action>
+
+        <action 
+            path="/Gallery"
+            type="net.kukido.blog.action.Gallery"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/Gallery.jsp"/>
+        </action>
+        
+        <action
+            path="/GalleryThumbnails"
+            type="net.kukido.blog.action.GalleryThumbnails"
+            >
+          <forward name="success" path="/jsp/pages/GalleryThumbnails.jsp"/>
+        </action>
+
+        <action
+            path="/ViewLogEntry"
+            type="net.kukido.blog.action.ViewLogEntry"
+	    scope="request"
+            >
+          <forward name="success" path="/jsp/pages/ViewLogEntry.jsp"/>
+        </action>            
+            
+        <action
+            path="/LogUpdate"
+            type="net.kukido.blog.action.LogUpdate"
+            validate="true"
+            name="logUpdateForm"
+            scope="session"
+            input="/jsp/pages/LogUpdateForm.jsp"
+            >
+          <forward name="success" path="/" redirect="true"/>
+        </action>
+
+        <action
+            path="/LogEdit"
+            type="net.kukido.blog.action.LogEdit"
+            name="logEditForm"
+            scope="session"
+            validate="true"
+            input="/jsp/pages/LogEditForm.jsp"
+            >
+          <forward name="success" path="/jsp/pages/LogEditForm.jsp" />
+        </action>
+
+	<action
+	    path="/LogDelete"
+	    type="net.kukido.blog.action.LogDelete"
+	    >
+	  <forward name="success" path="/" redirect="true"/>
+	</action>
+        
+        <action 
+            path="/CalculateGeotags"
+            type="net.kukido.blog.action.CalculateGeotags"
+            name="batchGeotagForm"
+            scope="request"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
+        
+        <action 
+            path="/GeotagMaps"
+            type="net.kukido.blog.action.GeotagMaps"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
+        
+        <!-- I've had to play some games with the form validation.
+          See code in CreateComment action to make sense of things.
+        -->
+        <action
+            path="/CreateComment"
+            type="net.kukido.blog.action.CreateComment"
+            name="commentForm"
+            scope="request"
+            validate="false"
+            >
+          <forward name="success" path="/archive/" redirect="true" />
+          <forward name="error" path="/ViewLogEntry.do?entryId=" />
+        </action>
+        
+        <action 
+            path="/DeleteComment"
+            type="net.kukido.blog.action.DeleteComment"
+            >
+          <forward name="success" path="/archive/" redirect="true" />
+        </action>
+
+	<action
+	    path="/AttachmentUploadForm"
+	    name="attachmentForm"
+	    scope="request"
+	    validate="false"
+	    forward="/jsp/pages/AttachmentUploadForm.jsp"
+	    />
+
+	<action
+	    path="/UploadAttachment"
+	    type="net.kukido.blog.action.UploadAttachment"
+	    name="attachmentForm"
+	    validate="true"
+	    scope="request"
+	    input="/jsp/pages/AttachmentUploadForm.jsp"
+	    >
+	  <forward name="success" path="/" redirect="true" />
+	</action>
+
+	<action
+	    path="/DeleteAttachment"
+	    type="net.kukido.blog.action.DeleteAttachment"
+	    >
+	  <forward name="success" path="/" redirect="true" />
+	</action>
+        
+        <action
+            path="/GalleryEntryUpload"
+            type="net.kukido.blog.action.GalleryEntryUpload"
+            name="galleryEntryUploadForm"
+            validate="true"
+            scope="request"
+            input="/jsp/pages/GalleryEntryUpload.jsp"
+            >
+          <forward name="success" path="/" redirect="true"/>
+        </action>
+             
+	<action
+	    path="/ViewMap"
+            type="net.kukido.blog.action.GpxGmap"
+	    >
+          <forward name="success" path="/jsp/pages/SingleTrailMap.jsp" />
+        </action>
+             
+	<action
+	    path="/TrailheadMap"
+            type="net.kukido.blog.action.TrailheadMap"
+	    >
+          <forward name="success" path="/jsp/pages/TrailheadMap.jsp" />
+        </action>
+                        
+	<action
+	    path="/ViewAttachment"
+	    type="net.kukido.blog.action.ViewAttachment"
+	    >
+	</action>
+                        
+	<action
+	    path="/StyleAttachment"
+	    type="net.kukido.blog.action.StyleAttachment"
+	    >
+	</action>
+
+	<action
+	    path="/ViewAttachmentResize"
+	    type="net.kukido.blog.action.ViewAttachmentResize"
+	    >
+	</action>
+
+	<action
+	    path="/ViewMophoImage"
+	    type="net.kukido.blog.action.ViewMophoImage"
+	    >
+	</action>
+
+        <action
+            path="/Login"
+            type="net.kukido.blog.action.Login"
+            validate="true"
+            name="loginForm"
+            scope="request"
+            input="/jsp/pages/Login.jsp"
+            >
+          <forward name="success" path="/" redirect="true"/>
+        </action>
+        
+        <action
+            path="/Logout"
+            type="net.kukido.blog.action.Logout"
+            >
+          <forward name="success" path="/" redirect="true"/>
+        </action>
+        
+        <action
+            path="/UserUpdateForm"
+            forward="/jsp/pages/UserUpdate.jsp"
+            />
+            
+        <action
+            path="/UserUpdate"
+            type="net.kukido.blog.action.UserUpdate"
+            name="userSettingsForm"
+            validate="true"
+            scope="request"
+            input="/jsp/pages/UserUpdate.jsp"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
+            
+        
+        <action 
+            path="/DropBox"
+            type="net.kukido.blog.action.DropBox"
+            >
+          <forward name="success" path="/jsp/pages/DropBox.jsp"/>
+        </action>
+            
+        <action
+            path="/DropBoxUpload"
+            type="net.kukido.blog.action.DropBoxUpload"
+            validate="true"
+            name="dropBoxUploadForm"
+            scope="request"
+            input="/DropBox.do"
+            >
+          <forward name="success" path="/DropBox.do" redirect="true"/>
+        </action>
+        
+        <action
+            path="/DropBoxDelete"
+            type="net.kukido.blog.action.DropBoxDelete"
+            >
+          <forward name="success" path="/DropBox.do"/>
+        </action>
+        
+        <!-- Mopho Stuff -->
+        <action            
+            path="/MophoUploadForm"
+            forward="/jsp/pages/MophoUploadForm.jsp" 
+            />
+            
+        <action 
+            path="/MophoUpload"
+            type="net.kukido.blog.action.MophoUpload"
+            validate="true"
+            name="mophoUploadForm"
+            scope="request"
+            input="/jsp/pages/MophoUploadForm.jsp"
+            >
+          <forward name="success" path="/MophoEntryListing.do" redirect="true"/>
+        </action>
+        
+        <action
+            path="/MophoEntryListing"
+	    type="net.kukido.blog.action.MophoEntryListing"
+            name="mophoListingForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/MophoEntryListing.jsp"/>
+        </action>
+            
+        <action
+            path="/WhatsAllThis"
+            forward="/jsp/pages/WhatsAllThis.jsp"
+            />
+        
+        <action
+            path="/RecentImages"
+            type="net.kukido.blog.action.RecentImages"
+            >
+          <forward name="success" path="/jsp/nav/RecentImages.jsp" />
+        </action>
+        
+        <action
+            path="/RecentImagesNew"
+            type="net.kukido.blog.action.RecentImages"
+            >
+          <forward name="success" path="/jsp/pages/RecentImages.jsp" />
+        </action>
+        
+        <action
+            path="/MostUsedTagsNav"
+            type="net.kukido.blog.action.MostUsedTags"
+            >
+          <forward name="success" path="/jsp/nav/TagListNav.jsp" />
+        </action>
+        
+        <action
+            path="/RecentTagsNav"
+            type="net.kukido.blog.action.RecentTags"
+            >
+          <forward name="success" path="/jsp/nav/TagListNav.jsp" />
+        </action>
+        
+        <action
+            path="/Blogroll"
+            forward="/jsp/pages/blogroll.jsp" 
+            />
+        
+        <action
+            path="/RecentCommentsNav"
+            type="net.kukido.blog.action.RecentComments"
+            >
+          <forward name="success" path="/jsp/nav/RecentCommentsNav.jsp" />
+        </action>
+        
+        <action
+            path="/ViewCommentSpam"
+            type="net.kukido.blog.action.ViewCommentSpam"
+            >
+          <forward name="success" path="/jsp/pages/ViewCommentSpam.jsp" />
+        </action>
+        
+        <action 
+            path="/DeleteCommentSpam"
+            type="net.kukido.blog.action.DeleteCommentSpam"
+            >
+          <forward name="success" path="/jsp/pages/ViewCommentSpam.jsp" />
+        </action>
+        
+        <action
+            path="/UnmarkCommentSpam"
+            type="net.kukido.blog.action.UnmarkCommentSpam"
+            >
+          <forward name="success" path="/archive/" redirect="true" />
+        </action>
+        
+        <action
+            path="/MarkCommentSpam"
+            type="net.kukido.blog.action.MarkCommentSpam"
+            >
+          <forward name="success" path="/archive/" redirect="true" />
+        </action>
+        
+        <action
+            path="/SearchComments"
+            type="net.kukido.blog.action.SearchComments"
+            name="commentSearchForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/ViewComments.jsp"/>          
+        </action>
+        
+        <action
+            path="/CommentRss"
+            type="net.kukido.blog.action.SearchComments"
+            name="commentSearchForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/CommentRss.jsp" />
+        </action>
+        
+        <action
+            path="/RecentCommentsFeed"
+            type="net.kukido.blog.action.RecentComments"
+            >
+          <forward name="success" path="/jsp/pages/CommentRss.jsp" />
+        </action>
+        
+        <action
+            path="/ReceiveTrackback"
+            type="net.kukido.blog.action.ReceiveTrackback"
+            name="trackbackForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/TrackbackResponse.jsp" />
+        </action>
+        
+        
+             
+	<action
+	    path="/LoadMailAttachments"
+            type="net.kukido.blog.action.LoadMailAttachments"
+	    >
+          <forward name="success" path="/jsp/pages/SelectMailAttachments.jsp" />
+        </action>
+        
+        <action
+            path="/AttachAttachments"
+            type="net.kukido.blog.action.AttachAttachments"
+            >
+          <!-- FIXME: This should be a redirect, and should go back to the LogEdit page. -->
+          <forward name="success" path="/archive/" redirect="true" />
+        </action>
+            
+    </action-mappings>
+    
+
+    <!-- == Resource Definitions =========================================== -->
+    <message-resources parameter="net.kukido.blog.ApplicationResources"/>
+
+
+    <!-- == Enable Tiles =================================================== -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+      <set-property property="definitions-config"
+          value="/WEB-INF/tiles-config.xml" />
+      <set-property property="moduleAware" value="true" />
+      <set-property property="definitions-parser-validate" value="true" />
+    </plug-in>
+
+</struts-config>

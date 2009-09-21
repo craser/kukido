@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="Attachment.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Attachment"/>
+    </fileobject>
+    <fileobject name="Comment.java">
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="Geotag.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Geotag"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="Link.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Link"/>
+    </fileobject>
+    <fileobject name="LogEntry.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a608822030000787077040000000078"/>
+        <attr name="class_dependency_java.io.Serializable" stringvalue="LogEntry"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000278"/>
+    </fileobject>
+    <fileobject name="MophoEntry.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="MophoEntry"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000178"/>
+    </fileobject>
+    <fileobject name="Tag.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Tag"/>
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="TagLink.java">
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="Thumbnail.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Thumbnail"/>
+    </fileobject>
+    <fileobject name="Topic.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="Topic"/>
+    </fileobject>
+    <fileobject name="Trackback.java">
+        <attr name="template" serialvalue="aced0005737200316f72672e6f70656e6964652e66696c6573797374656d732e4d756c746946696c654f626a65637424566f696456616c7565d9ec9c94d5fd3ca40c0000787077040000000078"/>
+    </fileobject>
+    <fileobject name="User.java">
+        <attr name="class_dependency_java.io.Serializable" stringvalue="User"/>
+    </fileobject>
+</attributes>
