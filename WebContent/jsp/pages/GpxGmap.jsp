@@ -3,11 +3,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/dmg-util.tld" prefix="dmg" %>
-<%@ page import="net.kukido.blog.datamodel.*" %>
-<%@ page import="net.kukido.maps.*" %>
-<jsp:useBean id="entry" type="LogEntry" scope="request" />
-<jsp:useBean id="map" type="Attachment" scope="request" />
-<jsp:useBean id="track" type="GpsTrack" scope="request" />
+<jsp:useBean id="entry" type="net.kukido.blog.datamodel.LogEntry" scope="request" />
+<jsp:useBean id="map" type="net.kukido.blog.datamodel.Attachment" scope="request" />
+<jsp:useBean id="track" type="net.kukido.maps.GpsTrack" scope="request" />
 <tiles:insert definition="mapLayout">
   <tiles:put name="title" type="string"><bean:write name="map" property="title" /></tiles:put>
   <tiles:put name="head" type="string">
