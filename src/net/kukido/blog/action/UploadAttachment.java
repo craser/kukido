@@ -18,8 +18,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.apache.struts.action.*;
 import org.apache.struts.upload.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.util.zip.*;
 
 /**
@@ -73,14 +71,13 @@ public class UploadAttachment extends Action
         fileDataOut.flush();
         attachment.setBytes(fileDataOut.toByteArray());
         
-        new AttachmentDao().create(attachment);
+        createAttachment(attachment);
     }
     
     private void handleZipFileUpload(AttachmentForm attachmentForm, User user)
         throws IOException, DataAccessException
     {
         Attachment zipAttachment = attachmentForm.getAttachment();
-        AttachmentDao attachmentDao = new AttachmentDao();
         FormFile file = attachmentForm.getFile();
         byte[] zipData = file.getFileData();
         ByteArrayInputStream byteIn = new ByteArrayInputStream(zipData);
@@ -104,7 +101,7 @@ public class UploadAttachment extends Action
             fileDataOut.flush();
             a.setBytes(fileDataOut.toByteArray());
             
-            attachmentDao.create(a);
+            createAttachment(a);
         }
     }
     
@@ -126,7 +123,7 @@ public class UploadAttachment extends Action
             ignored.printStackTrace(System.err);
         }
         
-        new AttachmentDao().create(attachment);
+        createAttachment(attachment);
 
         if (attachmentForm.getUseAsGalleryThumb())
         {
@@ -136,5 +133,10 @@ public class UploadAttachment extends Action
             entry.setImageDisplayClass(attachmentForm.getImageDisplayClass());
             logDao.update(entry);
         }        
+    }
+    
+    private void createAttachment(Attachment attachment) throws DataAccessException
+    {
+    	new AttachmentDao().create(attachment);
     }
 }

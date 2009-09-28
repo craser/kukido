@@ -268,6 +268,10 @@ public class AttachmentDao extends Dao
             update.setTimestamp("Date_Taken", attachment.getDateTaken());
 	    update.setInt("Attachment_ID", attachment.getAttachmentId());
 	    update.executeUpdate();
+	    
+	    ThumbnailDao thumbDao = new ThumbnailDao();
+	    thumbDao.deleteByAttachmentId(attachment.getAttachmentId());
+	    
 	}
 	catch (Exception e)
 	{
