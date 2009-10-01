@@ -86,6 +86,11 @@
             name="batchGeotagForm"
             type="net.kukido.blog.forms.BatchGeotagForm"
             />
+            
+        <form-bean
+            name="unattachedAttachmentsForm"
+            type="net.kukido.blog.forms.UnattachedAttachmentsForm"
+            />
                  
     </form-beans>
 
@@ -537,11 +542,14 @@
         </action>
         
         <action
-            path="/AttachAttachments"
-            type="net.kukido.blog.action.AttachAttachments"
+            path="/AttachMailAttachments"
+            type="net.kukido.blog.action.EditAttachments"
+            name="unattachedAttachmentsForm"
+            scope="session"
+            validate="false"
             >
           <!-- FIXME: This should be a redirect, and should go back to the LogEdit page. -->
-          <forward name="success" path="/archive/" redirect="true" />
+          <forward name="success" path="/" redirect="true" />
         </action>
             
     </action-mappings>
