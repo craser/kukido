@@ -55,6 +55,9 @@
 			srcdir="${local.src.dir}"
 			destdir="${local.classes.dir}">
 		</javac>
+		<copy todir="${local.classes.dir}">
+			<fileset dir="${local.src.dir}" includes="**/*.properties" />
+		</copy>
 	</target>
 	
 	<target name="clean">
