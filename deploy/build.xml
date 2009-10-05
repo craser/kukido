@@ -20,14 +20,14 @@
 			remotedir="${prod.war.dir}"
 			verbose="true"
 			>
-			<fileset dir="${local.dist.dir}">
+			<fileset dir="${local.build.dir}">
 				<include name="${local.war.file}" />
 			</fileset>
 		</ftp>
 	</target>
 	
 	<target name="build-war" depends="build-war-template">
-		<war destfile="${local.dist.dir}/${local.war.file}">
+		<war destfile="${local.build.dir}/${local.war.file}">
 			<fileset dir="${local.war.template}" />
 		</war>
 	</target>
@@ -38,13 +38,13 @@
 				<exclude name="**/.svn" />
 			</fileset>
 		</copy>
-		<copy file="${local.dist.dir}/${kukido.jar.file}"
+		<copy file="${local.build.dir}/${kukido.jar.file}"
 			todir="${local.war.template}/WEB-INF/lib" 
 			/>
 	</target>
 	
 	<target name="kukido-jar" depends="compile-all">
-		<jar destfile="${local.dist.dir}/${kukido.jar.file}">
+		<jar destfile="${local.build.dir}/${kukido.jar.file}">
 			<fileset dir="${local.classes.dir}" />
 		</jar>
 	</target>
@@ -58,8 +58,8 @@
 	</target>
 	
 	<target name="clean">
-		<delete dir="${local.dist.dir}" />
-		<mkdir dir="${local.dist.dir}" />
+		<delete dir="${local.build.dir}" />
+		<mkdir dir="${local.build.dir}" />
 		<mkdir dir="${local.classes.dir}" />
 	</target>
 </project>
