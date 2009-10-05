@@ -1,0 +1,65 @@
+<project basedir="." name="KukidoBlog">
+
+	<property file="build.properties" />
+	
+	<path id="project.class.path">
+		<fileset dir="${local.lib.dir}" includes="**/*.jar" />
+		<fileset dir="${local.j2ee.lib.dir}" includes="**/*.jar" />
+	</path>
+	
+	<target name="deploy-prod" depends="build-war">
+		<echo message="Deploying WAR file to production server." />
+		<echo message="    host: ${prod.host}" />
+		<echo message="    user: ${prod.user}" />
+		<echo message="    pass: ${prod.pass}" />
+		<echo message="    dir : ${prod.war.dir}" />
+		<ftp server="${prod.host}" 
+			userid="${prod.user}" 
+			password="${prod.pass}" 
+			action="put"
+			remotedir="${prod.war.dir}"
+			verbose="true"
+			>
+			<fileset dir="${local.dist.dir}">
+				<include name="${local.war.file}" />
+			</fileset>
+		</ftp>
+	</target>
+	
+	<target name="build-war" depends="build-war-template">
+		<war destfile="${local.dist.dir}/${local.war.file}">
+			<fileset dir="${local.war.template}" />
+		</war>
+	</target>
+	
+	<target name="build-war-template" depends="kukido-jar">
+		<copy todir="${local.war.template}">
+			<fileset dir="${local.web.dir}">
+				<exclude name="**/.svn" />
+			</fileset>
+		</copy>
+		<copy file="${local.dist.dir}/${kukido.jar.file}"
+			todir="${local.war.template}/WEB-INF/lib" 
+			/>
+	</target>
+	
+	<target name="kukido-jar" depends="compile-all">
+		<jar destfile="${local.dist.dir}/${kukido.jar.file}">
+			<fileset dir="${local.classes.dir}" />
+		</jar>
+	</target>
+	
+	<target name="compile-all" depends="clean">
+		<javac 
+			classpathref="project.class.path"
+			srcdir="${local.src.dir}"
+			destdir="${local.classes.dir}">
+		</javac>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${local.dist.dir}" />
+		<mkdir dir="${local.dist.dir}" />
+		<mkdir dir="${local.classes.dir}" />
+	</target>
+</project>
