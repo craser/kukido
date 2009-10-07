@@ -1,0 +1,19 @@
+.controllink {
+  font-weight: normal;
+  font-size: 0.6em;
+  border: 1px solid black;
+  color: red;
+  padding: 2px;
+  background-image: url(../img/stripes_bg.gif);
+  width: 20px;
+}
+
+.controllink a {
+  border: 0;
+}
+
+.filename {
+  padding-left: 20px;
+}
+
+   

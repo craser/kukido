@@ -1,0 +1,57 @@
+.blogdigest {
+  margin: 0;
+}
+
+h3.channeltitle {  
+  display: block;
+  color: #000;
+  padding: 1px;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 1.4em;
+  border: 3px solid #000;
+  background-color: #efe8d0;
+}
+
+h3.channeltitle a {
+  border: 0;
+}
+
+div.blogentry {
+  padding: 3px;
+}
+
+
+
+h4.blogtitle {
+  display: block;
+  border: 0;
+  color: #553333;
+  border-bottom: 1px solid #555;
+  margin: 0;
+  margin-top: 10px;
+  font-family: sans-serif;
+}
+
+h4.blogtitle a {
+  border: 0;
+}
+
+div.blogentrymetadata {
+  margin: 0;
+  font-size: 0.6em;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  font-family: sans-serif;
+}
+
+.morelink {
+  text-align: right;
+  display: block;
+  border: 0;
+}
+
+a.morelink:hover {
+  text-decoration: underline;
+}
+
