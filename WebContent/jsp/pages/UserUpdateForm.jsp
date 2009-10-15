@@ -1,6 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested" %>
+
 <nested:form action="UserUpdate" focus="password">
-  <html:errors />
+  <nested:errors />
   <table>
     <tr>
       <td colspan="2"><h2><nested:write property="user.userName" />'s User Settings</h2></td>
