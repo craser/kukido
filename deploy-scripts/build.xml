@@ -11,7 +11,7 @@
 		<fileset dir="${local.j2ee.lib.dir}" includes="**/*.jar" />
 	</path>
 	
-	<target name="deploy-prod" depends="">
+	<target name="deploy-prod" depends="build-war">
 		<echo message="Deploying WAR file to production server." />
 		<echo message="    host: ${prod.host}" />
 		<echo message="    user: ${prod.user}" />
