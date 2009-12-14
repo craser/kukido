@@ -35,24 +35,30 @@ public class LoadMailAttachments extends Action {
             User user = (User)req.getSession().getAttribute("user");
             UserAuthenticator userAuth = new UserAuthenticator(user);
             
-            loadAttachments(user);
+            try { loadAttachments(user); }
+            catch (Exception e) {
+            	ActionMessages errors = new ActionMessages(getErrors(req));
+            	errors.add("foo", new ActionMessage("error.email.load.failure", e.getMessage()));
+            	this.addErrors(req, errors);
+            }
             Collection<Attachment> attachments = (Collection<Attachment>)new AttachmentDao().findUnattached();
             
             for (Attachment a : attachments) {
                 System.out.println("LOADED: " + a.getFileName());
             }
             
-            
             req.setAttribute("attachments", attachments);
+            
             return mapping.findForward("success");
         }
         catch (Exception e)
         {
+        	e.printStackTrace(System.out);
             throw new ServletException(e);
         }
     }        
     
-    private void loadAttachments(User user) throws IOException
+    private void loadAttachments(User user) throws ServletException
     {
         Store store = null;
         Folder folder = null;
@@ -93,7 +99,7 @@ public class LoadMailAttachments extends Action {
         catch (Exception e)
         {
             expunge = false; // Something has gone wrong.  Avoid data loss.
-            throw new IOException("Unable to retrieve messages from email inbox.");
+            throw new ServletException("Unable to retrieve messages from email inbox.", e);
         }
         finally 
         {
