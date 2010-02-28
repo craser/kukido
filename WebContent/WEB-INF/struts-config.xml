@@ -532,7 +532,12 @@
           <forward name="success" path="/jsp/pages/TrackbackResponse.jsp" />
         </action>
         
-        
+        <action
+        	path="/CyclingStats"
+        	type="net.kukido.blog.action.CyclingStats"
+        	>
+          <forward name="success" path="/jsp/nav/CyclingStatsNav.jsp" />
+        </action>
              
 	<action
 	    path="/LoadMailAttachments"

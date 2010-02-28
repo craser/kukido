@@ -39,7 +39,8 @@ public class GpxGmap extends Action
             Attachment map = attachmentDao.findByFileName(req.getParameter("fileName"));
             attachmentDao.populateBytes(map);
             GpxParser gpxParser = new GpxParser();
-            GpsTrack track = gpxParser.parse(map.getBytes());
+            List<GpsTrack> tracks = gpxParser.parse(map.getBytes());
+            GpsTrack track = tracks.get(0);
             LogEntry entry = logDao.findByEntryId(map.getEntryId());
 
             req.setAttribute("entry", entry);

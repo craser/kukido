@@ -1,6 +1,9 @@
 <%-- <jsp:include page="MoPho.jsp" /> --%>
 <jsp:include page="/jsp/nav/SearchNav.jsp" />
 <jsp:include page="/jsp/nav/UserNav.jsp" />
+<%--
+<jsp:include page="/CyclingStats.do" />
+ --%>
 <jsp:include page="/RecentImages.do">
   <jsp:param name="numEntries" value="6" />
 </jsp:include>

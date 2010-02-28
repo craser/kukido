@@ -128,6 +128,23 @@ public class AttachmentDao extends Dao
         + ",Date_Taken"
         + " from ATTACHMENTS where Attachment_ID = :Attachment_ID";
 
+    static private final String FIND_MAPS_BY_YEAR_SQL =
+	"select"
+        + " Attachment_ID"
+        + ",Entry_ID"
+        + ",Is_Gallery_Image"
+        + ",File_Name"
+        + ",Mime_Type"
+        + ",File_Type"
+        + ",User_ID"
+        + ",User_Name"
+        + ",Date_Posted"
+        + ",Title"
+        + ",Description"
+        + ",Date_Taken"
+        + " from ATTACHMENTS where File_Type = 'map'"
+        + " and year(Date_Posted) = :Year";
+
     static private final String DELETE_BY_ATTACHMENT_ID_SQL =
 	"delete from ATTACHMENTS where Attachment_ID = :Attachment_ID";
     
@@ -458,6 +475,40 @@ public class AttachmentDao extends Dao
 	    try { findByName.close(); } catch (Exception ignored) {}
 	    try { conn.close(); } catch (Exception ignored) {}
 	}
+    }
+    
+    public Collection findMapsByYear(int year)
+    	throws DataAccessException
+    {
+    	Connection conn = null;
+    	NamedParamStatement find = null;
+    	ResultSet results = null;
+    	try
+    	{
+    	    conn = getConnection();
+    	    find = new NamedParamStatement(conn, FIND_MAPS_BY_YEAR_SQL);
+    	    find.setInt("Year", year);
+    	    results = find.executeQuery();
+
+    	    Collection attachments = new ArrayList();
+            while (results.next()) {
+                Attachment a = populateAttachment(results);
+                attachments.add(a);
+            }
+                
+            return attachments;
+    	}
+    	catch (Exception e)
+    	{
+    	    throw new DataAccessException("Unable to find attachment with type \"map\" posted in year " + year, e);
+    	}
+    	finally
+    	{
+    	    try { results.close(); } catch (Exception ignored) {}
+    	    try { find.close(); } catch (Exception ignored) {}
+    	    try { conn.close(); } catch (Exception ignored) {}
+    	}
+    	
     }
     
     public boolean fileNameExists(String fileName) // File_Name is a KEY

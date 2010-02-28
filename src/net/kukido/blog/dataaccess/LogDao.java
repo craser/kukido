@@ -90,7 +90,7 @@ public class LogDao extends Dao implements Iterator
         try {
             conn = getConnection();
             create = new NamedParamStatement(conn, CREATE_SQL);
-	    Timestamp now = new Timestamp(new java.util.Date().getTime());
+            Timestamp now = new Timestamp(new java.util.Date().getTime());
             create.setTimestamp("Date_Posted", now);
             create.setTimestamp("Last_Updated", now);
             create.setInt("User_ID", logEntry.getUserId());
@@ -99,7 +99,7 @@ public class LogDao extends Dao implements Iterator
             create.setString("Image_File_Name",  logEntry.getImageFileName());
             create.setString("Intro", logEntry.getIntro());
             create.setString("Body", logEntry.getBody());
-	    create.setString("Via_Title", logEntry.getViaTitle());
+            create.setString("Via_Title", logEntry.getViaTitle());
             create.setString("Via_Text",  logEntry.getViaText());
             create.setString("Via_Url", logEntry.getViaUrl());
             create.setString("Allow_Comments", Boolean.toString(logEntry.getAllowComments()));
