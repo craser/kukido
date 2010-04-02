@@ -7,7 +7,9 @@
  * General Guidelines
  */
 body {
-  background: url(../img/clouds-bg.jpg);
+  background: url(../img/dreadedmonkeygod.jpg);
+  background-color: #fff;
+  background-repeat: no-repeat;
   font-family: georgia, serif;
   color: #222;
   margin: 0px;
