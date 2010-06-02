@@ -22,28 +22,30 @@ function buildOnClick(gmap, marker, m, i) {
             var origImg = marker.getIcon().image;
             marker.setImage("img/progress_small.gif");
             var k = function(mapJson) {
-            	alert("In k()");
-                var gpxTrack = eval(mapJson);
-                alert("After eval(mapJson); calling renderTrack()");
+                var gpxTracks = eval(mapJson); // Should be an array of GPS Tracks.
                 
-                var trackOverlays = renderTrack(gmap, gpxTrack, function () { return getColor(i); });
-                var hideTrackInfo = function() {
-                            // Clear the overlay and the info window
-                            for (var i = 0; i < trackOverlays.length; i++) {
-                                gmap.removeOverlay(trackOverlays[i]);
-                            }
-                            var infoTable = document.getElementById(gpxTrack.fileName);
-                            var sidebar = infoTable.parentNode;
-                            sidebar.removeChild(infoTable);
-                            gmap.addOverlay(marker);
-                            if (sidebar.childNodes.length <= 0) { closeSlide(); }
-                        };
-                displayTrackInfo(marker, gpxTrack, getColor(i), hideTrackInfo); // Opens the info window
-                marker.setImage(origImg);
-                gmap.removeOverlay(marker);
+                for (var i = 0; i < gpxTracks.length; i++) {
+	                var gpxTrack = gpxTracks[i];
+	                
+	                var trackOverlays = renderTrack(gmap, gpxTrack, function () { return getColor(i); });
+	                var hideTrackInfo = function() {
+	                            // Clear the overlay and the info window
+	                            for (var i = 0; i < trackOverlays.length; i++) {
+	                                gmap.removeOverlay(trackOverlays[i]);
+	                            }
+	                            var infoTable = document.getElementById(gpxTrack.fileName);
+	                            var sidebar = infoTable.parentNode;
+	                            sidebar.removeChild(infoTable);
+	                            gmap.addOverlay(marker);
+	                            if (sidebar.childNodes.length <= 0) { closeSlide(); }
+	                        };
+	                displayTrackInfo(marker, gpxTrack, getColor(i), hideTrackInfo); // Opens the info window
+	                marker.setImage(origImg);
+	                gmap.removeOverlay(marker);
+                }
+                
             }; // k
             var url = 'json/maps/' + m.fileName;
-            alert("URL: " + url);
             GDownloadUrl(url, k);
         }; // onClick
 }
