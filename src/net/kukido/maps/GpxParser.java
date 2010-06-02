@@ -13,9 +13,6 @@ import org.xml.sax.helpers.*;
 import java.text.*;
 
 /**
- * Note that this handler assumes that there is only ONE trk element
- * in the document to be parsed.  If there are multiple trk elements, 
- * only the last will be retrievable.
  * @author  craser
  */
  public class GpxParser extends DefaultHandler
@@ -141,6 +138,9 @@ import java.text.*;
                 throw new SAXException("Unable to parse timestamp: \"" + val + "\"");
             }
         }  
+        else if ("name".equals(currentState)) {
+        	track.setName(val);
+        }
         else if ("trk".equals(currentState)) {
         	tracks.add(track);
         	track = null;

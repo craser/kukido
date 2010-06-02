@@ -22,7 +22,10 @@ function buildOnClick(gmap, marker, m, i) {
             var origImg = marker.getIcon().image;
             marker.setImage("img/progress_small.gif");
             var k = function(mapJson) {
+            	alert("In k()");
                 var gpxTrack = eval(mapJson);
+                alert("After eval(mapJson); calling renderTrack()");
+                
                 var trackOverlays = renderTrack(gmap, gpxTrack, function () { return getColor(i); });
                 var hideTrackInfo = function() {
                             // Clear the overlay and the info window
@@ -40,6 +43,7 @@ function buildOnClick(gmap, marker, m, i) {
                 gmap.removeOverlay(marker);
             }; // k
             var url = 'json/maps/' + m.fileName;
+            alert("URL: " + url);
             GDownloadUrl(url, k);
         }; // onClick
 }

@@ -17,6 +17,7 @@ GpsLocation
 --%>
 ({  title: "<nested:write name="entry" property="title" />",
     fileName: "<nested:write name="map" property="fileName" />",
+    trackName: "<nested:write name="track" property="name" />",
     duration: "<nested:write name="track" property="formattedDuration" />",
     date: "<nested:write name="track" property="startTime" format="MM/dd/yyyy" />",
     climbing: <nested:write name="track" property="climbingVertical" format="0.00" />,
