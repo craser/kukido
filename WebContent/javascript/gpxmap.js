@@ -135,6 +135,7 @@ function renderMapByName(gpxFileName, getColor) {
         for (var i = 0; i < gpxTracks.length; i++) {
         	var gpxTrack = gpxTracks[i];
         	renderTrack(map, gpxTrack, getColor);
+        }
     };
     GDownloadUrl(url, k);
 }
