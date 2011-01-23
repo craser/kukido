@@ -132,7 +132,8 @@ function renderMapByName(gpxFileName, getColor) {
     var url = "json/maps/" + gpxFileName;
     var k = function (mapJson) {
         var gpxTracks = eval(mapJson);
-        for (var gpxTrack in gpxTracks) {
+        for (var i = 0; i < gpxTracks.length; i++) {
+        	var gpxTrack = gpxTracks[i];
         	renderTrack(map, gpxTrack, getColor);
         }
     };
