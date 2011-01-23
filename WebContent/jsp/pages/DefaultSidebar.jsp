@@ -20,7 +20,8 @@
   <jsp:param name="numTags" value="50" />
 </jsp:include>
 --%>
-<jsp:include page="/DeliciousLinks" />
+<%-- jsp:include page="/DeliciousLinks" / --%>
+<jsp:include page="/GoogleShared" />
 <%-- <jsp:include page="/jsp/nav/BlogrollNav.jsp" /> --%>
 <%-- <jsp:include page="/jsp/nav/FeedsNav.jsp" /> --%>
 <%-- <jsp:include page="/jsp/nav/FirefoxNav.jsp" /> --%>
