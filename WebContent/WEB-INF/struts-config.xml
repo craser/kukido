@@ -550,7 +550,7 @@
             path="/AttachMailAttachments"
             type="net.kukido.blog.action.EditAttachments"
             name="unattachedAttachmentsForm"
-            scope="session"
+            scope="request"
             validate="false"
             >
           <!-- FIXME: This should be a redirect, and should go back to the LogEdit page. -->
