@@ -90,6 +90,16 @@ public class CalculateGeotags extends Action
 	}
     }
     
+    private GpsLocation getCenter(List<GpsTrack> tracks)
+    {
+    	GpsBounds bounds = tracks.get(0).getBounds();
+    	for (GpsTrack track : tracks) {
+    		bounds = bounds.expand(track.getBounds());
+    	}
+    	
+    	return bounds.getCenter();
+    }
+    
     private GpsTrack parseMap(Attachment map)
         throws DataAccessException, SAXException, IOException
     {
@@ -97,9 +107,9 @@ public class CalculateGeotags extends Action
         GpxParser gpxParser = new GpxParser();
         byte[] bytes = map.getBytes();
         InputStream in = new ByteArrayInputStream(bytes);
-        GpsTrack track = gpxParser.parse(in);
+        List<GpsTrack> tracks = gpxParser.parse(in);
         
-        return track;
+        return tracks.get(0);
     }
     
     

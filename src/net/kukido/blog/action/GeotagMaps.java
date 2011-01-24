@@ -73,9 +73,9 @@ public class GeotagMaps extends Action
         GpxParser gpxParser = new GpxParser();
         byte[] bytes = map.getBytes();
         InputStream in = new ByteArrayInputStream(bytes);
-        GpsTrack track = gpxParser.parse(in);
+        List<GpsTrack> tracks = gpxParser.parse(in);
         
-        return track;
+        return tracks.get(0);
     }
     
     

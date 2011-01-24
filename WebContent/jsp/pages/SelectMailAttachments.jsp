@@ -19,6 +19,7 @@
   <tiles:put name="title" type="string">Uploaded Attachments</tiles:put>
   <tiles:put name="content" type="string">
     <!-- SelectMailAttachments.jsp -->
+    <html:errors />
     <nested:form action="AttachMailAttachments.do">
         <nested:define id="entryId" name="unattachedAttachmentsForm" property="entryId" type="java.lang.Integer" /> 
         <!-- id="unattachedAttachmentsForm" type="net.kukido.blog.forms.UnattachedAttachmentsForm" scope="session"/ -->

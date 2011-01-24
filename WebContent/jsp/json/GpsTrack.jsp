@@ -3,9 +3,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested" %>
 <%@ taglib uri="/WEB-INF/dmg-util.tld" prefix="dmg" %>
+<%@ page import="net.kukido.maps.*" %>
+
 <jsp:useBean id="entry" type="net.kukido.blog.datamodel.LogEntry" scope="request" />
 <jsp:useBean id="map" type="net.kukido.blog.datamodel.Attachment" scope="request" />
-<jsp:useBean id="track" type="net.kukido.maps.GpsTrack" scope="request" />
+<%-- jsp:useBean id="track" type="net.kukido.maps.GpsTrack" scope="request" / --%>
+<jsp:useBean id="tracks" type="java.util.List" scope="request" />
 <%--
 GpsLocation
     private float latitude;
@@ -13,8 +16,11 @@ GpsLocation
     private float elevation;
     private Date timestamp;
 --%>
-({  title: "<nested:write name="entry" property="title" />",
+([
+<nested:iterate id="track" name="tracks" type="GpsTrack">
+{  title: "<nested:write name="entry" property="title" />",
     fileName: "<nested:write name="map" property="fileName" />",
+    trackName: "<nested:write name="track" property="name" />",
     duration: "<nested:write name="track" property="formattedDuration" />",
     date: "<nested:write name="track" property="startTime" format="MM/dd/yyyy" />",
     climbing: <nested:write name="track" property="climbingVertical" format="0.00" />,
@@ -40,4 +46,7 @@ GpsLocation
         },
     </nested:iterate>
     ]
-})
+},
+</nested:iterate>
+])
+<% System.out.println("DONE ITERATING OVER GPXTRACKS"); %>

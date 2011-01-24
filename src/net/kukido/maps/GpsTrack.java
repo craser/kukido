@@ -22,6 +22,8 @@ public class GpsTrack extends ArrayList<GpsLocation>
     
     static private final double MILES_PER_KM = 0.621371192d;
     
+    private String name;
+    
     /**
      * This is a total hack, but I'm sick and I just want this done.  When 
      * I think of something better, I'll fix this.
@@ -199,7 +201,6 @@ public class GpsTrack extends ArrayList<GpsLocation>
     
     public GpsTrack getThinnedTrack(double d, double m)
     {
-        System.out.println("[GpsTrack] thin(" + d + ", " + m + ")");
         GpsTrack t = new GpsTrack();
         Iterator i = iterator();
         GpsLocation a = (GpsLocation)i.next();
@@ -217,9 +218,17 @@ public class GpsTrack extends ArrayList<GpsLocation>
             }
             b = c;            
         }
-        System.out.println("    original size: " + size());
-        System.out.println("    new size     : " + t.size());
         
         return t;
     }
+
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
 }

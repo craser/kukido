@@ -2,6 +2,12 @@
 
 	<property file="build.properties" />
 	
+	<path id="ant.classpath">
+		<fileset dir="${ant.lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="ant.classpath" />
+	
 	<path id="project.class.path">
 		<fileset dir="${local.lib.dir}" includes="**/*.jar" />
 		<fileset dir="${local.j2ee.lib.dir}" includes="**/*.jar" />
@@ -24,6 +30,28 @@
 				<include name="${local.war.file}" />
 			</fileset>
 		</ftp>
+	</target>
+	
+	<target name="tag-build" depends="init-tag-name">
+		<echo message="Tagging build: ${svn.tag.name}" />
+		<svn>
+			<wcversion
+				path="${svn.work.dir}"
+			/>
+			<copy srcPath="${svn.work.dir}" 
+				destUrl="${svn.tags.url}/${svn.tag.name}"
+				message="Automated tagging upon deployment to production."
+			/>
+		</svn>
+		<echo message="Repository URL: ${repository.url}" />
+	</target>
+	
+	<target name="init-tag-name">
+		<tstamp>
+			<format property="timestamp" pattern="yyyy.MM.dd-HH.mm.ss" />
+		</tstamp>
+		<property name="svn.tag.name" value="Production-Build-${timestamp}" />
+		<echo message="Tag name: ${svn.tag.name}" />
 	</target>
 	
 	<target name="build-war" depends="build-war-template">

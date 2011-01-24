@@ -532,7 +532,12 @@
           <forward name="success" path="/jsp/pages/TrackbackResponse.jsp" />
         </action>
         
-        
+        <action
+        	path="/CyclingStats"
+        	type="net.kukido.blog.action.CyclingStats"
+        	>
+          <forward name="success" path="/jsp/nav/CyclingStatsNav.jsp" />
+        </action>
              
 	<action
 	    path="/LoadMailAttachments"
@@ -545,7 +550,7 @@
             path="/AttachMailAttachments"
             type="net.kukido.blog.action.EditAttachments"
             name="unattachedAttachmentsForm"
-            scope="session"
+            scope="request"
             validate="false"
             >
           <!-- FIXME: This should be a redirect, and should go back to the LogEdit page. -->

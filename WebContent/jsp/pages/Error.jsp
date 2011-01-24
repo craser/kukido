@@ -1,6 +1,6 @@
 <%@ page import="java.io.*" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<bean:define id="exception" name="exception" scope="request" type="Exception" />
+<bean:define id="exception" name="exception" scope="request" type="Throwable" />
 <html>
   <head>
     <title>DMG: Server Error</title>
@@ -17,6 +17,9 @@
     <!--
 <% 
 try {
+	while (exception.getCause() != null) {
+		exception = exception.getCause();
+	}
     exception.printStackTrace(new PrintWriter(out)); 
 }
 catch (Exception ignored) {}

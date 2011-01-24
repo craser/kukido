@@ -131,8 +131,11 @@ function renderMapByName(gpxFileName, getColor) {
     getColor = (getColor == null) ? function(p) { return "#5959AB"; } : getColor;
     var url = "json/maps/" + gpxFileName;
     var k = function (mapJson) {
-        var gpxTrack = eval(mapJson);
-        renderTrack(map, gpxTrack, getColor);
+        var gpxTracks = eval(mapJson);
+        for (var i = 0; i < gpxTracks.length; i++) {
+        	var gpxTrack = gpxTracks[i];
+        	renderTrack(map, gpxTrack, getColor);
+        }
     };
     GDownloadUrl(url, k);
 }

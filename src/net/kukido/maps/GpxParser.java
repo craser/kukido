@@ -13,9 +13,6 @@ import org.xml.sax.helpers.*;
 import java.text.*;
 
 /**
- * Note that this handler assumes that there is only ONE trk element
- * in the document to be parsed.  If there are multiple trk elements, 
- * only the last will be retrievable.
  * @author  craser
  */
  public class GpxParser extends DefaultHandler
@@ -24,24 +21,25 @@ import java.text.*;
     
     private GpsTrack track;
     private GpsLocation trackPoint;
-    private Stack state;
+    private Stack<String> state;
     private StringBuffer chars;
+    private List<GpsTrack> tracks;
     
     /** Creates a new instance of GpxHandler */
     public GpxParser() {
-        state = new Stack();
+        state = new Stack<String>();
         chars = new StringBuffer();
+        tracks = new ArrayList<GpsTrack>();
     }
     
-    public GpsTrack parse(byte[] bytes)
+    public List<GpsTrack> parse(byte[] bytes)
         throws SAXException, IOException
     {
         InputStream in = null;
         try 
         {
             in = new ByteArrayInputStream(bytes);
-            GpsTrack track = parse(in);
-            return track;
+            return parse(in);
         }
         finally
         {
@@ -49,17 +47,17 @@ import java.text.*;
         }
     }
     
-    public GpsTrack parse(InputStream in) 
-        throws SAXException, IOException
+    public List<GpsTrack> parse(InputStream in)
+    	throws SAXException, IOException
     {
         //XMLReader reader = XMLReaderFactory.createXMLReader();
         // FIXME: This should be soft-coded using a property value
         // to set the class name of the appropriate factory, etc.
-        XMLReader reader = new org.apache.xerces.parsers.SAXParser();
-        reader.setContentHandler(this);
-        reader.parse(new InputSource(in));
-        
-        return track;
+    	XMLReader reader = new org.apache.xerces.parsers.SAXParser();
+    	reader.setContentHandler(this);
+    	reader.parse(new InputSource(in));
+    	
+    	return tracks;
     }
     
     public void startPrefixMapping(String prefix, String uri)
@@ -122,9 +120,6 @@ import java.text.*;
         String val = chars.toString().trim();
         chars = new StringBuffer();
         
-        String dateString = null;
-        Date timestamp = null;
-        
         if ("trkpt".equals(currentState)) {
             trackPoint.setGrade(calculateGrade(track, trackPoint));
             track.add(trackPoint);
@@ -136,13 +131,20 @@ import java.text.*;
         }
         else if ("time".equals(currentState)) {
             try {
-                timestamp = parseDateString(val);
+                Date timestamp = parseDateString(val);
                 if (trackPoint != null) trackPoint.setTimestamp(timestamp);
             }
             catch (ParseException e) {
                 throw new SAXException("Unable to parse timestamp: \"" + val + "\"");
             }
         }  
+        else if ("name".equals(currentState)) {
+        	track.setName(val);
+        }
+        else if ("trk".equals(currentState)) {
+        	tracks.add(track);
+        	track = null;
+        }
     }
     
     private Date parseDateString(String dateString)

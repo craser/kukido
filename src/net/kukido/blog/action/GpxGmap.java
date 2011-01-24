@@ -39,12 +39,14 @@ public class GpxGmap extends Action
             Attachment map = attachmentDao.findByFileName(req.getParameter("fileName"));
             attachmentDao.populateBytes(map);
             GpxParser gpxParser = new GpxParser();
-            GpsTrack track = gpxParser.parse(map.getBytes());
+            List<GpsTrack> tracks = gpxParser.parse(map.getBytes());
+            GpsTrack track = tracks.get(0); // FIXME: Need to update this Action to deal with multiple tracks in a single file.
             LogEntry entry = logDao.findByEntryId(map.getEntryId());
 
             req.setAttribute("entry", entry);
             req.setAttribute("map", map);
             req.setAttribute("track", track);
+            req.setAttribute("tracks", tracks);
 
             return mapping.findForward("success");
 	}

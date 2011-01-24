@@ -14,7 +14,7 @@
     <table width="100%">
       <logic:iterate name="fileNames" scope="request" id="fileName">
       <tr>
-        <td class="controllink"><a href="DropBoxDelete.do?fileName=<%= fileName %>">delete</a></th>
+        <th class="controllink"><a href="DropBoxDelete.do?fileName=<%= fileName %>">delete</a></th>
         <td class="filename" bgcolor="<%= (i++%2)==0?bgColor:"" %>"><a href="dropbox/<%= fileName %>"><bean:write name="fileName"/></a></td>
       </tr>
       </logic:iterate>
@@ -24,7 +24,7 @@
     <html:form action="DropBoxUpload" focus="password" enctype="multipart/form-data">
       <table>
           <tr>
-              <td class="inputlabel"><bean:message key="prompt.file.upload"/></th>
+              <th class="inputlabel"><bean:message key="prompt.file.upload"/></th>
               <td><html:file property="uploadFile"/></td>
           </tr>
           <tr>

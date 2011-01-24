@@ -35,24 +35,32 @@ public class LoadMailAttachments extends Action {
             User user = (User)req.getSession().getAttribute("user");
             UserAuthenticator userAuth = new UserAuthenticator(user);
             
-            loadAttachments(user);
+            try { loadAttachments(user); }
+            catch (Exception e) {
+            	ByteArrayOutputStream out = new ByteArrayOutputStream();
+            	e.printStackTrace(new PrintStream(out));
+            	ActionMessages errors = new ActionMessages(getErrors(req));
+            	errors.add("foo", new ActionMessage("error.email.load.failure", out.toString()));
+            	this.addErrors(req, errors);
+            }
             Collection<Attachment> attachments = (Collection<Attachment>)new AttachmentDao().findUnattached();
             
             for (Attachment a : attachments) {
                 System.out.println("LOADED: " + a.getFileName());
             }
             
-            
             req.setAttribute("attachments", attachments);
+            
             return mapping.findForward("success");
         }
         catch (Exception e)
         {
+        	e.printStackTrace(System.out);
             throw new ServletException(e);
         }
     }        
     
-    private void loadAttachments(User user) throws IOException
+    private void loadAttachments(User user) throws MessagingException
     {
         Store store = null;
         Folder folder = null;
@@ -60,11 +68,11 @@ public class LoadMailAttachments extends Action {
         try
         {   
             Properties p = System.getProperties();
-            p.setProperty("mail.store.protocol", "pop3");
+            //p.setProperty("mail.store.protocol", "pop3");
+            //p.setProperty("mail.debug", "true");
             Session session = Session.getDefaultInstance(p);
-            //session.setDebug(true);
             
-            store = session.getStore();
+            store = session.getStore("pop3"); // FIXME: Should be configurable by user.
             store.connect("dreadedmonkeygod.net", 110, "uploads@dreadedmonkeygod.net", "m3t@b0l1zm");
             //store.connect("pop.gmail.com", 995, "chris.raser@gmail.com", "c0r0gati0n");
             
@@ -89,11 +97,6 @@ public class LoadMailAttachments extends Action {
                     e.printStackTrace(System.out);
                 }
             }
-        }
-        catch (Exception e)
-        {
-            expunge = false; // Something has gone wrong.  Avoid data loss.
-            throw new IOException("Unable to retrieve messages from email inbox.");
         }
         finally 
         {

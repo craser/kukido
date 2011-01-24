@@ -6,6 +6,8 @@
 
 package net.kukido.maps;
 
+import static java.lang.Math.*;
+
 /**
  *
  * @author  craser
@@ -21,6 +23,14 @@ public class GpsBounds
     
     }
     
+    public GpsBounds(GpsBounds bounds)
+    {
+    	this.minLatitude = bounds.minLatitude;
+    	this.maxLatitude = bounds.maxLatitude;
+    	this.minLongitude = bounds.minLongitude;
+    	this.maxLongitude = bounds.maxLongitude;
+    }
+    
     /** Creates a new instance of GpsBounds */
     public GpsBounds(float minLat, float maxLat, float minLon, float maxLon) 
     {
@@ -28,6 +38,17 @@ public class GpsBounds
         this.maxLatitude = maxLat;
         this.minLongitude = minLon;
         this.maxLongitude = maxLon;
+    }
+    
+    public GpsBounds expand(GpsBounds bounds)
+    {
+    	GpsBounds expanded = new GpsBounds(
+    			min(this.minLatitude, bounds.minLatitude),
+    			max(this.maxLatitude, bounds.maxLatitude),
+    			min(this.minLongitude, bounds.minLongitude),
+    			max(this.maxLongitude, bounds.maxLongitude));
+    	
+    	return expanded;
     }
     
     public GpsLocation getCenter()
