@@ -1,4 +1,4 @@
-
+ 
 // Takes the GMap and an array of DMG Maps, and renders the
 // markers and sets up event handling.
 function markMaps(gmap, maps, displayFuncs) {
@@ -24,10 +24,11 @@ function buildOnClick(gmap, marker, m, i) {
             var k = function(mapJson) {
                 var gpxTracks = eval(mapJson); // Should be an array of GPS Tracks.
                 
-                for (var i = 0; i < gpxTracks.length; i++) {
-	                var gpxTrack = gpxTracks[i];
+                for (var t = 0; t < gpxTracks.length; t++) {
+	                var gpxTrack = gpxTracks[t];
 	                
-	                var trackOverlays = renderTrack(gmap, gpxTrack, function () { return getColor(i); });
+	                var getColor = buildColorGetter(t + i);
+	                var trackOverlays = renderTrack(gmap, gpxTrack, getColor);
 	                var hideTrackInfo = function() {
 	                            // Clear the overlay and the info window
 	                            for (var i = 0; i < trackOverlays.length; i++) {
@@ -39,7 +40,7 @@ function buildOnClick(gmap, marker, m, i) {
 	                            gmap.addOverlay(marker);
 	                            if (sidebar.childNodes.length <= 0) { closeSlide(); }
 	                        };
-	                displayTrackInfo(marker, gpxTrack, getColor(i), hideTrackInfo); // Opens the info window
+	                displayTrackInfo(marker, gpxTrack, getColor, hideTrackInfo); // Opens the info window
 	                marker.setImage(origImg);
 	                gmap.removeOverlay(marker);
                 }
@@ -50,7 +51,11 @@ function buildOnClick(gmap, marker, m, i) {
         }; // onClick
 }
 
-function displayTrackInfo(marker, gpxTrack, color, hideTrackInfo) {
+function buildColorGetter(n) {
+	return function () { return getColor(n); }
+}
+
+function displayTrackInfo(marker, gpxTrack, getColor, hideTrackInfo) {
     openSlide();
     
     // BUG! FIXME: Adding to the innerHTML property strips off
@@ -65,7 +70,7 @@ function displayTrackInfo(marker, gpxTrack, color, hideTrackInfo) {
     div.setAttribute("class", "trackInfo");
     
     var trackTitle = document.createElement("h4");
-    trackTitle.setAttribute("style", "background-color: " + color);
+    trackTitle.setAttribute("style", "background-color: " + getColor());
     trackTitle.setAttribute("class", "trackInfoTitle");
     
     trackTitle.onclick = hideTrackInfo;
