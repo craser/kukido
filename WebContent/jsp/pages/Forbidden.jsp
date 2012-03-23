@@ -1,0 +1,1 @@
+<% response.sendError(response.SC_FORBIDDEN, "SPAM"); %>

@@ -43,6 +43,57 @@
   </filter>
   
   <filter>
+  	<filter-name>CacheRss1h</filter-name>
+  	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
+  	<init-param>
+  	  <param-name>cacheDir</param-name>
+  	  <param-value>/</param-value>
+  	</init-param>
+  	<init-param>
+  	  <param-name>timeout</param-name>
+  	  <param-value>3600</param-value><!-- 1 hour -->
+  	</init-param>
+  	<init-param>
+  	  <param-name>mimeType</param-name>
+  	  <param-value>application/rss+xml</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter>
+  	<filter-name>CacheHtml1h</filter-name>
+  	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
+  	<init-param>
+  	  <param-name>cacheDir</param-name>
+  	  <param-value>/</param-value>
+  	</init-param>
+  	<init-param>
+  	  <param-name>timeout</param-name>
+  	  <param-value>3600</param-value><!-- 1 hour -->
+  	</init-param>
+  	<init-param>
+  	  <param-name>mimeType</param-name>
+  	  <param-value>text/html</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter>
+  	<filter-name>CacheHtml12h</filter-name>
+  	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
+  	<init-param>
+  	  <param-name>cacheDir</param-name>
+  	  <param-value>/</param-value>
+  	</init-param>
+  	<init-param>
+  	  <param-name>timeout</param-name>
+  	  <param-value>43200</param-value><!-- 12 hours -->
+  	</init-param>
+  	<init-param>
+  	  <param-name>mimeType</param-name>
+  	  <param-value>text/html</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter>
     <filter-name>UrlRedirect</filter-name>
     <filter-class>net.kukido.servlet.filter.UrlRedirectFilter</filter-class>
     <init-param>
@@ -340,6 +391,7 @@
     </init-param>
   </filter>
   
+  
   <filter>
     <filter-name>DataSourceFilter</filter-name>
     <filter-class>net.kukido.blog.servlet.filter.DataSourceFilter</filter-class>
@@ -354,6 +406,38 @@
       <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- Caching -->
+  <filter-mapping>
+    <filter-name>CacheRss1h</filter-name>
+    <url-pattern>/monkeyfeed.xml</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheRss1h</filter-name>
+    <url-pattern>/comments.xml</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheRss1h</filter-name>
+    <url-pattern>/commentspam.xml</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheHtml1h</filter-name>
+    <url-pattern>/archive/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheHtml12h</filter-name>
+    <url-pattern>/search/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheHtml12h</filter-name>
+    <url-pattern>/search/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Anti-Spam Throttle -->
   <filter-mapping>
     <filter-name>Throttle</filter-name>
     <url-pattern>/CreateComment.do</url-pattern>

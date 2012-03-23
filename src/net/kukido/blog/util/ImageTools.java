@@ -73,8 +73,10 @@ public class ImageTools
 	try
 	{
 	    fis = new ByteArrayInputStream(bytes); 
-	    com.sun.image.codec.jpeg.JPEGImageDecoder decoder = com.sun.image.codec.jpeg.JPEGCodec.createJPEGDecoder(fis); 
-	    return decoder.decodeAsBufferedImage();
+	    //com.sun.image.codec.jpeg.JPEGImageDecoder decoder = com.sun.image.codec.jpeg.JPEGCodec.createJPEGDecoder(fis); 
+	    //return decoder.decodeAsBufferedImage();
+	    
+	    return ImageIO.read(fis);
 	}
 	finally
 	{

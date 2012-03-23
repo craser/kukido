@@ -141,7 +141,9 @@ public class LoadMailAttachments extends Action {
                 Part p = multiPart.getBodyPart(i);
                 System.out.println("    PARTS[" + i + "]: (" + p.getContentType() + ") " + p.getFileName());
                 
-                if (p.getFileName() != null) {
+                // This breaks for GPX attachments sent from Trails on my iPhone.  
+                // Using getDisposition() fails universally. 
+                //if (p.getFileName() != null)
                     try { 
                         loadAttachment(message, p, user); 
                     }
@@ -149,7 +151,7 @@ public class LoadMailAttachments extends Action {
                         e.printStackTrace(System.err);
                         loadedAll = false; 
                     }
-                }
+                //}
             }
         }
         
@@ -189,15 +191,19 @@ public class LoadMailAttachments extends Action {
     
     private String getSafeFileName(Part part, AttachmentDao dao) throws DataAccessException, MessagingException
     {
-        if (!dao.fileNameExists(part.getFileName())) {
-            return part.getFileName();
+        String fileName = part.getFileName();
+        if (fileName == null) { 
+            fileName = "unknown";
+        }
+        if (!dao.fileNameExists(fileName)) {
+            return fileName;
         }
         else {
             int prefix = 1;
-            while (dao.fileNameExists(prefix + "_" + part.getFileName())) {
+            while (dao.fileNameExists(prefix + "_" + fileName)) {
                 prefix++;
             }
-            return prefix + "_" + part.getFileName();
+            return prefix + "_" + fileName;
         }
     }
     

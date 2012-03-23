@@ -251,6 +251,7 @@
             >
           <forward name="success" path="/archive/" redirect="true" />
           <forward name="error" path="/ViewLogEntry.do?entryId=" />
+          <forward name="spam" path="/jsp/pages/Forbidden.jsp" />
         </action>
         
         <action 

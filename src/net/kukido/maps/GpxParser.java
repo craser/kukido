@@ -139,7 +139,15 @@ import java.text.*;
             }
         }  
         else if ("name".equals(currentState)) {
-        	track.setName(val);
+            try {
+                if ("trk".equals(state.peek()) && (track != null)) {
+                    track.setName(val);
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Caught problem adding name element:");
+                e.printStackTrace(System.out);
+            }
         }
         else if ("trk".equals(currentState)) {
         	tracks.add(track);
