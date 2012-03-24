@@ -23,6 +23,11 @@ public class ConnectionWrapper implements Connection
         this.conn = conn;
     }
     
+    public Connection getConnection() 
+    {
+        return conn;
+    }
+    
     public void clearWarnings() throws java.sql.SQLException {
         conn.clearWarnings();
     }
