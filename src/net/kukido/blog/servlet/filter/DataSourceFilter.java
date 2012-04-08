@@ -6,17 +6,13 @@
 
 package net.kukido.blog.servlet.filter;
 
-import net.kukido.blog.config.*;
-import net.kukido.blog.security.*;
-import net.kukido.blog.datamodel.*;
 import net.kukido.blog.dataaccess.*;
-import net.kukido.sql.*;
 
 import java.io.*;
-import java.util.*;
 import java.sql.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.*;
-import javax.servlet.http.*;
 import javax.sql.*;
 
 /**
@@ -25,27 +21,19 @@ import javax.sql.*;
  */
 public class DataSourceFilter implements Filter
 {
-    static private String jdbcDriver;// = "com.mysql.jdbc.Driver";
-    static private String connectURL;// =
-                                     // "jdbc:mysql://localhost/dreade2_web?user=dreade2_webuser&password=spiderman";
-
-    static {
-        DmgConfig conf = new DmgConfig();
-        jdbcDriver = conf.getProperty("driver");
-        connectURL = conf.getProperty("connecturl");
-    }
-
+    
     static public synchronized Connection getConnection()
-            throws DataAccessException
+        throws DataAccessException
     {
         try {
-            Class.forName(jdbcDriver).newInstance();
-            Connection conn = DriverManager.getConnection(connectURL);
-
+            Context ctx = (Context)new InitialContext().lookup("java:comp/env");
+            DataSource source = (DataSource)ctx.lookup("jdbc/dreade2_web");
+            Connection conn = source.getConnection();
+            
             return conn;
         }
         catch (Exception e) {
-            throw new DataAccessException("Unable to create database connection: " + e, e);
+            throw new DataAccessException("Error trying open database connection.", e);
         }
     }
 
