@@ -407,6 +407,7 @@
   </filter-mapping>
   
   <!-- Caching -->
+  <!-- Temporarily disable caching for development & testing.
   <filter-mapping>
     <filter-name>CacheRss1h</filter-name>
     <url-pattern>/monkeyfeed.xml</url-pattern>
@@ -436,6 +437,8 @@
     <filter-name>CacheHtml12h</filter-name>
     <url-pattern>/search/*</url-pattern>
   </filter-mapping>
+  
+  -->
   
   <!-- Anti-Spam Throttle -->
   <filter-mapping>

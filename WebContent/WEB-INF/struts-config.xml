@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-
-<!DOCTYPE struts-config PUBLIC
- "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
- "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
-    <data-sources>
-    
-        <data-source type="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" key="dataSource">
-            <set-property property="driverClass" value="com.mysql.jdbc.Driver" />
-            <set-property property="url"         value="jdbc:mysql://localhost/dreade2_web?user=dreade2_webuser&amp;password=spiderman" />
-            <set-property property="description" value="Connection to MySQL Database" />
-        </data-source>
-        
-    </data-sources>
     
     <!-- == Form Bean Definitions ========================================== -->
     <form-beans>
@@ -42,10 +30,10 @@
             type="net.kukido.blog.forms.DropBoxUploadForm"
             />
 
-	<form-bean
-	    name="attachmentForm"
-	    type="net.kukido.blog.forms.AttachmentForm"
-	    />
+		<form-bean
+		    name="attachmentForm"
+		    type="net.kukido.blog.forms.AttachmentForm"
+		    />
             
         <form-bean
             name="searchForm"
@@ -61,11 +49,11 @@
             name="mophoUploadForm"
             type="net.kukido.blog.forms.MophoUploadForm"
             />
-            
-	<form-bean
-	    name="mophoListingForm"
-	    type="net.kukido.blog.forms.MophoListingForm"
-	    />
+	            
+		<form-bean
+		    name="mophoListingForm"
+		    type="net.kukido.blog.forms.MophoListingForm"
+		    />
             
         <form-bean
             name="commentSearchForm"

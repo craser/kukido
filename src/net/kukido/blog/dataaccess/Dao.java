@@ -1,11 +1,6 @@
 package net.kukido.blog.dataaccess;
 
 import java.sql.*;
-import javax.sql.*;
-import java.util.*;
-import net.kukido.blog.config.*;
-import net.kukido.blog.datamodel.*;
-import net.kukido.blog.forms.*;
 import net.kukido.blog.servlet.filter.*;
 import net.kukido.sql.*;
 
