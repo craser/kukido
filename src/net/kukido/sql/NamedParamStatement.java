@@ -1,7 +1,10 @@
 package net.kukido.sql;
 
 import java.util.*;
+import java.io.InputStream;
+import java.io.Reader;
 import java.sql.*;
+
 import javax.sql.*;
 
 /**
@@ -570,5 +573,143 @@ public class NamedParamStatement implements java.sql.PreparedStatement
 
     public void setUnicodeStream(String paramName, java.io.InputStream x, int length) throws SQLException {
 	preparedStatement.setUnicodeStream(getParamIndex(paramName), x, length);
+    }
+
+    public boolean isClosed() throws SQLException
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean isPoolable() throws SQLException
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public void setPoolable(boolean arg0) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void setAsciiStream(int arg0, InputStream arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setAsciiStream(int arg0, InputStream arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setBinaryStream(int arg0, InputStream arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setBinaryStream(int arg0, InputStream arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setBlob(int arg0, InputStream arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setBlob(int arg0, InputStream arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setCharacterStream(int arg0, Reader arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setCharacterStream(int arg0, Reader arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setClob(int arg0, Reader arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setClob(int arg0, Reader arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNCharacterStream(int arg0, Reader arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNCharacterStream(int arg0, Reader arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNClob(int arg0, NClob arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNClob(int arg0, Reader arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNClob(int arg0, Reader arg1, long arg2) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setNString(int arg0, String arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setRowId(int arg0, RowId arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void setSQLXML(int arg0, SQLXML arg1) throws SQLException
+    {
+        // TODO Auto-generated method stub
+        
     }    
 }
