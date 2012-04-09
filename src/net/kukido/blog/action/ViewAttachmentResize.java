@@ -22,75 +22,86 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 /**
- * @author  craser
+ * @author craser
  * @version
  */
 public class ViewAttachmentResize extends Action
 {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req,
+            HttpServletResponse res) throws ServletException, IOException
     {
-	OutputStream resOut = null;
-	try
-	{
-	    String fileName = req.getParameter("fileName");
-	    int maxDimension = Integer.parseInt(req.getParameter("maxDimension"));
+        OutputStream resOut = null;
+        try {
+            if (!req.getHeader("referer").contains("dreadedmonkeygod.net")
+                    && !req.getHeader("referrer").contains("dreadedmonkeygod.net")) {
+                return mapping.findForward("forbidden");
+            }
 
-	    Thumbnail thumbnail = null;
-	    try
-	    {
-                //System.out.println("[ViewAttachmentResize] Seeking attachment: \"" + fileName + "\"");
-		thumbnail = new ThumbnailDao().findByFileNameMaxDimension(fileName, maxDimension);
-	    }
-	    catch (DataAccessException e)
-	    {
-                //System.out.println("[ViewAttachmentResize] creating resized version of \"" + fileName + "\"");
+            String fileName = req.getParameter("fileName");
+            int maxDimension = Integer.parseInt(req.getParameter("maxDimension"));
+
+            Thumbnail thumbnail = null;
+            try {
+                // System.out.println("[ViewAttachmentResize] Seeking attachment: \""
+                // + fileName + "\"");
+                thumbnail = new ThumbnailDao().findByFileNameMaxDimension(fileName, maxDimension);
+            }
+            catch (DataAccessException e) {
+                // System.out.println("[ViewAttachmentResize] creating resized version of \""
+                // + fileName + "\"");
                 AttachmentDao attachmentDao = new AttachmentDao();
-		Attachment attachment = attachmentDao.findByFileName(fileName);
+                Attachment attachment = attachmentDao.findByFileName(fileName);
                 attachmentDao.populateBytes(attachment);
-		String format = fileName.substring(fileName.indexOf(".") + 1);
-		ImageTools tools = new ImageTools();
-		BufferedImage thumb = tools.createImage(attachment.getBytes());           
-		thumb = tools.scaleToMaxDim(thumb, maxDimension);
+                String format = fileName.substring(fileName.indexOf(".") + 1);
+                ImageTools tools = new ImageTools();
+                BufferedImage thumb = tools.createImage(attachment.getBytes());
+                thumb = tools.scaleToMaxDim(thumb, maxDimension);
                 // This part we do if we can, but don't sweat it if we can't.
-                try { 
+                try {
                     int orientation = tools.getOrientation(attachment.getBytes());
-                    //System.out.println("Orientation: " + orientation); // This just prints the orientation.
-                    thumb = tools.fixOrientation(thumb, orientation); 
+                    // System.out.println("Orientation: " + orientation); //
+                    // This just prints the orientation.
+                    thumb = tools.fixOrientation(thumb, orientation);
                 }
-                catch (Exception ignored) {}
-                
-		ByteArrayOutputStream imageOut = new ByteArrayOutputStream();
-		ImageIO.write(thumb, format, imageOut);
+                catch (Exception ignored) {
+                }
 
-		thumbnail = new Thumbnail();
-		thumbnail.setAttachmentId(attachment.getAttachmentId());
-		thumbnail.setFileName(attachment.getFileName());
-		thumbnail.setMaxDimension(maxDimension);
-		thumbnail.setBytes(imageOut.toByteArray());
+                ByteArrayOutputStream imageOut = new ByteArrayOutputStream();
+                ImageIO.write(thumb, format, imageOut);
 
-		new ThumbnailDao().create(thumbnail);
-	    }
+                thumbnail = new Thumbnail();
+                thumbnail.setAttachmentId(attachment.getAttachmentId());
+                thumbnail.setFileName(attachment.getFileName());
+                thumbnail.setMaxDimension(maxDimension);
+                thumbnail.setBytes(imageOut.toByteArray());
 
+                new ThumbnailDao().create(thumbnail);
+            }
 
-	    String mimeType = getServlet().getServletContext().getMimeType(thumbnail.getFileName());
-	    res.setContentType(mimeType);
-	    resOut = res.getOutputStream();
-	    resOut.write(thumbnail.getBytes());
+            String mimeType = getServlet().getServletContext().getMimeType(thumbnail.getFileName());
+            res.setContentType(mimeType);
+            resOut = res.getOutputStream();
+            resOut.write(thumbnail.getBytes());
 
             return null; // Do nothing else.
-	}
-	catch (Exception e)
-	{
-	    System.out.println("PROBLEM CREATING NEW THUMBNAIL!");
-	    e.printStackTrace(System.out);
-	    throw new ServletException(e);
-	}
-	finally
-	{
-	    try { resOut.flush(); } catch (Exception ignored) {}
-	    try { resOut.close(); } catch (Exception ignored) {}
-	}
+        }
+        catch (Exception e) {
+            System.out.println("PROBLEM CREATING NEW THUMBNAIL!");
+            e.printStackTrace(System.out);
+            throw new ServletException(e);
+        }
+        finally {
+            try {
+                resOut.flush();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                resOut.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
     }
 
 }
