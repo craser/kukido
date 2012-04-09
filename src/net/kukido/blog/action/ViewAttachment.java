@@ -22,44 +22,55 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 /**
- * @author  craser
+ * @author craser
  * @version
  */
 public class ViewAttachment extends Action
 {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req,
+            HttpServletResponse res) throws ServletException, IOException
     {
-	OutputStream resOut = null;
-	try
-	{
-	    String fileName = req.getParameter("fileName");
+        OutputStream resOut = null;
+        try {
+            if (!req.getHeader("referer").contains("dreadedmonkeygod.net")
+                    && !req.getHeader("referrer").contains("dreadedmonkeygod.net")) {
+                return mapping.findForward("forbidden");
+            }
+                    
+            String fileName = req.getParameter("fileName");
             AttachmentDao attachmentDao = new AttachmentDao();
-	    Attachment attachment = attachmentDao.findByFileName(fileName);
+            Attachment attachment = attachmentDao.findByFileName(fileName);
             attachmentDao.populateBytes(attachment);
-            String mimeType = getServlet().getServletContext().getMimeType(attachment.getFileName());
-            if (mimeType == null) mimeType = attachment.getMimeType(); // Last-ditch effort...
-	    res.setContentType(mimeType);
-	    resOut = res.getOutputStream();
-	    resOut.write(attachment.getBytes());
+            String mimeType = getServlet().getServletContext()
+                    .getMimeType(attachment.getFileName());
+            if (mimeType == null)
+                mimeType = attachment.getMimeType(); // Last-ditch effort...
+            res.setContentType(mimeType);
+            resOut = res.getOutputStream();
+            resOut.write(attachment.getBytes());
 
             return null; // Do nothing else.
-	}
-        catch (DataAccessException e)
-        {
+        }
+        catch (DataAccessException e) {
             e.printStackTrace();
             res.sendError(res.SC_NOT_FOUND);
             return null; // Do nothing else.
         }
-	catch (Exception e)
-	{
-	    throw new ServletException(e);
-	}
-	finally
-	{
-	    try { resOut.flush(); } catch (Exception ignored) {}
-	    try { resOut.close(); } catch (Exception ignored) {}
-	}
+        catch (Exception e) {
+            throw new ServletException(e);
+        }
+        finally {
+            try {
+                resOut.flush();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                resOut.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
     }
 
 }
