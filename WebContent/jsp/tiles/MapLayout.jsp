@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="css/handheld.css" media="handheld"/>
     <link rel="stylesheet" type="text/css" href="css/countdown.css"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
-    <script type="text/javascript" src="hostfunnel.js"></script>
     <!-- page-specific header information -->
     <tiles:get name="head" />
     <!-- end of page-specific header information -->
