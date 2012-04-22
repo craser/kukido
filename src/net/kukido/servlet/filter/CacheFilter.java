@@ -3,7 +3,6 @@ package net.kukido.servlet.filter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -12,18 +11,15 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -39,20 +35,24 @@ public class CacheFilter implements Filter
     {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
-        File cacheFile = null;
 
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
-            cacheFile = getCacheFile(req);
-            int httpStatus = HttpServletResponse.SC_OK;
+            File cacheFile = getCacheFile(req);
             if (isStale(cacheFile) || debug) {
-                httpStatus = updateCache(cacheFile, req, res, chain);
+                int httpStatus = updateCache(cacheFile, req, res, chain);
+                setCachedPragma(res, false);
+                res.setContentType(getMimeType(req));
+                outputCacheFile(cacheFile, res);
+                
+                if (httpStatus != HttpServletResponse.SC_OK) {
+                    cacheFile.delete(); // Hackety-hack, don't talk back.
+                }
             }
-            res.setContentType(getMimeType(req));
-            outputCacheFile(cacheFile, res);
-            
-            if (httpStatus != HttpServletResponse.SC_OK) {
-                cacheFile.delete(); // Hackety-hack, don't talk back.
+            else {
+                setCachedPragma(res, true);
+                res.setContentType(getMimeType(req));
+                outputCacheFile(cacheFile, res);
             }
         }
         catch (Exception e) {
@@ -63,7 +63,7 @@ public class CacheFilter implements Filter
     
     private void setCachedPragma(HttpServletResponse res, boolean cached)
     {
-        //Pragma: cached=(true|false)
+        //Pragma: dmg-cached=(true|false)
         res.setHeader("Pragma", "dmg-cached=" + cached);
     }
     
@@ -78,6 +78,7 @@ public class CacheFilter implements Filter
             for (int read = in.read(buf); read > 0; read = in.read(buf)) {
                 out.write(buf, 0, read);
             }
+            out.flush();
         }
         finally {
             try { in.close(); } catch (Exception ignored) {}
