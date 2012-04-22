@@ -7,8 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,10 +44,16 @@ public class CacheFilter implements Filter
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
             cacheFile = getCacheFile(req);
+            int httpStatus = HttpServletResponse.SC_OK;
             if (isStale(cacheFile) || debug) {
-                updateCache(cacheFile, req, res, chain);
+                httpStatus = updateCache(cacheFile, req, res, chain);
             }
+            res.setContentType(getMimeType(req));
             outputCacheFile(cacheFile, res);
+            
+            if (httpStatus != HttpServletResponse.SC_OK) {
+                cacheFile.delete(); // Hackety-hack, don't talk back.
+            }
         }
         catch (Exception e) {
             chain.doFilter(request, response);
@@ -51,12 +61,17 @@ public class CacheFilter implements Filter
         }
     }
     
+    private void setCachedPragma(HttpServletResponse res, boolean cached)
+    {
+        //Pragma: cached=(true|false)
+        res.setHeader("Pragma", "dmg-cached=" + cached);
+    }
+    
     private void outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
     {
         FileInputStream in = null;
         OutputStream out = null;
         try {
-            res.setContentType(mimeType);
             in = new FileInputStream(cacheFile);
             out = res.getOutputStream();
             byte[] buf = new byte[1024]; // 1k
@@ -70,13 +85,55 @@ public class CacheFilter implements Filter
         }
     }
     
-    private void updateCache(File cacheFile, HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+    private String getMimeType(HttpServletRequest req)
+    {
+        if ("auto".equalsIgnoreCase(this.mimeType)) {
+            String path = req.getRequestURI();
+            String fileName = (path.contains("/") ? path.substring(path.lastIndexOf("/")) : path);
+            String mimeType = req.getSession().getServletContext().getMimeType(fileName);
+            
+            return mimeType;
+        }
+        else {
+            return this.mimeType;
+        }
+            
+    }
+
+    /**
+     * 
+     * @param cacheFile
+     * @param req
+     * @param res
+     * @param chain
+     * @return Returns the HTTP status code from the response.
+     * @throws IOException
+     * @throws ServletException
+     */
+    private int updateCache(File cacheFile, HttpServletRequest req, HttpServletResponse res, FilterChain chain)
         throws IOException, ServletException
     {
         final FileOutputStream fileOut = new FileOutputStream(cacheFile);
         final PrintWriter fileWriter = new PrintWriter(cacheFile);
         try {
+            final int[] httpStatus = new int[] { HttpServletResponse.SC_OK }; // Hacking around Java's "final" requirement.
             HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(res) {
+                public void sendError(int status) throws IOException {
+                    httpStatus[0] = status;
+                    super.sendError(status);
+                }
+                public void sendError(int status, String message) throws IOException {
+                    httpStatus[0] = status;
+                    super.sendError(status, message);
+                }
+                public void setStatus(int status) {
+                    httpStatus[0] = status;
+                    super.setStatus(status);
+                }
+                public void setStatus(int status, String message) {
+                    httpStatus[0] = status;
+                    super.setStatus(status, message);
+                }
                 public ServletOutputStream getOutputStream() {
                     return new ServletOutputStream() {
                         public void write(int arg0) throws IOException {
@@ -101,6 +158,7 @@ public class CacheFilter implements Filter
             chain.doFilter(req, responseWrapper);
             fileOut.flush();
             fileWriter.flush();
+            return httpStatus[0];
         }
         catch (Exception e) {
             throw new ServletException(e);
@@ -133,9 +191,8 @@ public class CacheFilter implements Filter
 
     private File getCacheFile(HttpServletRequest req) throws IOException
     {
-        String url = req.getRequestURL().toString();
-        int hashCode = url.hashCode();
-        String fileName = "cache_" + hashCode;
+        int hashId = getCacheFileIdentifier(req);
+        String fileName = "cache_" + hashId;
         File cache = new File(req.getSession().getServletContext().getRealPath(cacheDir));
         
         File file = new File(cache, fileName);
@@ -144,6 +201,21 @@ public class CacheFilter implements Filter
         }
         
         return file;        
+    }
+
+    private int getCacheFileIdentifier(HttpServletRequest req)
+    {
+        StringBuffer url = new StringBuffer(req.getRequestURL().toString());
+        List<String> paramNames = new ArrayList<String>(req.getParameterMap().keySet());
+        Collections.sort(paramNames);
+        url.append("?");
+        for (String p : paramNames) {
+            for (String v : req.getParameterValues(p)) {
+                url.append(p).append("=").append(v).append("&");
+            }
+        }
+        int hashCode = url.toString().hashCode(); // Not sure if it's strictly necessary to convert to String first.
+        return hashCode;
     }
 
     public void init(FilterConfig conf) throws ServletException
