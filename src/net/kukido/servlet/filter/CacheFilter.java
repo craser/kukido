@@ -38,21 +38,23 @@ public class CacheFilter implements Filter
 
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
+            System.out.println("url: " + req.getRequestURL());
             File cacheFile = getCacheFile(req);
             if (isStale(cacheFile) || debug) {
                 int httpStatus = updateCache(cacheFile, req, res, chain);
-                setCachedPragma(res, false);
                 res.setContentType(getMimeType(req));
-                outputCacheFile(cacheFile, res);
+                int bytesWritten = outputCacheFile(cacheFile, res);
+                setPragmaHeaders(res, cacheFile, bytesWritten, false);
+                
                 
                 if (httpStatus != HttpServletResponse.SC_OK) {
                     cacheFile.delete(); // Hackety-hack, don't talk back.
                 }
             }
             else {
-                setCachedPragma(res, true);
                 res.setContentType(getMimeType(req));
-                outputCacheFile(cacheFile, res);
+                int bytesWritten = outputCacheFile(cacheFile, res);
+                setPragmaHeaders(res, cacheFile, bytesWritten, true);
             }
         }
         catch (Exception e) {
@@ -61,13 +63,13 @@ public class CacheFilter implements Filter
         }
     }
     
-    private void setCachedPragma(HttpServletResponse res, boolean cached)
+    private void setPragmaHeaders(HttpServletResponse res, File cacheFile, int bytesWritten, boolean cached)
     {
         //Pragma: dmg-cached=(true|false)
-        res.setHeader("Pragma", "dmg-cached=" + cached);
+        res.setHeader("dmg-cached", "" + cached);
     }
     
-    private void outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
+    private int outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
     {
         FileInputStream in = null;
         OutputStream out = null;
@@ -75,10 +77,14 @@ public class CacheFilter implements Filter
             in = new FileInputStream(cacheFile);
             out = res.getOutputStream();
             byte[] buf = new byte[1024]; // 1k
+            int numBytes = 0;
             for (int read = in.read(buf); read > 0; read = in.read(buf)) {
                 out.write(buf, 0, read);
+                numBytes += read;
             }
             out.flush();
+            System.out.println("Wrote " + numBytes + " bytes.");
+            return numBytes;
         }
         finally {
             try { in.close(); } catch (Exception ignored) {}
