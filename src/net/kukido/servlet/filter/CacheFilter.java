@@ -38,23 +38,21 @@ public class CacheFilter implements Filter
 
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
-            System.out.println("url: " + req.getRequestURL());
             File cacheFile = getCacheFile(req);
             if (isStale(cacheFile) || debug) {
                 int httpStatus = updateCache(cacheFile, req, res, chain);
+                setPragmaHeaders(res, cacheFile, false);
                 res.setContentType(getMimeType(req));
                 int bytesWritten = outputCacheFile(cacheFile, res);
-                setPragmaHeaders(res, cacheFile, bytesWritten, false);
-                
                 
                 if (httpStatus != HttpServletResponse.SC_OK) {
                     cacheFile.delete(); // Hackety-hack, don't talk back.
                 }
             }
             else {
+                setPragmaHeaders(res, cacheFile, true);
                 res.setContentType(getMimeType(req));
                 int bytesWritten = outputCacheFile(cacheFile, res);
-                setPragmaHeaders(res, cacheFile, bytesWritten, true);
             }
         }
         catch (Exception e) {
@@ -63,10 +61,10 @@ public class CacheFilter implements Filter
         }
     }
     
-    private void setPragmaHeaders(HttpServletResponse res, File cacheFile, int bytesWritten, boolean cached)
+    private void setPragmaHeaders(HttpServletResponse res, File cacheFile, boolean cached)
     {
         //Pragma: dmg-cached=(true|false)
-        res.setHeader("dmg-cached", "" + cached);
+        res.setHeader("Pragma", "dmg-cached=" + cached + "; dmg-file-size=" + cacheFile.length());
     }
     
     private int outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
@@ -145,14 +143,17 @@ public class CacheFilter implements Filter
                     return new ServletOutputStream() {
                         public void write(int arg0) throws IOException {
                             fileOut.write(arg0);
+                            fileOut.flush();
                         }
                         
                         public void write(byte[] bytes) throws IOException {
                             fileOut.write(bytes);
+                            fileOut.flush();
                         }
                         
                         public void write(byte[] bytes, int start, int len) throws IOException {
                             fileOut.write(bytes, start, len);
+                            fileOut.flush();
                         }
                     };
                 }
