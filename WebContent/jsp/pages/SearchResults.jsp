@@ -10,7 +10,8 @@
   <tiles:put name="content" type="string">
     <!-- SearchResults.jsp -->
     <logic:greaterThan name="searchForm" property="page" value="1">
-      <html:link styleClass="paginglink prevpagelink" page="/search" name="searchForm" property="prevPageParamMap">previous results</html:link>
+      <%-- <html:link styleClass="paginglink prevpagelink" page="/search" name="searchForm" property="prevPageParamMap">previous results</html:link> --%>
+      <html:link styleClass="paginglink prevpagelink" page="/SearchLogEntries.do" name="searchForm" property="prevPageParamMap">previous results</html:link>
     </logic:greaterThan>
     <logic:iterate name="entries" id="entry" type="net.kukido.blog.datamodel.LogEntryHeader">
       <div class="searchresult">
@@ -20,7 +21,8 @@
       </div>
     </logic:iterate>
     <logic:lessEqual name="searchForm" property="pageSize" value="<%= String.valueOf(entries.size()) %>">
-      <html:link styleClass="paginglink nextpagelink" page="/search" name="searchForm" property="nextPageParamMap">more results</html:link>
+      <%-- <html:link styleClass="paginglink nextpagelink" page="/search" name="searchForm" property="nextPageParamMap">more results</html:link>  --%>
+      <html:link styleClass="paginglink nextpagelink" page="/SearchLogEntries.do" name="searchForm" property="nextPageParamMap">more results</html:link>
     </logic:lessEqual>
     <!-- End of SearchResults.jsp -->
   </tiles:put>
@@ -37,3 +39,4 @@
     <!-- End of SearchResults.jsp -->
   </tiles:put>
 </tiles:insert>
+<% out.flush(); %>
