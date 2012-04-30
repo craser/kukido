@@ -239,7 +239,6 @@
             >
           <forward name="success" path="/archive/" redirect="true" />
           <forward name="error" path="/ViewLogEntry.do?entryId=" />
-          <forward name="spam" path="/jsp/pages/Forbidden.jsp" />
         </action>
         
         <action 
@@ -548,6 +547,9 @@
             
     </action-mappings>
     
+    <global-forwards>
+      <forward name="forbidden" path="/jsp/pages/Forbidden.jsp" />
+    </global-forwards>
 
     <!-- == Resource Definitions =========================================== -->
     <message-resources parameter="net.kukido.blog.ApplicationResources"/>
