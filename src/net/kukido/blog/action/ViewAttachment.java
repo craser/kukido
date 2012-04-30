@@ -16,6 +16,7 @@ import java.io.*;
 import java.net.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
 import org.apache.struts.action.*;
 import org.apache.struts.upload.*;
 import java.awt.image.BufferedImage;
@@ -32,8 +33,7 @@ public class ViewAttachment extends Action
     {
         OutputStream resOut = null;
         try {
-            if (!req.getHeader("referer").contains("dreadedmonkeygod.net")
-                    && !req.getHeader("referrer").contains("dreadedmonkeygod.net")) {
+            if (!validReferrer(req)) {
                 return mapping.findForward("forbidden");
             }
                     
@@ -71,6 +71,22 @@ public class ViewAttachment extends Action
             catch (Exception ignored) {
             }
         }
+    }
+    
+    private boolean validReferrer(HttpServletRequest req) {
+
+        String referer = req.getHeader("referer");
+        String referrer = req.getHeader("referrer");
+        referer = (referer == null) ? "" : referer;
+        referrer = (referrer == null) ? "" : referrer;
+        
+        String[] validReferrers = new String[] { "dreadedmonkeygod.net", "localhost" };
+        for (String ref : validReferrers) {
+            if (referer.contains(ref) || referrer.contains(ref)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
