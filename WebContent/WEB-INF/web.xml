@@ -18,6 +18,15 @@
   </filter>
   
   <filter>
+      <filter-name>LoggingFilter</filter-name>
+      <filter-class>net.kukido.blog.servlet.filter.LoggingFilter</filter-class>
+      <init-param>
+          <param-name>configFile</param-name>
+          <param-value>WEB-INF/log4j.properties</param-value>
+      </init-param>
+  </filter>
+  
+  <filter>
     <filter-name>Throttle</filter-name>
     <filter-class>net.kukido.servlet.filter.DosThrottleFilter</filter-class>
     <init-param>
@@ -43,7 +52,7 @@
   </filter>
   
   <filter>
-  	<filter-name>CacheRss1h</filter-name>
+  	<filter-name>AttachmentCache1h</filter-name>
   	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
   	<init-param>
   	  <param-name>cacheDir</param-name>
@@ -52,6 +61,23 @@
   	<init-param>
   	  <param-name>timeout</param-name>
   	  <param-value>3600</param-value><!-- 1 hour -->
+  	</init-param>
+  	<init-param>
+  	  <param-name>mimeType</param-name>
+  	  <param-value>auto</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter>
+  	<filter-name>CacheRss3h</filter-name>
+  	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
+  	<init-param>
+  	  <param-name>cacheDir</param-name>
+  	  <param-value>/</param-value>
+  	</init-param>
+  	<init-param>
+  	  <param-name>timeout</param-name>
+  	  <param-value>10800</param-value><!-- 10 hours -->
   	</init-param>
   	<init-param>
   	  <param-name>mimeType</param-name>
@@ -289,11 +315,11 @@
     <!-- Archives by Tag -->
     <init-param>
       <param-name>pattern21</param-name>
-      <param-value>.*/tags/(.*)</param-value>
+      <param-value>.*/tags/([^/]*)(/(\d*))?</param-value>
     </init-param>
     <init-param>
       <param-name>template21</param-name>
-      <param-value>/SearchLogEntries.do?tags=$1&amp;pageSize=30</param-value>
+      <param-value>/SearchLogEntries.do?tags=$1&amp;pageSize=30&amp;page=$3</param-value>
     </init-param>
     <!-- Searching -->
     <init-param>
@@ -406,21 +432,44 @@
       <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- Caching -->
-  <!-- Temporarily disable caching for development & testing.
+  <!-- Initializing Logging -->
+  
   <filter-mapping>
-    <filter-name>CacheRss1h</filter-name>
+  	<filter-name>LoggingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Caching -->
+  
+  
+  <filter-mapping>
+    <filter-name>AttachmentCache1h</filter-name>
+    <url-pattern>/attachments/postcards/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>AttachmentCache1h</filter-name>
+    <url-pattern>/attachments/thumbs/*</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheRss3h</filter-name>
     <url-pattern>/monkeyfeed.xml</url-pattern>
   </filter-mapping>
   
   <filter-mapping>
-    <filter-name>CacheRss1h</filter-name>
+    <filter-name>CacheRss3h</filter-name>
     <url-pattern>/comments.xml</url-pattern>
   </filter-mapping>
   
   <filter-mapping>
-    <filter-name>CacheRss1h</filter-name>
+    <filter-name>CacheRss3h</filter-name>
     <url-pattern>/commentspam.xml</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheHtml1h</filter-name>
+    <url-pattern>/</url-pattern>
   </filter-mapping>
   
   <filter-mapping>
@@ -429,8 +478,8 @@
   </filter-mapping>
   
   <filter-mapping>
-    <filter-name>CacheHtml12h</filter-name>
-    <url-pattern>/search/*</url-pattern>
+    <filter-name>CacheHtml1h</filter-name>
+    <url-pattern>/galleries/*</url-pattern>
   </filter-mapping>
   
   <filter-mapping>
@@ -438,7 +487,10 @@
     <url-pattern>/search/*</url-pattern>
   </filter-mapping>
   
-  -->
+  <filter-mapping>
+    <filter-name>CacheHtml12h</filter-name>
+    <url-pattern>/SearchLogEntries.do</url-pattern>
+  </filter-mapping>
   
   <!-- Anti-Spam Throttle -->
   <filter-mapping>

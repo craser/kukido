@@ -1,6 +1,6 @@
 package net.kukido.blog.logging;
 
-public class Logging {
-	
+public class Logging 
+{
 
 }
