@@ -39,7 +39,7 @@ public class CacheFilter implements Filter
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
             File cacheFile = getCacheFile(req);
-            if (isStale(cacheFile) || debug) {
+            if (isStale(cacheFile) || debug || req.getParameter("nocache") == "true") {
                 int httpStatus = updateCache(cacheFile, req, res, chain);
                 setPragmaHeaders(res, cacheFile, false);
                 res.setContentType(getMimeType(req));
@@ -81,7 +81,6 @@ public class CacheFilter implements Filter
                 numBytes += read;
             }
             out.flush();
-            System.out.println("Wrote " + numBytes + " bytes.");
             return numBytes;
         }
         finally {
@@ -119,7 +118,7 @@ public class CacheFilter implements Filter
         throws IOException, ServletException
     {
         final FileOutputStream fileOut = new FileOutputStream(cacheFile);
-        final PrintWriter fileWriter = new PrintWriter(cacheFile);
+        final PrintWriter fileWriter = new PrintWriter(fileOut);
         try {
             final int[] httpStatus = new int[] { HttpServletResponse.SC_OK }; // Hacking around Java's "final" requirement.
             HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(res) {
@@ -143,17 +142,14 @@ public class CacheFilter implements Filter
                     return new ServletOutputStream() {
                         public void write(int arg0) throws IOException {
                             fileOut.write(arg0);
-                            fileOut.flush();
                         }
                         
                         public void write(byte[] bytes) throws IOException {
                             fileOut.write(bytes);
-                            fileOut.flush();
                         }
                         
                         public void write(byte[] bytes, int start, int len) throws IOException {
                             fileOut.write(bytes, start, len);
-                            fileOut.flush();
                         }
                     };
                 }
@@ -164,8 +160,8 @@ public class CacheFilter implements Filter
             };
             
             chain.doFilter(req, responseWrapper);
-            fileOut.flush();
             fileWriter.flush();
+            fileOut.flush();
             return httpStatus[0];
         }
         catch (Exception e) {
