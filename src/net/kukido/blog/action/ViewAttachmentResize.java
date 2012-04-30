@@ -32,8 +32,7 @@ public class ViewAttachmentResize extends Action
     {
         OutputStream resOut = null;
         try {
-            if (!req.getHeader("referer").contains("dreadedmonkeygod.net")
-                    && !req.getHeader("referrer").contains("dreadedmonkeygod.net")) {
+            if (!validReferrer(req)) {
                 return mapping.findForward("forbidden");
             }
 
@@ -102,6 +101,22 @@ public class ViewAttachmentResize extends Action
             catch (Exception ignored) {
             }
         }
+    }
+    
+    private boolean validReferrer(HttpServletRequest req) {
+
+        String referer = req.getHeader("referer");
+        String referrer = req.getHeader("referrer");
+        referer = (referer == null) ? "" : referer;
+        referrer = (referrer == null) ? "" : referrer;
+        
+        String[] validReferrers = new String[] { "dreadedmonkeygod.net", "localhost" };
+        for (String ref : validReferrers) {
+            if (referer.contains(ref) || referrer.contains(ref)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
