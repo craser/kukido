@@ -24,7 +24,7 @@ public class CreateComment extends Action
         throws ServletException, IOException
     {
         try {
-            ActionForward spam = mapping.findForward("spam");
+            ActionForward spam = mapping.findForward("forbidden");
             return spam; 
         }
         catch (Exception e) {
