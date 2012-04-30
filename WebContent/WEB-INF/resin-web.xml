@@ -1,5 +1,5 @@
 <web-app xmlns="http://caucho.com/ns/resin">
-  <database jndi-name="jdbc/kukido">
+  <database jndi-name="jdbc/dreade2_web" max-connections="3" max-idle-time="15">
     <driver type="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
       <url>jdbc:mysql://localhost/dreade2_web</url>
       <user>dreade2_webuser</user>
