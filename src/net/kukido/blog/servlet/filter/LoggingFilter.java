@@ -45,6 +45,7 @@ public class LoggingFilter implements Filter
         Properties props = getConfigProperties(config);
         PropertyConfigurator.configure(props);
         log = Logging.getLogger(this.getClass());
+        log.info("Logging configured.");
     }
     
     private Properties getConfigProperties(FilterConfig config)
