@@ -5,24 +5,20 @@
   <display-name>home</display-name>
   
   <filter>
-      <filter-name>ExceptionHandler</filter-name>
-      <filter-class>net.kukido.blog.servlet.filter.ExceptionHandler</filter-class>
-      <init-param>
-          <param-name>jsp</param-name>
-          <param-value>/jsp/pages/Error.jsp</param-value>
-      </init-param>
-      <init-param>
-          <param-name>debug</param-name>
-          <param-value>false</param-value>
-      </init-param>
-  </filter>
-  
-  <filter>
       <filter-name>LoggingFilter</filter-name>
       <filter-class>net.kukido.blog.servlet.filter.LoggingFilter</filter-class>
       <init-param>
           <param-name>configFile</param-name>
           <param-value>WEB-INF/log4j.properties</param-value>
+      </init-param>
+  </filter>
+  
+  <filter>
+      <filter-name>ExceptionHandler</filter-name>
+      <filter-class>net.kukido.blog.servlet.filter.ExceptionHandler</filter-class>
+      <init-param>
+          <param-name>jsp</param-name>
+          <param-value>/jsp/pages/Error.jsp</param-value>
       </init-param>
   </filter>
   
@@ -427,11 +423,6 @@
   <!-- # Filter Mappings                                          # -->
   <!-- ############################################################ -->
   
-  <filter-mapping>
-      <filter-name>ExceptionHandler</filter-name>
-      <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
   <!-- Initializing Logging -->
   
   <filter-mapping>
@@ -439,8 +430,16 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- Caching -->
   
+  <!-- Exception Handling -->
+  
+  <filter-mapping>
+      <filter-name>ExceptionHandler</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
+  <!-- Caching -->
   
   <filter-mapping>
     <filter-name>AttachmentCache1h</filter-name>
@@ -466,7 +465,7 @@
     <filter-name>CacheRss3h</filter-name>
     <url-pattern>/commentspam.xml</url-pattern>
   </filter-mapping>
-  
+
   <filter-mapping>
     <filter-name>CacheHtml1h</filter-name>
     <url-pattern>/</url-pattern>
@@ -588,6 +587,10 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/LogDelete.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
     <url-pattern>/MarkCommentSpam.do</url-pattern>
   </filter-mapping>
   <filter-mapping>
@@ -601,6 +604,10 @@
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/UserUpdate.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/logs/*</url-pattern>
   </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
   <!-- Action Servlet Configuration -->

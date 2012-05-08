@@ -7,14 +7,18 @@ package net.kukido.blog.servlet.filter;
 
 import javax.servlet.*;
 
+import net.kukido.blog.log.Logging;
+
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author craser
  */
 public class ExceptionHandler implements Filter
 {
+    private Logger log;
     private String jsp; // Path to the JSP that will display error. 
-    private boolean debug;
     
     public void destroy()
     {
@@ -27,14 +31,14 @@ public class ExceptionHandler implements Filter
             chain.doFilter(req, res);
         }
         catch(Exception e) {
-            debug("Caught exeption #1", e);
+            log.error("Caught exeption #1", e);
             try {
                 RequestDispatcher dispatcher = req.getRequestDispatcher(jsp);
                 req.setAttribute("exception", e);
                 dispatcher.forward(req, res);
             }
             catch (Exception ignored) {
-                debug("Caught exception #2", ignored);
+                log.error("Caught exception #2", ignored);
                 // Nuthin' we can do.  We tried, son.
             }
         }
@@ -45,25 +49,14 @@ public class ExceptionHandler implements Filter
 	throws ServletException
     {
         try {
-            this.debug = Boolean.parseBoolean(config.getInitParameter("debug"));
+            this.log = Logging.getLogger(getClass());
             this.jsp = config.getInitParameter("jsp");
-            debug("jsp: \"" + this.jsp + "\"");
+            log.debug("Error jsp: \"" + this.jsp + "\"");
         }
         catch (Exception e)
         {
             throw new ServletException("Error initializing " + getClass().getName(), e);
         }
-    }
-
-    private void debug(String message, Throwable t)
-    {
-	debug(message);
-	if (debug) t.printStackTrace();
-    }
-
-    private void debug(String message)
-    {
-	if (debug) System.out.println("[ExceptionHandler] " + message);
     }
 
 }
