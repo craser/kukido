@@ -3,8 +3,10 @@ package net.kukido.servlet.filter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,51 +25,70 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import net.kukido.blog.log.Logging;
+
+import org.apache.log4j.Logger;
+
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 public class CacheFilter implements Filter
 {
+    private enum CacheBehavior {CACHED, UNCACHED, BYPASSED};
+    private Logger log;
     private String cacheDir;
     private String mimeType;
     private int timeout = 60; // Time interval in seconds.
-    private boolean debug = false;
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
+    {
+        log.info("URL: " + ((HttpServletRequest)request).getRequestURL());
+        if ("true".equalsIgnoreCase(request.getParameter("nocache"))) {
+            log.info("Request parameter \"nocache\" set to \"true\".  Bypassing caching filter.");
+            chain.doFilter(request, response);
+        }
+        else if(((HttpServletRequest)request).getSession().getAttribute("user") != null) {
+            log.info("User is logged in.  Bypassing caching filter.");
+            chain.doFilter(request, response);
+        }
+        else {
+            log.info("Caching: " + ((HttpServletRequest)request).getRequestURL());
+            doFilterCached(request, response, chain);
+        }
+    }
+    
+    public void doFilterCached(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException
     {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
-
+        File cacheFile = null;
         // If there's a problem creating/opening the cache file, bail to non-cached mode.
         try {
-            File cacheFile = getCacheFile(req);
-            if (isStale(cacheFile) || debug || req.getParameter("nocache") == "true") {
+            cacheFile = getCacheFile(req);
+            if (cacheFile.length() == 0 || isStale(cacheFile) || req.getParameter("nocache") == "true") {
+                log.info("Refreshing cached file for URL: " + req.getRequestURL());
                 int httpStatus = updateCache(cacheFile, req, res, chain);
-                setPragmaHeaders(res, cacheFile, false);
-                res.setContentType(getMimeType(req));
-                int bytesWritten = outputCacheFile(cacheFile, res);
                 
                 if (httpStatus != HttpServletResponse.SC_OK) {
+                    log.debug("Deleting cache file: " + cacheFile.getName());
                     cacheFile.delete(); // Hackety-hack, don't talk back.
                 }
             }
             else {
-                setPragmaHeaders(res, cacheFile, true);
+                log.info("Using cached output for URL: " + req.getRequestURL());
                 res.setContentType(getMimeType(req));
-                int bytesWritten = outputCacheFile(cacheFile, res);
+                outputCacheFile(cacheFile, res);
             }
         }
         catch (Exception e) {
-            chain.doFilter(request, response);
-            return;
+            log.info("Error in doFilterCached()", e);
+            log.info("Deleting cache file " + cacheFile.getName());
+            if (cacheFile != null) cacheFile.delete();
+            throw new ServletException(e);
         }
     }
     
-    private void setPragmaHeaders(HttpServletResponse res, File cacheFile, boolean cached)
-    {
-        //Pragma: dmg-cached=(true|false)
-        res.setHeader("Pragma", "dmg-cached=" + cached + "; dmg-file-size=" + cacheFile.length());
-    }
-    
-    private int outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
+    private void outputCacheFile(File cacheFile, HttpServletResponse res) throws IOException
     {
         FileInputStream in = null;
         OutputStream out = null;
@@ -75,17 +96,22 @@ public class CacheFilter implements Filter
             in = new FileInputStream(cacheFile);
             out = res.getOutputStream();
             byte[] buf = new byte[1024]; // 1k
-            int numBytes = 0;
+            int bytesWritten = 0;
             for (int read = in.read(buf); read > 0; read = in.read(buf)) {
                 out.write(buf, 0, read);
-                numBytes += read;
+                bytesWritten += read;
             }
             out.flush();
-            return numBytes;
+            log.debug("Cache file size: " + cacheFile.length() + " bytes.");
+            log.debug("Wrote " + bytesWritten + " bytes to response output stream.");
         }
         finally {
             try { in.close(); } catch (Exception ignored) {}
-            try { out.close(); } catch (Exception ignored) {}
+            try { 
+                log.debug("Closing output stream.");
+                out.close(); 
+            } 
+            catch (Exception ignored) {}
         }
     }
     
@@ -95,10 +121,11 @@ public class CacheFilter implements Filter
             String path = req.getRequestURI();
             String fileName = (path.contains("/") ? path.substring(path.lastIndexOf("/")) : path);
             String mimeType = req.getSession().getServletContext().getMimeType(fileName);
-            
+            log.debug("Determined mime type \"" + mimeType + "\" from file name \"" + fileName + "\"");
             return mimeType;
         }
         else {
+            log.debug("Configured mime type: \"" + mimeType + "\"");
             return this.mimeType;
         }
             
@@ -117,65 +144,39 @@ public class CacheFilter implements Filter
     private int updateCache(File cacheFile, HttpServletRequest req, HttpServletResponse res, FilterChain chain)
         throws IOException, ServletException
     {
-        final FileOutputStream fileOut = new FileOutputStream(cacheFile);
-        final PrintWriter fileWriter = new PrintWriter(fileOut);
+        FileOutputStream fileOut = new FileOutputStream(cacheFile);
+        PrintWriter writer = new PrintWriter(fileOut);
+        PrintStream stream = new PrintStream(cacheFile);
         try {
-            final int[] httpStatus = new int[] { HttpServletResponse.SC_OK }; // Hacking around Java's "final" requirement.
-            HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(res) {
-                public void sendError(int status) throws IOException {
-                    httpStatus[0] = status;
-                    super.sendError(status);
-                }
-                public void sendError(int status, String message) throws IOException {
-                    httpStatus[0] = status;
-                    super.sendError(status, message);
-                }
-                public void setStatus(int status) {
-                    httpStatus[0] = status;
-                    super.setStatus(status);
-                }
-                public void setStatus(int status, String message) {
-                    httpStatus[0] = status;
-                    super.setStatus(status, message);
-                }
-                public ServletOutputStream getOutputStream() {
-                    return new ServletOutputStream() {
-                        public void write(int arg0) throws IOException {
-                            fileOut.write(arg0);
-                        }
-                        
-                        public void write(byte[] bytes) throws IOException {
-                            fileOut.write(bytes);
-                        }
-                        
-                        public void write(byte[] bytes, int start, int len) throws IOException {
-                            fileOut.write(bytes, start, len);
-                        }
-                    };
-                }
-                
-                public PrintWriter getWriter() {
-                    return fileWriter;
-                }
-            };
-            
-            chain.doFilter(req, responseWrapper);
-            fileWriter.flush();
-            fileOut.flush();
-            return httpStatus[0];
+            CacheResponseWrapper wrapper = new CacheResponseWrapper(res, writer, stream);
+            log.debug("Calling down the chain...");
+            chain.doFilter(req, wrapper);
+            log.debug("Cache update returned HTTP status " + wrapper.getHttpStatus());
+            return wrapper.getHttpStatus();
         }
         catch (Exception e) {
+            log.error("Error creating cache file " + cacheFile.getName(), e);
             throw new ServletException(e);
         }
         finally {
-            try { fileOut.close(); } catch (Exception ignored) {}
-            try { fileWriter.close(); } catch (Exception ignored) {}
+            try {
+                stream.flush();
+                stream.close();
+            }
+            catch (Exception ignored) {}
+            try {
+                log.debug("Closing FileWriter");
+                writer.flush();
+                writer.close(); 
+            } 
+            catch (Exception ignored) {}
         }
     }
     
     private boolean isStale(File cacheFile) {
         
         if (!cacheFile.exists()) {
+            log.debug("Cache file " + cacheFile.getName() + " does not exist.");
             return true;
         }
         
@@ -190,20 +191,21 @@ public class CacheFilter implements Filter
         Calendar now = Calendar.getInstance(); // Right now.
         boolean stale = now.after(check);
         
+        log.debug("Cache file " + cacheFile.getName() + " is " + (stale ? "" : "not") + " older than " + timeout + " seconds.");
         return stale;
     }
 
     private File getCacheFile(HttpServletRequest req) throws IOException
     {
-        int hashId = getCacheFileIdentifier(req);
-        String fileName = "cache_" + hashId;
-        File cache = new File(req.getSession().getServletContext().getRealPath(cacheDir));
+        int cacheId = getCacheFileIdentifier(req);
+        String fileName = "cache_" + cacheId;
         
-        File file = new File(cache, fileName);
+        File file = new File(cacheDir, fileName);
         if (file.exists() && !file.canWrite()) {
             throw new IOException("Unable to write to cache file: " + file.getCanonicalPath());
         }
         
+        log.debug("Cache file: " + file);
         return file;        
     }
 
@@ -224,9 +226,15 @@ public class CacheFilter implements Filter
 
     public void init(FilterConfig conf) throws ServletException
     {
-        this.cacheDir = conf.getInitParameter("cacheDir");
+        this.cacheDir = conf.getServletContext().getRealPath(conf.getInitParameter("cacheDir"));
         this.mimeType = conf.getInitParameter("mimeType");
         this.timeout = Integer.parseInt(conf.getInitParameter("timeout"));
+        
+        log = Logging.getLogger(getClass().getName() + "." + conf.getFilterName());
+        log.info("CacheFilter \"" + conf.getFilterName() + "\" initialized.");
+        log.debug("cache dir: " + cacheDir);
+        log.debug("mime type: " + mimeType);
+        log.debug("timeout: " + timeout + " seconds");
     }
 
     public void destroy()
