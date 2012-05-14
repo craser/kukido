@@ -12,8 +12,7 @@
       <nested:hidden property="comment.entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
         <h2><a name="commentform">Post a Comment</a></h2>
         <p><b>New Rules:</b> Unfortunately, I've had to do some things to mitigate the impact of spammers.
-          So, your comment will take up to an hour to appear.  We'll be back to real time updates as soon
-          as the laundry is done, the dogs are fed, the grocery shopping is done...
+          So, your comment will take up to an hour to appear.
         </p>
         <html:errors/>
         <table>
