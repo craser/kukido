@@ -424,20 +424,28 @@
   <!-- ############################################################ -->
   
   <!-- Initializing Logging -->
-  
   <filter-mapping>
   	<filter-name>LoggingFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  
   <!-- Exception Handling -->
-  
   <filter-mapping>
       <filter-name>ExceptionHandler</filter-name>
       <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- Provide ONE connection per request.  -->
+  <filter-mapping>
+    <filter-name>DataSourceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Log the user in iff they're not already -->
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   <!-- Caching -->
   
@@ -504,18 +512,6 @@
   
   <filter-mapping>
     <filter-name>UrlRedirect</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  <!-- Provide ONE connection per request.  -->
-  <filter-mapping>
-    <filter-name>DataSourceFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  <!-- Log the user in iff they're not already -->
-  <filter-mapping>
-    <filter-name>LoginFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
