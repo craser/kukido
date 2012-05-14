@@ -20,7 +20,7 @@ import net.sf.akismet.Akismet;
 
 public class CreateComment extends Action
 {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res) 
+    public ActionForward execute_DISABLED(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res) 
         throws ServletException, IOException
     {
         try {
@@ -33,7 +33,7 @@ public class CreateComment extends Action
         }
     }
     
-    public ActionForward execute_DISABLED(ActionMapping mapping, ActionForm form, HttpServletRequest req,
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req,
             HttpServletResponse res) throws ServletException, IOException
     {
         try {
@@ -42,7 +42,7 @@ public class CreateComment extends Action
             comment.setIsSpam(isSpam(req, comment));
             
             if (comment.isSpam()) {
-                ActionForward spam = mapping.findForward("spam");
+                ActionForward spam = mapping.findForward("forbidden");
                 return spam; // Short circuit.
             }
             
