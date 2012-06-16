@@ -9,15 +9,23 @@ package net.kukido.blog.action;
 import net.kukido.blog.dataaccess.*;
 import net.kukido.blog.datamodel.*;
 import net.kukido.blog.forms.*;
+import net.kukido.blog.log.Logging;
 import net.kukido.blog.util.*;
+import net.kukido.maps.GpsLocation;
+import net.kukido.maps.GpsTrack;
+import net.kukido.maps.GpxParser;
 
 import java.util.*;
 import java.io.*;
 import java.net.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.apache.log4j.Logger;
 import org.apache.struts.action.*;
 import org.apache.struts.upload.*;
+import org.xml.sax.SAXException;
+
 import java.util.zip.*;
 
 /**
@@ -26,6 +34,12 @@ import java.util.zip.*;
  */
 public class UploadAttachment extends Action
 {
+    private Logger log;
+    
+    public UploadAttachment() {
+        this.log = Logging.getLogger(getClass());
+    }
+    
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException
     {
@@ -133,6 +147,37 @@ public class UploadAttachment extends Action
             entry.setImageDisplayClass(attachmentForm.getImageDisplayClass());
             logDao.update(entry);
         }        
+        
+        if (attachment.getIsMap())
+        {
+            try {
+                Attachment map = new AttachmentDao().findByFileName(attachment.getFileName());
+                log.debug("Geotagging map \"" + map.getFileName() + "\"");
+                GpsTrack t = parseMap(map);
+                GpsLocation location = t.getCenter();
+                location.setTimestamp(t.getStartTime());
+                
+                Geotag geotag = new Geotag(location);
+                geotag.setAttachmentId(map.getAttachmentId());
+                geotag.setMapId(map.getAttachmentId());
+                new GeotagDao().create(geotag);
+            }
+            catch (Exception e) {
+                log.error("Unable to geotag newly uploaded map.", e);
+            }
+        }
+    }
+    
+    private GpsTrack parseMap(Attachment map)
+        throws DataAccessException, SAXException, IOException
+    {
+        new AttachmentDao().populateBytes(map);
+        GpxParser gpxParser = new GpxParser();
+        byte[] bytes = map.getBytes();
+        InputStream in = new ByteArrayInputStream(bytes);
+        List<GpsTrack> tracks = gpxParser.parse(in);
+        
+        return tracks.get(0);
     }
     
     private void createAttachment(Attachment attachment) throws DataAccessException
