@@ -110,7 +110,7 @@ public class ViewAttachmentResize extends Action
         referer = (referer == null) ? "" : referer;
         referrer = (referrer == null) ? "" : referrer;
         
-        String[] validReferrers = new String[] { "dreadedmonkeygod.net", "localhost" };
+        String[] validReferrers = new String[] { "dreadedmonkeygod.net", "google.com", "localhost" };
         for (String ref : validReferrers) {
             if (referer.contains(ref) || referrer.contains(ref)) {
                 return true;
