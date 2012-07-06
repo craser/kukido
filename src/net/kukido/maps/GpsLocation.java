@@ -149,6 +149,11 @@ public class GpsLocation implements Comparable
         return d;
     }
     
+    /**
+     * Returns a bearing in radians.
+     * @param b
+     * @return radians
+     */
     public double getBearingTo(GpsLocation b)
     {
         double lat1 = this.latitude;
@@ -164,9 +169,7 @@ public class GpsLocation implements Comparable
         double y = Math.sin(lon1 - lon2) * Math.cos(lat2);
         double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2);
         double radBrng = Math.atan2(y, x);
-        double brng = (radBrng + 360) % 360;
-        
-        return brng;
+        return radBrng;
     }
     
     public boolean equals(Object o) {        

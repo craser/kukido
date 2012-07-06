@@ -196,30 +196,61 @@ public class GpsTrack extends ArrayList<GpsLocation>
     }
     
     public GpsTrack getThinnedTrack() {
-        return getThinnedTrack(1.5d, 100d);
+        return getThinnedTrack(500);
     }
     
-    public GpsTrack getThinnedTrack(double d, double m)
+    public GpsTrack getThinnedTrack(int maxNodes)
     {
-        GpsTrack t = new GpsTrack();
-        Iterator i = iterator();
-        GpsLocation a = (GpsLocation)i.next();
-        t.add(a);
-        GpsLocation b = (GpsLocation)i.next();
+        if (size() < maxNodes) {
+            return this;
+        }
+        SortedSet<Integer> included = new TreeSet<Integer>();
+        included.add(0);
+        included.add(size() - 1);
         
-        while (i.hasNext()) {
-            GpsLocation c = (GpsLocation)i.next();
-            double bab = a.getBearingTo(b);
-            double bbc = b.getBearingTo(c);
-            double db = Math.abs(bab - bbc);
-            if (db > d || !i.hasNext() || (a.getMetersTo(b) > m)) {
-                t.add(b);
-                a = b;
-            }
-            b = c;            
+        while (included.size() < maxNodes) {
+            addMostInteresting(this, included);
         }
         
-        return t;
+        GpsTrack thin = new GpsTrack();
+        for (int i : included) {
+            thin.add(get(i));
+        }
+        
+        return thin;
+    }
+    
+    private void addMostInteresting(GpsTrack track, SortedSet<Integer> included)
+    {
+        GpsLocation a = null;
+        GpsLocation b = null;
+        double bearing = 0;
+        double score = 0;
+        int include = -1;
+        for (int i = 0; i < track.size(); i++) {
+            if ((i + 1) >= track.size()) { // Last node included always in calling method.
+                break;
+            }
+            if (included.contains(i)) {
+                a = track.get(i);
+                int j = included.tailSet(i+1).first();
+                b = track.get(j);
+                bearing = a.getBearingTo(b);
+                continue;
+            }
+            
+            GpsLocation l = track.get(i);
+            double distance = a.getMetersTo(l);
+            double theta = bearing - a.getBearingTo(l);
+            theta = Math.abs(theta % Math.PI);
+            double offset = Math.abs(distance * Math.sin(theta));
+            if (offset > score) {
+                score = offset;
+                include = i;
+            }
+        }
+        
+        included.add(include);
     }
 
 	public void setName(String name) 
