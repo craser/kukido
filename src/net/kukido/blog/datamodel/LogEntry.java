@@ -23,11 +23,11 @@ public class LogEntry extends LogEntryHeader
     /**
      * @return a list of valid values for displayClass property.
      */
-    static public Collection getDisplayClassOptions() {
-        List options = new ArrayList(2);
+    static public Collection<String> getDisplayClassOptions() {
+        List<String> options = new ArrayList<String>(2);
         options.add("thumbnail");
         options.add("postcard");
-        //options.add("MAP");
+        options.add("map");
         return options;
     }
     
