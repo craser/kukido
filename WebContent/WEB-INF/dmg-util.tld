@@ -10,7 +10,7 @@
     <tlib-version>1.0</tlib-version>
     <jsp-version>1.2</jsp-version>
     <short-name>dmg-home</short-name>
-    <uri>/dm-gutil</uri>
+    <uri>/dmg-util</uri>
     <display-name>dmg-home</display-name>
     <description>A blank tag library template. 
     </description>    
@@ -566,6 +566,56 @@
                 <ReferenceScope>Session</ReferenceScope>
                 <ReferencesTagType></ReferencesTagType>
                 <ReferencesTagVariable></ReferencesTagVariable>
+                
+                
+                <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
+            </tldx>
+            -->
+        </attribute>
+        <example></example>
+    </tag>
+    <tag>
+        <name>mapImage</name>
+        <tag-class>net.kukido.blog.tags.MapImage</tag-class>
+        <body-content>JSP</body-content>
+        <display-name></display-name>
+        <small-icon></small-icon>
+        <large-icon></large-icon>
+        <description></description>
+        <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
+        <tldx>
+            <packagename>net.kukido.blog.tags</packagename>
+            <extendsSupportClass>TRUE</extendsSupportClass>
+            <supportClass>BodyTagSupport</supportClass>
+            <implementsTryCatchFinally>FALSE</implementsTryCatchFinally>
+            <findparent>FALSE</findparent>
+            <parenttype></parenttype>
+            <parentvariable></parentvariable>
+        </tldx>
+        -->
+        <attribute>
+            <name>map</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+            <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
+            <tldx>
+                <javaVariable></javaVariable>
+                
+                
+                
+                
+                <IsReferenceID>FALSE</IsReferenceID>
+                <ReferencesTag>FALSE</ReferencesTag>
+                <ReferenceScope>Session</ReferenceScope>
+                <ReferencesTagType></ReferencesTagType>
+                <ReferencesTagVariable></ReferencesTagVariable>
+                
+                
+                
+                
+                
+                
                 
                 
                 <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
