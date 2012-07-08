@@ -196,10 +196,10 @@ public class GpsTrack extends ArrayList<GpsLocation>
     }
     
     public GpsTrack getThinnedTrack() {
-        return getThinnedTrack(500);
+        return getThinnedTrack(500, "");
     }
     
-    public GpsTrack getThinnedTrack(int maxNodes)
+    public GpsTrack getThinnedTrack(int maxNodes, String ignored) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
     {
         if (size() < maxNodes) {
             return this;

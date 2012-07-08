@@ -125,7 +125,7 @@ public class MapImage extends ImgTag
         log.info("'path' param of URL for " + attachment.getFileName() + " was too long (" + pathValue.length() + "); using thinned track instead.");
         log.debug("d: " + d);
         log.debug("m: " + m);
-        GpsTrack thinnedTrack = track.getThinnedTrack(85);
+        GpsTrack thinnedTrack = track.getThinnedTrack(85, "");
         log.debug("thinned size: " + thinnedTrack.size());
         pathValue = toPathValue(thinnedTrack);
         d = Math.min((d * 2d), 270d);
