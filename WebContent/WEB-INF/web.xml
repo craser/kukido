@@ -254,6 +254,7 @@
     </init-param>
     <init-param>
       <param-name>template14</param-name>
+      <!-- Note that setting the maxDimension here will NOT affect the size of map thumnails.  For that, see MapImage JSP tag impl. -->
       <param-value>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=426</param-value>
     </init-param>
     <!-- Galleries -->

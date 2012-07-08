@@ -83,6 +83,8 @@ public class MapImage extends ImgTag
     
     /**
      * Translates my thumbnail/postcard specifiers into actual pixel dims (ex 400x300)
+     * Note that changing these values does NOT affect the size of thumbnail/postcard images elsewhere.
+     * That's controlled in web.xml.
      * @param size
      * @return
      */
