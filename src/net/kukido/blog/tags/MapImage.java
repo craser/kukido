@@ -37,7 +37,7 @@ public class MapImage extends ImgTag
 {
     // Required parameters:
     //     path
-    static private final String URL_FORMAT = "//maps.googleapis.com/maps/api/staticmap?size={0}&sensor={1}&maptype={2}&format={3}&key={4}&path=color:0xFF0000BF|weight:2|{5}";
+    static private final String URL_FORMAT = "//maps.googleapis.com/maps/api/staticmap?size={0}&sensor={1}&maptype={2}&format={3}&key={4}&path=color:0xFF0000BF|weight:3|{5}";
     static private final String API_KEY = "ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA";
     static private final DecimalFormat DEGREE_FORMAT = new DecimalFormat("#.####");
     
@@ -127,7 +127,7 @@ public class MapImage extends ImgTag
         log.info("'path' param of URL for " + attachment.getFileName() + " was too long (" + pathValue.length() + "); using thinned track instead.");
         log.debug("d: " + d);
         log.debug("m: " + m);
-        GpsTrack thinnedTrack = track.getThinnedTrack(85, "");
+        GpsTrack thinnedTrack = track.getThinnedTrack(85, 0);
         log.debug("thinned size: " + thinnedTrack.size());
         pathValue = toPathValue(thinnedTrack);
         d = Math.min((d * 2d), 270d);

@@ -195,21 +195,30 @@ public class GpsTrack extends ArrayList<GpsLocation>
         return miles;
     }
     
+    /**
+     * Returns a track thinned so that the maximum deviation from the original is 2m.
+     * @return
+     */
     public GpsTrack getThinnedTrack() {
-        return getThinnedTrack(500, "");
+        GpsTrack thinnedTrack = getThinnedTrack(Integer.MAX_VALUE, 2d);
+        return thinnedTrack;
     }
     
-    public GpsTrack getThinnedTrack(int maxNodes, String ignored) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
+    /**
+     * 
+     * @param maxNodes
+     * @param ignored
+     * @return
+     */
+    public GpsTrack getThinnedTrack(int maxNodes, double minScore) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
     {
-        if (size() < maxNodes) {
-            return this;
-        }
         SortedSet<Integer> included = new TreeSet<Integer>();
         included.add(0);
         included.add(size() - 1);
         
         while (included.size() < maxNodes) {
-            addMostInteresting(this, included);
+            boolean added = addMostInteresting(this, included, minScore);
+            if (!added) break;
         }
         
         GpsTrack thin = new GpsTrack();
@@ -220,7 +229,13 @@ public class GpsTrack extends ArrayList<GpsLocation>
         return thin;
     }
     
-    private void addMostInteresting(GpsTrack track, SortedSet<Integer> included)
+    /**
+     * 
+     * @param track
+     * @param included
+     * @return boolean indicating whether a new point was added.
+     */
+    private boolean addMostInteresting(GpsTrack track, SortedSet<Integer> included, double minScore)
     {
         GpsLocation a = null;
         GpsLocation b = null;
@@ -250,7 +265,13 @@ public class GpsTrack extends ArrayList<GpsLocation>
             }
         }
         
-        included.add(include);
+        if (score > minScore) {
+            included.add(include);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 	public void setName(String name) 
