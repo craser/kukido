@@ -128,7 +128,7 @@ function renderTrack(map, gpxTrack, getColor)
 // Requires ajax.js
 function renderMapByName(gpxFileName, getColor) {
     // Default to a "rich blue" color for map rendering.
-    getColor = (getColor == null) ? function(p) { return "#5959AB"; } : getColor;
+    getColor = (getColor == null) ? function(p) { return "#FF0000"; } : getColor;
     var url = "json/maps/" + gpxFileName;
     var k = function (mapJson) {
         var gpxTracks = eval(mapJson);
