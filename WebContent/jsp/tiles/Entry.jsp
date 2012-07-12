@@ -52,7 +52,6 @@
           </logic:equal>
           <logic:equal name="entry" property="imageDisplayClass" value="map">
             <p style="text-align: center">
-            <% System.out.println("FOO"); %>
               <dmg:mapImage map="<%= entry.getImageFileName() %>" />
             </p>
           </logic:equal>
