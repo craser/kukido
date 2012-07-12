@@ -28,9 +28,20 @@
       <link>http://dreadedmonkeygod.net/home/archive/<bean:write name="entry" property="entryId"/></link>
       <description><![CDATA[
         <logic:present name="entry" property="imageFileName">
-      	  <p style="text-align: center">
-      	    <dmg:image size="postcards" fileName="<%= entry.getImageFileName() %>" absolute="true" />
-          </p>
+
+          <logic:equal name="entry" property="imageDisplayClass" value="thumbnail">
+              <dmg:image size="postcards" fileName="<%= entry.getImageFileName() %>" absolute="true" />
+          </logic:equal>
+          <logic:equal name="entry" property="imageDisplayClass" value="postcard">
+            <p style="text-align: center">
+              <dmg:image size="postcards" fileName="<%= entry.getImageFileName() %>" absolute="true" />
+            </p>
+          </logic:equal>
+          <logic:equal name="entry" property="imageDisplayClass" value="map">
+            <p style="text-align: center">
+              <dmg:mapImage map="<%= entry.getImageFileName() %>" />
+            </p>
+          </logic:equal>
         </logic:present>
         <bean:write name="entry" property="intro" filter="false"/>
         <logic:present name="entry" property="body">
