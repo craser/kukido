@@ -256,9 +256,8 @@ public class GpsTrack extends ArrayList<GpsLocation>
             
             GpsLocation l = track.get(i);
             double distance = a.getMetersTo(l);
-            double theta = bearing - a.getBearingTo(l);
-            theta = Math.abs(theta % Math.PI);
-            double offset = Math.abs(distance * Math.sin(theta));
+            double theta = a.getBearingTo(l);
+            double offset = getDistanceToLine(bearing, theta, distance);
             if (offset > score) {
                 score = offset;
                 include = i;
@@ -273,7 +272,15 @@ public class GpsTrack extends ArrayList<GpsLocation>
             return false;
         }
     }
-
+    
+    private double getDistanceToLine(double bl, double bp, double dp)
+    {
+        double p = Math.abs(bp - bl) % Math.PI;
+        double t = (p > (0.5d * Math.PI)) ? (Math.PI - p) : p;
+        double d = dp * Math.sin(t);
+        
+        return d;
+    }
 	public void setName(String name) 
 	{
 		this.name = name;
