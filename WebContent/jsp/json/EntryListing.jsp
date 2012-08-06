@@ -16,7 +16,7 @@ LogEntry:
     private boolean allowComments;
     private String title;
     private String imageFileName;
-    private String imageDisplayClass;
+    private String imageFileType;
     private String intro;
     private String body;
     private String viaTitle;

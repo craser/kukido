@@ -42,15 +42,12 @@
   <logic:equal name="showContent" value="true">
       <div class="entrycontent">
         <logic:present name="entry" property="imageFileName">
-          <logic:equal name="entry" property="imageDisplayClass" value="thumbnail">
-            <dmg:entrylink entry="entry"><img alt="<%= entry.getTitle() %>" class="thumbnail" src="attachments/thumbs/<%= entry.getImageFileName() %>"></dmg:entrylink>
-          </logic:equal>
-          <logic:equal name="entry" property="imageDisplayClass" value="postcard">
+          <logic:equal name="entry" property="imageFileType" value="image">
             <p style="text-align: center">
               <img alt="<%= entry.getTitle() %>" src="attachments/postcards/<%= entry.getImageFileName() %>">
             </p>
           </logic:equal>
-          <logic:equal name="entry" property="imageDisplayClass" value="map">
+          <logic:equal name="entry" property="imageFileType" value="map">
             <p style="text-align: center">
               <dmg:mapImage map="<%= entry.getImageFileName() %>" />
             </p>

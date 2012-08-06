@@ -112,14 +112,6 @@
                 </nested:equal>
                 <tr>
                   <td colspan="4" nowrap>
-                    Display as:
-                    <nested:select property="entry.imageDisplayClass">
-                      <nested:options property="displayClassOptions" />
-                    </nested:select>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="4" nowrap>
                     <nested:hidden property="entry.allowComments" />
                     <nested:submit value="Save"/>
                     <html:button onclick="<%= "window.location = 'AttachmentUploadForm.do?entryId=" + entryId + "'" %>" property="entry.entryId" value="Add Attachment" />

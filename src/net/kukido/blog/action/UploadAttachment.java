@@ -144,7 +144,7 @@ public class UploadAttachment extends Action
             LogDao logDao = new LogDao();
             LogEntry entry = logDao.findByEntryId(attachment.getEntryId());
             entry.setImageFileName(attachment.getFileName());
-            entry.setImageDisplayClass(attachmentForm.getImageDisplayClass());
+            entry.setImageFileType(attachment.getFileType());
             logDao.update(entry);
         }        
         
