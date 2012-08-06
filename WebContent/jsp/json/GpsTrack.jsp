@@ -37,7 +37,7 @@ GpsLocation
         minLon: <nested:write name="track" property="bounds.minLongitude" />
         },
     points: [
-    <nested:iterate name="track" property="thinnedTrack" id="point" type="GpsLocation">
+    <nested:iterate name="track" property="thinnedTrack"  id="point" type="GpsLocation">
         {   lat: <nested:write name="point" property="latitude" />,
             lon: <nested:write name="point" property="longitude" />,
             elv: <nested:write name="point" property="elevation" />,
@@ -49,4 +49,3 @@ GpsLocation
 },
 </nested:iterate>
 ])
-<% System.out.println("DONE ITERATING OVER GPXTRACKS"); %>

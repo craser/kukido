@@ -65,7 +65,7 @@
   </filter>
   
   <filter>
-  	<filter-name>CacheRss3h</filter-name>
+  	<filter-name>CacheJson3h</filter-name>
   	<filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
   	<init-param>
   	  <param-name>cacheDir</param-name>
@@ -77,8 +77,25 @@
   	</init-param>
   	<init-param>
   	  <param-name>mimeType</param-name>
-  	  <param-value>application/rss+xml</param-value>
+  	  <param-value>application/json</param-value>
   	</init-param>
+  </filter>
+  
+  <filter>
+    <filter-name>CacheRss3h</filter-name>
+    <filter-class>net.kukido.servlet.filter.CacheFilter</filter-class>
+    <init-param>
+      <param-name>cacheDir</param-name>
+      <param-value>/</param-value>
+    </init-param>
+    <init-param>
+      <param-name>timeout</param-name>
+      <param-value>10800</param-value><!-- 10 hours -->
+    </init-param>
+    <init-param>
+      <param-name>mimeType</param-name>
+      <param-value>application/rss+xml</param-value>
+    </init-param>
   </filter>
   
   <filter>
@@ -254,6 +271,7 @@
     </init-param>
     <init-param>
       <param-name>template14</param-name>
+      <!-- Note that setting the maxDimension here will NOT affect the size of map thumnails.  For that, see MapImage JSP tag impl. -->
       <param-value>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=426</param-value>
     </init-param>
     <!-- Galleries -->
@@ -462,6 +480,11 @@
   <filter-mapping>
     <filter-name>CacheRss3h</filter-name>
     <url-pattern>/monkeyfeed.xml</url-pattern>
+  </filter-mapping>
+  
+  <filter-mapping>
+    <filter-name>CacheJson3h</filter-name>
+    <url-pattern>/json/*</url-pattern>
   </filter-mapping>
   
   <filter-mapping>

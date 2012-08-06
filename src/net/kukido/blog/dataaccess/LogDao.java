@@ -17,40 +17,40 @@ public class LogDao extends Dao implements Iterator
     
 
     private static final String CREATE_SQL =
-	"insert into LOG_ENTRIES "
-	+ "(Date_Posted, Last_Updated, User_ID, User_Name, Title"
+	    "insert into LOG_ENTRIES "
+	    + "(Date_Posted, Last_Updated, User_ID, User_Name, Title"
         + ",Image_File_Name ,Intro, Body, Via_Text, Via_Url, Via_Title, Allow_Comments)"
-	+ " values "
-	+ "(:Date_Posted"	 // Date_Posted
-	+ ",:Last_Updated"	 // Last_Updated
-	+ ",:User_ID"		 // User_ID
-	+ ",:User_Name"		 // User_Name
-	+ ",:Title"		 // Title
+    	+ " values "
+    	+ "(:Date_Posted"	 // Date_Posted
+    	+ ",:Last_Updated"	 // Last_Updated
+    	+ ",:User_ID"		 // User_ID
+    	+ ",:User_Name"		 // User_Name
+    	+ ",:Title"		 // Title
         + ",:Image_File_Name"    // Image_File_Name
         + ",:Intro"              // Intro
-	+ ",:Body"		 // Body
+        + ",:Body"		 // Body
         + ",:Via_Text"           // Via_Text
         + ",:Via_Url"            // Via_Url
-	+ ",:Via_Title"		 // Via_Title
+        + ",:Via_Title"		 // Via_Title
         + ",:Allow_Comments"     // Allow_Comments
         + ")";
     
     private static final String UPDATE_SQL =
-	"update LOG_ENTRIES set"
-	+ " Date_Posted = :Date_Posted"	// 1  Date_Posted
-	+ ",Last_Updated = :Last_Updated"
-	+ ",User_ID = :User_ID" // 2  User_ID
-	+ ",User_Name = :User_Name" // 3 User_Name
-	+ ",Title = :Title"	// 6  Title
+        "update LOG_ENTRIES set"
+    	+ " Date_Posted = :Date_Posted"	// 1  Date_Posted
+    	+ ",Last_Updated = :Last_Updated"
+    	+ ",User_ID = :User_ID" // 2  User_ID
+    	+ ",User_Name = :User_Name" // 3 User_Name
+    	+ ",Title = :Title"	// 6  Title
         + ",Image_File_Name = :Image_File_Name" // 7 Image_File_Name
-        + ",Image_Display_Class = :Image_Display_Class" // 8 Image_Display_Class
+        + ",Image_File_Type = :Image_File_Type" // 8 Image_File_Type
         + ",Intro = :Intro"  // 9 Intro
-	+ ",Body = :Body"	// 10  Body
-	+ ",Via_Title = :Via_Title" // 11 Via_Title
+    	+ ",Body = :Body"	// 10  Body
+    	+ ",Via_Title = :Via_Title" // 11 Via_Title
         + ",Via_Text = :Via_Text" // 12 Via_Text
         + ",Via_Url = :Via_Url" // 13 Via_Url
         + ",Allow_Comments = :Allow_Comments" // 14 Allow_Updates
-	+ " where Entry_ID = :Entry_ID"; // 15 Entry_ID
+        + " where Entry_ID = :Entry_ID"; // 15 Entry_ID
     
     
     private static final String DELETE_SQL =
@@ -162,16 +162,16 @@ public class LogDao extends Dao implements Iterator
             conn = getConnection();
             update = new NamedParamStatement(conn, UPDATE_SQL);
             update.setTimestamp("Date_Posted", new java.sql.Timestamp(logEntry.getDatePosted().getTime()));
-	    update.setTimestamp("Last_Updated", new java.sql.Timestamp(new java.util.Date().getTime()));
+            update.setTimestamp("Last_Updated", new java.sql.Timestamp(new java.util.Date().getTime()));
             update.setInt("User_ID", logEntry.getUserId());
             update.setString("User_Name", logEntry.getUserName());
             update.setString("Title", logEntry.getTitle());
             update.setString("Image_File_Name", logEntry.getImageFileName());
-            update.setString("Image_Display_Class", logEntry.getImageDisplayClass());
+            update.setString("Image_File_Type", logEntry.getImageFileType());
             update.setString("Intro", logEntry.getIntro());
             update.setString("Body", logEntry.getBody());
             update.setInt("Entry_ID", logEntry.getEntryId());
-	    update.setString("Via_Title", logEntry.getViaTitle());
+            update.setString("Via_Title", logEntry.getViaTitle());
             update.setString("Via_Text", logEntry.getViaText());
             update.setString("Via_Url", logEntry.getViaUrl());
             update.setString("Allow_Comments", Boolean.toString(logEntry.getAllowComments()));
@@ -472,15 +472,15 @@ public class LogDao extends Dao implements Iterator
     {   
         header.setEntryId(results.getInt("Entry_ID"));
         header.setDatePosted(results.getTimestamp("Date_Posted"));
-	header.setLastUpdated(results.getTimestamp("Last_Updated"));
+        header.setLastUpdated(results.getTimestamp("Last_Updated"));
         header.setUserId(results.getInt("User_ID"));
         header.setUserName(results.getString("User_Name"));
         header.setTitle(results.getString("Title"));
         header.setImageFileName(results.getString("Image_File_Name"));
-        header.setImageDisplayClass(results.getString("Image_Display_Class"));
+        header.setImageFileType(results.getString("Image_File_Type"));
         header.setIntro(results.getString("Intro"));
         header.setBody(results.getString("Body"));
-	header.setViaTitle(results.getString("Via_Title"));
+        header.setViaTitle(results.getString("Via_Title"));
         header.setViaText(results.getString("Via_Text"));
         header.setViaUrl(results.getString("Via_Url"));
         header.setAllowComments(results.getBoolean("Allow_Comments"));

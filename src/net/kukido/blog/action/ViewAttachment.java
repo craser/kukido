@@ -33,10 +33,6 @@ public class ViewAttachment extends Action
     {
         OutputStream resOut = null;
         try {
-            if (!validReferrer(req)) {
-                return mapping.findForward("forbidden");
-            }
-                    
             String fileName = req.getParameter("fileName");
             AttachmentDao attachmentDao = new AttachmentDao();
             Attachment attachment = attachmentDao.findByFileName(fileName);
@@ -72,21 +68,4 @@ public class ViewAttachment extends Action
             }
         }
     }
-    
-    private boolean validReferrer(HttpServletRequest req) {
-
-        String referer = req.getHeader("referer");
-        String referrer = req.getHeader("referrer");
-        referer = (referer == null) ? "" : referer;
-        referrer = (referrer == null) ? "" : referrer;
-        
-        String[] validReferrers = new String[] { "dreadedmonkeygod.net", "google.com", "localhost" };
-        for (String ref : validReferrers) {
-            if (referer.contains(ref) || referrer.contains(ref)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

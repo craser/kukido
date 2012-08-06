@@ -45,7 +45,7 @@ function getColor(i) {
 }
 
 function getDefaultColor() {
-    return null;
+    return "#FF0000";
 }
 
 function getColorByGradient(point) // g is a floating point number indicating the grade of the trail

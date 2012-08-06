@@ -22,7 +22,7 @@ public class LogEntryHeader implements Serializable
     private boolean allowComments;
     private String title;
     private String imageFileName;
-    private String imageDisplayClass;
+    private String imageFileType;
     private String intro;
     private String body;
     private String viaTitle;
@@ -57,7 +57,7 @@ public class LogEntryHeader implements Serializable
         this.allowComments = h.allowComments;
         this.title = h.title;
         this.imageFileName = h.imageFileName;
-        this.imageDisplayClass = h.imageDisplayClass;
+        this.imageFileType = h.imageFileType;
         this.intro = h.intro;
         this.body = h.body;
         this.viaTitle = h.viaTitle;
@@ -130,14 +130,14 @@ public class LogEntryHeader implements Serializable
         return imageFileName;
     }
     
-    public void setImageDisplayClass(String imageDisplayClass)
+    public void setImageFileType(String imageFileType)
     {
-        this.imageDisplayClass = imageDisplayClass;
+        this.imageFileType = imageFileType;
     }
     
-    public String getImageDisplayClass()
+    public String getImageFileType()
     {
-        return imageDisplayClass;
+        return imageFileType;
     }
     
     public void setIntro(String intro)

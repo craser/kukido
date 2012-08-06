@@ -15,7 +15,6 @@ public class AttachmentForm extends ActionForm
     private boolean useAsGalleryThumb;
     private boolean loadFromUrl;
     private boolean isZipFile;
-    private String imageDisplayClass;
     private String fileUrl;
 
 
@@ -72,17 +71,6 @@ public class AttachmentForm extends ActionForm
     public String getFileUrl()
     {
         return this.fileUrl;
-    }
-    
-    
-    public void setImageDisplayClass(String imageDisplayClass)
-    {
-        this.imageDisplayClass = imageDisplayClass;
-    }
-    
-    public String getImageDisplayClass() 
-    {
-        return imageDisplayClass;
     }
     
     public Collection getDisplayClassOptions()

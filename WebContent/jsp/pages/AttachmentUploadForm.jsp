@@ -44,16 +44,6 @@
     </td>
   </tr>
   <tr>
-    <td class="inputlabel">
-      Display thumbnail as:
-    </td>
-    <td>
-        <nested:select property="imageDisplayClass">
-          <nested:options property="displayClassOptions" />
-        </nested:select>
-    </td>
-  </tr>
-  <tr>
     <td>
       <nested:checkbox property="isZipFile" /> 
     </td>
