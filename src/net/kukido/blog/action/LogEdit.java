@@ -18,45 +18,36 @@ import org.apache.struts.action.*;
 import net.kukido.blog.util.ImageTools;
 
 /**
- *
- * @author  craser
+ * 
+ * @author craser
  */
 public class LogEdit extends Action
 {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req,
+            HttpServletResponse res) throws ServletException, IOException
     {
-        try
-        {
-            LogEditForm updateForm = (LogEditForm)form;
+        try {
+            LogEditForm updateForm = (LogEditForm) form;
+            LogEntry entry = updateForm.getEntry();
+            
+            // This is kind of ugly, but it'll fix the bug for now.
+            if (entry.getImageFileName() != null && !"".equals(entry.getImageFileName())) {
+                AttachmentDao attachmentDao = new AttachmentDao();
+                Attachment thumb = attachmentDao.findByFileName(entry.getImageFileName());
+                entry.setImageFileType(thumb.getFileType());
+            }
+
             LogDao logDao = new LogDao();
-	    LogEntry entry = updateForm.getEntry();
             logDao.update(entry);
-
-
-	    AttachmentDao attachmentDao = new AttachmentDao();
-            /*
-	    for (Iterator as = entry.getAttachments().iterator(); as.hasNext(); )
-	    {
-		Attachment a = (Attachment)as.next();
-                if (a.getIsGalleryImage() && (a.getDateTaken() == null)) {
-                    ImageTools tools = new ImageTools();
-                    Date dateTaken = tools.getDateTaken(a.getBytes());
-                    a.setDateTaken(dateTaken);
-                }
-		attachmentDao.update(a);
-	    }
-            */
-
-	    req.setAttribute("entry", entry);
-	    Collection attachments = new AttachmentDao().findByEntryId(entry.getEntryId());
-	    req.setAttribute("attachments", attachments);
+            
+            req.setAttribute("entry", entry);
+            Collection attachments = new AttachmentDao().findByEntryId(entry.getEntryId());
+            req.setAttribute("attachments", attachments);
 
             return mapping.findForward("success");
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new ServletException(e);
         }
-    }    
+    }
 }
