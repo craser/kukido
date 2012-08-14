@@ -39,7 +39,7 @@
             </nested:equal>
             <nested:equal name="logEditForm" property="entry.imageFileType" value="map">
               <nested:define id="thumbnailFilename" name="logEditForm" property="entry.imageFileName" type="java.lang.String" />
-              <dmg:mapImage size="thumbnail" map="<%= thumbnailFilename %>" styleClass="thumbnail" />
+              <dmg:mapImage size="thumbnail" map="<%= "" + thumbnailFilename %>" styleClass="thumbnail" />
             </nested:equal>
           </nested:present>
           
