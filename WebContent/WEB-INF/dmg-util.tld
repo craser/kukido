@@ -622,6 +622,64 @@
             </tldx>
             -->
         </attribute>
+        <attribute>
+            <name>size</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+            <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
+            <tldx>
+                <javaVariable></javaVariable>
+                
+                
+                
+                
+                <IsReferenceID>FALSE</IsReferenceID>
+                <ReferencesTag>FALSE</ReferencesTag>
+                <ReferenceScope>Session</ReferenceScope>
+                <ReferencesTagType></ReferencesTagType>
+                <ReferencesTagVariable></ReferencesTagVariable>
+                
+                
+                
+                
+                
+                
+                
+                
+                <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
+            </tldx>
+            -->
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+            <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
+            <tldx>
+                <javaVariable></javaVariable>
+                
+                
+                
+                
+                <IsReferenceID>FALSE</IsReferenceID>
+                <ReferencesTag>FALSE</ReferencesTag>
+                <ReferenceScope>Session</ReferenceScope>
+                <ReferencesTagType></ReferencesTagType>
+                <ReferencesTagVariable></ReferencesTagVariable>
+                
+                
+                
+                
+                
+                
+                
+                
+                <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
+            </tldx>
+            -->
+        </attribute>
         <example></example>
     </tag>
     

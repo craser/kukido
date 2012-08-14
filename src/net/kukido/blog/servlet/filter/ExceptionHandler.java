@@ -28,6 +28,8 @@ public class ExceptionHandler implements Filter
 	throws java.io.IOException, javax.servlet.ServletException
     {
         try {
+            log.info("Filtering.");
+            log.debug("Calling down the chain.");
             chain.doFilter(req, res);
         }
         catch(Exception e) {

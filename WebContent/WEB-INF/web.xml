@@ -403,6 +403,15 @@
       <param-name>template29</param-name>
       <param-value>/ReceiveTrackback.do?entryId=$1&amp;$2</param-value>
     </init-param>
+    <!-- Testing Error Handling -->
+    <init-param>
+      <param-name>pattern30</param-name>
+      <param-value>.*/throw$</param-value>
+    </init-param>
+    <init-param>
+      <param-name>template30</param-name>
+      <param-value>/ThrowAction.do</param-value>
+    </init-param>
     <!-- Debugging -->
     <init-param>
       <param-name>debug</param-name>
@@ -627,6 +636,10 @@
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/logs/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/ThrowAction.do</url-pattern>
   </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
   <!-- Action Servlet Configuration -->

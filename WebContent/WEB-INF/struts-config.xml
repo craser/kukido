@@ -526,6 +526,11 @@
         	>
           <forward name="success" path="/jsp/nav/CyclingStatsNav.jsp" />
         </action>
+        
+        <action
+          path="/ThrowAction"
+          type="net.kukido.blog.test.ThrowAction"
+        />
              
 	<action
 	    path="/LoadMailAttachments"

@@ -32,8 +32,15 @@
         <div class="entrycontent">          
           
           <nested:present property="entry.imageFileName">
-            <nested:define id="thumbnailFilename" name="logEditForm" property="entry.imageFileName" />
-            <img class="thumbnail" src="attachments/thumbs/<%= thumbnailFilename %>">
+            <nested:define id="thumbnailFileType" name="logEditForm" property="entry.imageFileType" />
+            <nested:equal name="logEditForm" property="entry.imageFileType" value="image">
+              <nested:define id="thumbnailFilename" name="logEditForm" property="entry.imageFileName" />
+              <img class="thumbnail" src="attachments/thumbs/<%= thumbnailFilename %>">
+            </nested:equal>
+            <nested:equal name="logEditForm" property="entry.imageFileType" value="map">
+              <nested:define id="thumbnailFilename" name="logEditForm" property="entry.imageFileName" type="java.lang.String" />
+              <dmg:mapImage size="thumbnail" map="<%= thumbnailFilename %>" styleClass="thumbnail" />
+            </nested:equal>
           </nested:present>
           
           <table>
