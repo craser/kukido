@@ -1,4 +1,5 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ page import="java.io.*" %>
 <tiles:insert definition="pageLayout">
 <tiles:put type="string" name="content">
 <!-- Login.jsp -->
@@ -22,6 +23,20 @@
 </tr>
 </table>
 </html:form>
+
+<!-- bling
+<% 
+try {
+  Throwable exception = (Throwable)request.getAttribute("exception");
+  while (exception.getCause() != null) {
+    exception = exception.getCause();
+  }
+    exception.printStackTrace(new PrintWriter(out)); 
+}
+catch (Exception ignored) {}
+%>
+
+--!>
 <!-- end of Login.jsp -->
 </tiles:put>
 </tiles:insert>
