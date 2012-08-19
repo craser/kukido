@@ -206,81 +206,18 @@ public class GpsTrack extends ArrayList<GpsLocation>
     
     /**
      * 
-     * @param maxNodes
+     * @param maxPoints
      * @param ignored
      * @return
      */
-    public GpsTrack getThinnedTrack(int maxNodes, double minScore) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
+    public GpsTrack getThinnedTrack(int maxPoints, double minDistance) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
     {
-        SortedSet<Integer> included = new TreeSet<Integer>();
-        included.add(0);
-        included.add(size() - 1);
-        
-        while (included.size() < maxNodes) {
-            boolean added = addMostInteresting(this, included, minScore);
-            if (!added) break;
-        }
-        
-        GpsTrack thin = new GpsTrack();
-        for (int i : included) {
-            thin.add(get(i));
-        }
+        Reducer reducer = new Reducer();
+        GpsTrack thin = reducer.reduce(this, maxPoints, minDistance);
         
         return thin;
     }
     
-    /**
-     * 
-     * @param track
-     * @param included
-     * @return boolean indicating whether a new point was added.
-     */
-    private boolean addMostInteresting(GpsTrack track, SortedSet<Integer> included, double minScore)
-    {
-        GpsLocation a = null;
-        GpsLocation b = null;
-        double bearing = 0;
-        double score = 0;
-        int include = -1;
-        for (int i = 0; i < track.size(); i++) {
-            if ((i + 1) >= track.size()) { // Last node included always in calling method.
-                break;
-            }
-            if (included.contains(i)) {
-                a = track.get(i);
-                int j = included.tailSet(i+1).first();
-                b = track.get(j);
-                bearing = a.getBearingTo(b);
-                continue;
-            }
-            
-            GpsLocation l = track.get(i);
-            double distance = a.getMetersTo(l);
-            double theta = a.getBearingTo(l);
-            double offset = getDistanceToLine(bearing, theta, distance);
-            if (offset > score) {
-                score = offset;
-                include = i;
-            }
-        }
-        
-        if (score > minScore) {
-            included.add(include);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    private double getDistanceToLine(double bl, double bp, double dp)
-    {
-        double p = Math.abs(bp - bl) % Math.PI;
-        double t = (p > (0.5d * Math.PI)) ? (Math.PI - p) : p;
-        double d = dp * Math.sin(t);
-        
-        return d;
-    }
 	public void setName(String name) 
 	{
 		this.name = name;
