@@ -529,7 +529,7 @@
         
         <action
           path="/ThrowAction"
-          type="net.kukido.blog.test.ThrowAction"
+          type="net.kukido.blog.action.ThrowAction"
         />
              
 	<action
