@@ -9,7 +9,6 @@ package net.kukido.blog.dataaccess;
 import net.kukido.blog.datamodel.*;
 import net.kukido.sql.NamedParamStatement;
 import java.sql.*;
-import javax.sql.*;
 import java.util.*;
 
 
@@ -161,7 +160,7 @@ public class GeotagDao extends Dao
         }
     }
     
-    public Collection findByBounds(float minLat, float maxLat, float minLon, float maxLon)
+    public Collection<Geotag> findByBounds(float minLat, float maxLat, float minLon, float maxLon)
         throws DataAccessException
     {
         Connection conn = null;
@@ -177,7 +176,7 @@ public class GeotagDao extends Dao
             find.setFloat("Max_Longitude", maxLon);
             rs = find.executeQuery();
             
-            List geotags = new LinkedList();
+            List<Geotag> geotags = new LinkedList<Geotag>();
             while (rs.next()) {
                 Geotag geotag = populateGeotag(rs);
                 geotags.add(geotag);
@@ -197,7 +196,7 @@ public class GeotagDao extends Dao
         }   
     }
     
-    public Collection findByFileType(String fileType)
+    public Collection<Geotag> findByFileType(String fileType)
         throws DataAccessException
     {
         Connection conn = null;
@@ -210,7 +209,7 @@ public class GeotagDao extends Dao
             find.setString("File_Type", fileType);
             rs = find.executeQuery();
             
-            Collection geotags = new ArrayList();
+            Collection<Geotag> geotags = new ArrayList<Geotag>();
             while (rs.next()) {
                 Geotag geotag = populateGeotag(rs);
                 geotags.add(geotag);
@@ -231,7 +230,7 @@ public class GeotagDao extends Dao
         
     }
     
-    public Map findByAttachmentIds(Collection attachmentIds)
+    public Map<Integer, Geotag> findByAttachmentIds(Collection<Integer> attachmentIds)
         throws DataAccessException
     {
         Connection conn = null;
@@ -243,13 +242,13 @@ public class GeotagDao extends Dao
             String sql = FIND_BY_ATTACHMENT_IDS_SQL + buildParamList(attachmentIds.size());
             find = conn.prepareStatement(sql);
             int p = 1; // Parameter index
-            for (Iterator i = attachmentIds.iterator(); i.hasNext(); p++) {
+            for (Iterator<Integer> i = attachmentIds.iterator(); i.hasNext(); p++) {
                 Integer id = (Integer)i.next();
                 find.setInt(p, id.intValue());
             }
             
             rs = find.executeQuery();
-            Map geotagsByAttachmentId = new HashMap();
+            Map<Integer, Geotag> geotagsByAttachmentId = new HashMap<Integer, Geotag>();
             while (rs.next()) {
                 int id = rs.getInt("Attachment_ID");
                 Geotag tag = populateGeotag(rs);
@@ -269,7 +268,7 @@ public class GeotagDao extends Dao
         } 
     }
     
-    public Collection findByAttachmentId(int attachmentId)
+    public Collection<Geotag> findByAttachmentId(int attachmentId)
         throws DataAccessException
     {
         Connection conn = null;
@@ -282,7 +281,7 @@ public class GeotagDao extends Dao
             find.setInt("Attachment_ID", attachmentId);
             rs = find.executeQuery();
             
-            Collection geotags = new ArrayList();
+            Collection<Geotag> geotags = new ArrayList<Geotag>();
             while (rs.next()) {
                 Geotag geotag = populateGeotag(rs);
                 geotags.add(geotag);
