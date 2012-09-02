@@ -19,7 +19,7 @@ public class LogDao extends Dao implements Iterator
     private static final String CREATE_SQL =
 	    "insert into LOG_ENTRIES "
 	    + "(Date_Posted, Last_Updated, User_ID, User_Name, Title"
-        + ",Image_File_Name ,Intro, Body, Via_Text, Via_Url, Via_Title, Allow_Comments)"
+        + ",Image_File_Name ,Image_File_Type ,Intro, Body, Via_Text, Via_Url, Via_Title, Allow_Comments)"
     	+ " values "
     	+ "(:Date_Posted"	 // Date_Posted
     	+ ",:Last_Updated"	 // Last_Updated
@@ -27,6 +27,7 @@ public class LogDao extends Dao implements Iterator
     	+ ",:User_Name"		 // User_Name
     	+ ",:Title"		 // Title
         + ",:Image_File_Name"    // Image_File_Name
+        + ",:Image_File_Type"    // Image_File_Type
         + ",:Intro"              // Intro
         + ",:Body"		 // Body
         + ",:Via_Text"           // Via_Text
@@ -96,7 +97,8 @@ public class LogDao extends Dao implements Iterator
             create.setInt("User_ID", logEntry.getUserId());
             create.setString("User_Name", logEntry.getUserName());
             create.setString("Title", logEntry.getTitle());
-            create.setString("Image_File_Name",  logEntry.getImageFileName());
+            create.setString("Image_File_Name", logEntry.getImageFileName());
+            create.setString("Image_File_Type", logEntry.getImageFileType());
             create.setString("Intro", logEntry.getIntro());
             create.setString("Body", logEntry.getBody());
             create.setString("Via_Title", logEntry.getViaTitle());
