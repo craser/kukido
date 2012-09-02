@@ -5,47 +5,50 @@ import net.kukido.blog.servlet.filter.*;
 import net.kukido.sql.*;
 
 /**
- * This class represents a generic Data Access Object, and provides
- * general functionality for access to persistant storage.
+ * This class represents a generic Data Access Object, and provides general
+ * functionality for access to persistant storage.
  * */
 
 public abstract class Dao
 {
-    private static final String GET_LAST_CREATED_ID_SQL = 
-        "select LAST_INSERT_ID()";
-    
-    public static Connection getConnection()
-	throws DataAccessException
+    private static final String GET_LAST_CREATED_ID_SQL = "select LAST_INSERT_ID()";
+
+    public Connection getConnection() throws DataAccessException
     {
-	return DataSourceFilter.getConnection();
+        return DataSourceFilter.getConnection();
     }
-    
-    public int getLastCreatedId(final Connection conn)
-        throws DataAccessException
+
+    public int getLastCreatedId(final Connection conn) throws DataAccessException
     {
         NamedParamStatement findLastId = null;
         ResultSet lastIdResults = null;
-        try
-        {
+        try {
             findLastId = new NamedParamStatement(conn, GET_LAST_CREATED_ID_SQL);
             lastIdResults = findLastId.executeQuery();
-            
-            if (!lastIdResults.next()) throw new DataAccessException("Unable to find most recently created id!");
-            
+
+            if (!lastIdResults.next())
+                throw new DataAccessException("Unable to find most recently created id!");
+
             int lastId = lastIdResults.getInt(1);
-            return lastId;            
+            return lastId;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new DataAccessException("Unable to find most recently created id!", e);
         }
-        finally
-        {
-            try { lastIdResults.close(); } catch (Exception ignored) {}
-            try { findLastId.close(); } catch (Exception ignored) {}
+        finally {
+            try {
+                lastIdResults.close();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                findLastId.close();
+            }
+            catch (Exception ignored) {
+            }
         }
     }
-    
+
     /**
      * @param numElements
      * @return A String of the form "(?,?,?,?...)"
@@ -53,7 +56,7 @@ public abstract class Dao
     public String buildParamList(int numElements)
     {
         StringBuffer b = new StringBuffer();
-        
+
         b.append("(");
         for (int i = 0; i < numElements; i++) {
             b.append("?");
