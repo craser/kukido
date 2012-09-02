@@ -1,4 +1,4 @@
-package net.kukido.blog.test;
+package net.kukido.blog.action;
 
 import java.io.IOException;
 
