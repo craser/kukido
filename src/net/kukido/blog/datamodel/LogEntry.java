@@ -15,9 +15,9 @@ import java.util.*;
  */
 public class LogEntry extends LogEntryHeader
 {
-    private Collection attachments;
-    private Collection comments;
-    private List trackbacks; // Watch out!  Used both for sent and received Trackbacks!
+    private Collection<Attachment> attachments;
+    private Collection<Comment> comments;
+    private List<Trackback> trackbacks; // Watch out!  Used both for sent and received Trackbacks!
     
 
     /**
@@ -36,26 +36,26 @@ public class LogEntry extends LogEntryHeader
      * */
     public LogEntry()
     {
-	this.attachments = new ArrayList();
-        this.comments = new ArrayList();
-        this.trackbacks = new ArrayList();
+	this.attachments = new ArrayList<Attachment>();
+        this.comments = new ArrayList<Comment>();
+        this.trackbacks = new ArrayList<Trackback>();
         
     }
     
     public LogEntry(LogEntryHeader header)
     {
         super(header);
-        this.attachments = new ArrayList();
-        this.comments = new ArrayList();
-        this.trackbacks = new ArrayList();
+        this.attachments = new ArrayList<Attachment>();
+        this.comments = new ArrayList<Comment>();
+        this.trackbacks = new ArrayList<Trackback>();
     }
 
-    public void setAttachments(Collection attachments)
+    public void setAttachments(Collection<Attachment> attachments)
     {
 	this.attachments = attachments;
     }
 
-    public Collection getAttachments()
+    public Collection<Attachment> getAttachments()
     {
 	return attachments;
     }
@@ -72,14 +72,14 @@ public class LogEntry extends LogEntryHeader
     
     public void addTag(Tag tag)
     {
-        Collection tags = getTags();
+        Collection<Tag> tags = getTags();
         tags.add(tag);
         setTags(tags);
     }
     
     public void removeTag(Tag tag)
     {
-        Collection tags = getTags();
+        Collection<Tag> tags = getTags();
         tags.remove(tag);
         setTags(tags);
     }
@@ -101,7 +101,7 @@ public class LogEntry extends LogEntryHeader
     
     public boolean hasAttachmentType(String type)
     {
-        for (Iterator as = attachments.iterator(); as.hasNext(); )
+        for (Iterator<Attachment> as = attachments.iterator(); as.hasNext(); )
         {
             if (type.equals(((Attachment)as.next()).getFileType()))
                 return true;
@@ -111,7 +111,7 @@ public class LogEntry extends LogEntryHeader
 
     public boolean getHasAttachments()
     {
-        for (Iterator as = attachments.iterator(); as.hasNext(); )
+        for (Iterator<Attachment> as = attachments.iterator(); as.hasNext(); )
         {
             if (!((Attachment)as.next()).getIsGalleryImage())
                 return true;
@@ -119,12 +119,12 @@ public class LogEntry extends LogEntryHeader
         return false;
     }
     
-    public void setComments(Collection comments)
+    public void setComments(Collection<Comment> comments)
     {
         this.comments = comments;
     }
     
-    public Collection getComments()
+    public Collection<Comment> getComments()
     {
         return comments;
     }
@@ -134,7 +134,7 @@ public class LogEntry extends LogEntryHeader
         return (comments == null) ? 0 : comments.size();
     }
     
-    public void setTrackbacks(List trackbacks)
+    public void setTrackbacks(List<Trackback> trackbacks)
     {
         if (trackbacks == null) { 
             this.trackbacks.clear(); 
@@ -142,7 +142,7 @@ public class LogEntry extends LogEntryHeader
         this.trackbacks = trackbacks;
     }
     
-    public List getTrackbacks()
+    public List<Trackback> getTrackbacks()
     {
         return trackbacks;
     }

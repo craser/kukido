@@ -36,11 +36,11 @@ public class LogEntryHeader implements Serializable
     private boolean hasGalleryImages;
     private boolean hasAttachments;
     
-    private Collection tags;
+    private Collection<Tag> tags;
     
     public LogEntryHeader() 
     {
-        this.tags = new ArrayList();
+        this.tags = new ArrayList<Tag>();
     }
     
     /**
@@ -230,12 +230,12 @@ public class LogEntryHeader implements Serializable
         return numTrackbacks;
     }
     
-    public void setTags(Collection tags)
+    public void setTags(Collection<Tag> tags)
     {
         this.tags = tags;
     }
     
-    public Collection getTags()
+    public Collection<Tag> getTags()
     {
         return tags;
     }

@@ -21,7 +21,7 @@ public class Attachment implements Serializable
     private Date dateTaken;
     private String title;
     private String description;
-    private Collection geotags;
+    private Collection<Geotag> geotags;
     private byte[] bytes;
     
    
@@ -32,8 +32,8 @@ public class Attachment implements Serializable
      *
      * @return The available fileType options for all attachments.
      */
-    static public Collection getFileTypeOptions() {
-        List options = new ArrayList(3);
+    static public Collection<String> getFileTypeOptions() {
+        List<String> options = new ArrayList<String>(3);
         options.add(TYPE_IMAGE);
         options.add(TYPE_MAP);
         options.add(TYPE_DOCUMENT);
@@ -175,7 +175,7 @@ public class Attachment implements Serializable
      * Getter for property geotags.
      * @return Value of property geotags.
      */
-    public java.util.Collection getGeotags() {
+    public Collection<Geotag> getGeotags() {
         return geotags;
     }
     
@@ -183,7 +183,7 @@ public class Attachment implements Serializable
      * Setter for property geotags.
      * @param geotags New value of property geotags.
      */
-    public void setGeotags(java.util.Collection geotags) {
+    public void setGeotags(Collection<Geotag> geotags) {
         this.geotags = geotags;
     }
     
