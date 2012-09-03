@@ -8,47 +8,23 @@ package net.kukido.blog.util;
 import java.util.*;
 
 /**
- *
+ * I'd LOVE to clean this up with generics.  Unfortunately,
+ * this doesn't seem possible.  Observe:
+ * 
+ * BucketMap<K,V> would extend HashMap<K, Collection<V>>.
+ * 
+ * This creates a problem when we try to define BucketMap.get():
+ * 
+ * public Collection<V> put(K key, V val)
+ * 
+ * The compiler chokes on this, since V doesn't necessarily 
+ * extend/implement Collection<V>.  Doh!
+ * 
+ * 
  * @author craser
  */
 public class BucketMap extends HashMap
 {
-    public interface BucketFactory {
-        public Collection getNew();
-    }
-    
-    private BucketFactory bf;
-    
-    public BucketMap()
-    {
-        this(new BucketFactory() {
-            public Collection getNew() {
-                return new HashSet();
-            }
-        });
-    }
-    
-    public BucketMap(BucketFactory bf)
-    {
-        this.bf = bf;
-    }
-    
-    public BucketMap(final Class c)
-    {
-        this(new BucketFactory() {
-            public Collection getNew() {
-                try { return (Collection)c.newInstance(); }
-                catch (Exception e) { 
-                    throw new IllegalStateException("Unable to create new instance of " + c.getName()); 
-                }
-            }
-        });
-    }
-    
-    protected Collection getNewBucket()
-    {
-        return this.bf.getNew();
-    }
     
     public Object put(Object key, Object val)
     {
@@ -57,5 +33,14 @@ public class BucketMap extends HashMap
             : getNewBucket();
         bucket.add(val);
         return super.put(key, bucket);
+    }
+    
+    /**
+     * Here to enable subclassing.
+     * @return
+     */
+    protected Collection getNewBucket()
+    {
+        return new HashSet();
     }
 }

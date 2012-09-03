@@ -19,7 +19,7 @@ public class RecentComments extends Action
             // keyed by the Entry ID.
             int numComments = Integer.parseInt(req.getParameter("numComments"));
             Collection comments = new CommentDao().findRecentComments(numComments);
-            Map commentsById = new BucketMap(LinkedList.class);
+            Map commentsById = new BucketMap();
             for (Iterator i = comments.iterator(); i.hasNext();) {
                 Comment c = (Comment)i.next();
                 Integer id = new Integer(c.getEntryId());
