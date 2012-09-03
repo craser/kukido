@@ -7,8 +7,8 @@
 package net.kukido.blog.dataaccess;
 
 import java.sql.*;
-import javax.sql.*;
 import java.util.*;
+
 import net.kukido.blog.datamodel.*;
 import net.kukido.blog.forms.*;
 import net.kukido.blog.util.BucketMap;
@@ -34,11 +34,6 @@ public class TagDao extends Dao
     static private final String FIND_BY_TAG_NAME =
         "select * from TAGS where Name = :Name";
     
-    static private final String FIND_BY_OBJECT_ID = 
-        "select TAG_LINKS.Object_ID, TAGS.* from TAG_LINKS, TAGS"
-        + " where TAGS.Tag_ID = TAG_LINKS.Tag_ID"
-        + " and TAG_LINKS.Object_ID = :Object_ID";
-    
     static private final String FIND_BY_OBJECT_IDS =
         "select TAG_LINKS.Object_ID, TAGS.* from TAG_LINKS, TAGS"
         + " where TAGS.Tag_ID = TAG_LINKS.Tag_ID"
@@ -54,13 +49,11 @@ public class TagDao extends Dao
      * Creates all tags in the given collection.
      * @param tags a Collection of Tags
      */
-    public Collection create(Collection tags)
+    public Collection<Tag> create(Collection<Tag> tags)
         throws DataAccessException
     {
-        Collection newTags = new ArrayList();
-        for (Iterator i = tags.iterator(); i.hasNext(); )
-        {
-            Tag tag = (Tag)i.next();
+        Collection<Tag> newTags = new ArrayList<Tag>();
+        for (Tag tag : tags) {
             newTags.add(create(tag));
         }
         
@@ -125,7 +118,7 @@ public class TagDao extends Dao
         }
     }
     
-    public Collection find(SearchForm form)
+    public Collection<Tag> find(SearchForm form)
         throws DataAccessException
     {
         Connection conn = null;
@@ -133,8 +126,8 @@ public class TagDao extends Dao
         ResultSet rs = null;
         try
         {
-            List criteria = new ArrayList();
-            Map params = new HashMap();
+            List<String> criteria = new ArrayList<String>();
+            Map<String, String> params = new HashMap<String, String>();
             
             if (form.getSearchTerm() != null)
             {
@@ -146,7 +139,7 @@ public class TagDao extends Dao
             if (!criteria.isEmpty())
             {
                 sql.append(" where" );
-                for (Iterator i = criteria.iterator(); i.hasNext(); ) {
+                for (Iterator<String> i = criteria.iterator(); i.hasNext(); ) {
                     sql.append((String)i.next());
                     if (i.hasNext()) { sql.append(" and "); }
                 }
@@ -157,7 +150,7 @@ public class TagDao extends Dao
             find.bindAll(params);
             rs = find.executeQuery();
             
-            Collection tags = new ArrayList();
+            Collection<Tag> tags = new ArrayList<Tag>();
             while (rs.next()) {
                 Tag tag = populateTag(rs);
                 tags.add(tag);
@@ -177,7 +170,7 @@ public class TagDao extends Dao
         }
     }
     
-    public Collection findAllTags()
+    public Collection<Tag> findAllTags()
         throws DataAccessException
     {
         Connection conn = null;
@@ -189,7 +182,7 @@ public class TagDao extends Dao
             find = new NamedParamStatement(conn, FIND_ALL_TAGS);
             tags = find.executeQuery();
             
-            Collection allTags = new LinkedList();
+            Collection<Tag> allTags = new LinkedList<Tag>();
             while (tags.next()) {
                 allTags.add(populateTag(tags));
             }
@@ -238,12 +231,12 @@ public class TagDao extends Dao
         }
     }
     
-    public Collection findByTagIds(Collection tagIds)
+    public Collection<Tag> findByTagIds(Collection<Integer> tagIds)
         throws DataAccessException
     {
         // Short-circuit if tagIds is empty.
         if (tagIds.isEmpty()) {
-            return new ArrayList(0);
+            return new ArrayList<Tag>(0);
         }
         
         Connection conn = null;
@@ -256,15 +249,13 @@ public class TagDao extends Dao
             find = conn.prepareStatement(sql);
             
             int paramIndex = 1;
-            for (Iterator i = tagIds.iterator(); i.hasNext(); paramIndex++)
-            {
-                Integer tagId = (Integer)i.next();
+            for (Integer tagId : tagIds) {
                 find.setInt(paramIndex, tagId.intValue());
             }
             
             results = find.executeQuery();
                 
-            Collection tags = new ArrayList();
+            Collection<Tag> tags = new ArrayList<Tag>();
             while (results.next()) {
                 tags.add(populateTag(results));
             }
@@ -313,7 +304,7 @@ public class TagDao extends Dao
         }
     }
  
-    public Collection findByNames(Collection names)
+    public Collection<Tag> findByNames(Collection<String> names)
         throws DataAccessException
     {
         Connection conn = null;
@@ -323,11 +314,9 @@ public class TagDao extends Dao
         {
             conn = getConnection();
             find = new NamedParamStatement(conn, FIND_BY_TAG_NAME);
-            Collection tags = new ArrayList();
+            Collection<Tag> tags = new ArrayList<Tag>();
             
-            for (Iterator i = names.iterator(); i.hasNext(); )
-            {
-                String name = (String)i.next();
+            for (String name : names) {
                 find.setString("Name", name);
                 results = find.executeQuery();
                 if (!results.next()) throw new DataAccessException("No tag exists with name \"" + name + "\"");
