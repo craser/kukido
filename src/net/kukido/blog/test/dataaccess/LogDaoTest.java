@@ -101,25 +101,29 @@ public class LogDaoTest
     public void test_update() throws DataAccessException
     {
         LogDao logDao = new LogDao();
-        LogEntry orig = new LogEntry();
-        orig.setAllowComments(true);
-        orig.setBody("body");
-        orig.setImageFileName("image-file-name");
-        orig.setImageFileType(Attachment.TYPE_DOCUMENT);
-        orig.setIntro("intro");
-        orig.setTitle("title");
-        orig.setUserId(-2);
-        orig.setUserName("junit");
-        orig.setViaText("via-text");
-        orig.setViaTitle("via-title");
-        orig.setViaUrl("via-url");
-        orig.setTags(tags);
+        LogEntry created = logDao.findByEntryId(entryId);
         
-        LogEntry created = logDao.create(orig);
+        
+        
         List<Tag> tempTags = new LinkedList<Tag>(tags);
-        tempTags.remove(0);
-        tempTags.add(new Tag("update-tag"));
+        tempTags.remove(0); // Test tag removal
+        tempTags.add(new Tag("update-tag")); // Test updating tags.
         Collection<Tag> updateTags = new TagDao().create(tempTags);
+
+        // Double-check that the existing values aren't the same as the new
+        // values we'll assign later.
+        assertTrue(created.getAllowComments());
+        assertFalse("update-body".equals(created.getBody()));
+        assertFalse("update-image-file-name".equals(created.getImageFileName()));
+        assertFalse(Attachment.TYPE_IMAGE.equals(created.getImageFileType()));
+        assertFalse("update-intro".equals(created.getIntro()));
+        assertFalse("update-title".equals(created.getTitle()));
+        assertFalse(-3 == created.getUserId());
+        assertFalse("update-junit".equals(created.getUserName()));
+        assertFalse("update-via-text".equals(created.getViaText()));
+        assertFalse("update-via-title".equals(created.getViaTitle()));
+        assertFalse("update-via-url".equals(created.getViaUrl()));
+        assertFalse(sameTags(created.getTags(), updateTags));
         
         
         created.setAllowComments(false);
