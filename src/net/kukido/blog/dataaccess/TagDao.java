@@ -250,7 +250,7 @@ public class TagDao extends Dao
             
             int paramIndex = 1;
             for (Integer tagId : tagIds) {
-                find.setInt(paramIndex, tagId.intValue());
+                find.setInt(paramIndex++, tagId.intValue());
             }
             
             results = find.executeQuery();
