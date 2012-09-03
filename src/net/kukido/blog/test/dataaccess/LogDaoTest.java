@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.* ;
 import static org.junit.Assert.* ;
@@ -93,6 +95,64 @@ public class LogDaoTest
         assertTrue("via-title".equals(created.getViaTitle()));
         assertTrue("via-url".equals(created.getViaUrl()));
         assertTrue(sameTags(created.getTags(), tags));
+    }
+    
+    @Test
+    public void test_update() throws DataAccessException
+    {
+        LogDao logDao = new LogDao();
+        LogEntry orig = new LogEntry();
+        orig.setAllowComments(true);
+        orig.setBody("body");
+        orig.setImageFileName("image-file-name");
+        orig.setImageFileType(Attachment.TYPE_DOCUMENT);
+        orig.setIntro("intro");
+        orig.setTitle("title");
+        orig.setUserId(-2);
+        orig.setUserName("junit");
+        orig.setViaText("via-text");
+        orig.setViaTitle("via-title");
+        orig.setViaUrl("via-url");
+        orig.setTags(tags);
+        
+        LogEntry created = logDao.create(orig);
+        List<Tag> tempTags = new LinkedList<Tag>(tags);
+        tempTags.remove(0);
+        tempTags.add(new Tag("update-tag"));
+        Collection<Tag> updateTags = new TagDao().create(tempTags);
+        
+        
+        created.setAllowComments(false);
+        created.setBody("update-body");
+        created.setImageFileName("update-image-file-name");
+        created.setImageFileType(Attachment.TYPE_IMAGE);
+        created.setIntro("update-intro");
+        created.setTitle("update-title");
+        created.setUserId(-3);
+        created.setUserName("update-junit");
+        created.setViaText("update-via-text");
+        created.setViaTitle("update-via-title");
+        created.setViaUrl("update-via-url");
+        created.setTags(updateTags);
+        
+        logDao.update(created);
+        
+        LogEntry updated = logDao.findByEntryId(created.getEntryId());
+        assertFalse(updated.getAllowComments());
+        assertTrue("update-body".equals(updated.getBody()));
+        assertTrue(withinFiveMinutes(updated.getDatePosted(), now));
+        assertFalse(updated.getEntryId() == -1); // Confirm that an ID was assigned.
+        assertTrue("update-image-file-name".equals(updated.getImageFileName()));
+        assertTrue(Attachment.TYPE_IMAGE.equals(updated.getImageFileType()));
+        assertTrue("update-intro".equals(updated.getIntro()));
+        assertTrue(withinFiveMinutes(updated.getLastUpdated(), now));
+        assertTrue("update-title".equals(updated.getTitle()));
+        assertTrue(-3 == updated.getUserId());
+        assertTrue("update-junit".equals(updated.getUserName()));
+        assertTrue("update-via-text".equals(updated.getViaText()));
+        assertTrue("update-via-title".equals(updated.getViaTitle()));
+        assertTrue("update-via-url".equals(updated.getViaUrl()));
+        assertTrue(sameTags(updated.getTags(), updateTags));
     }
     
     @After
