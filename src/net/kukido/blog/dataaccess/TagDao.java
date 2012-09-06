@@ -138,7 +138,7 @@ public class TagDao extends Dao
             StringBuffer sql = new StringBuffer("select * from TAGS");
             if (!criteria.isEmpty())
             {
-                sql.append(" where" );
+                sql.append(" where " );
                 for (Iterator<String> i = criteria.iterator(); i.hasNext(); ) {
                     sql.append((String)i.next());
                     if (i.hasNext()) { sql.append(" and "); }
@@ -389,6 +389,7 @@ public class TagDao extends Dao
             conn = getConnection();
             update = new NamedParamStatement(conn, UPDATE_TAG);
             update.setString("Name", tag.getName());
+            update.setInt("Tag_ID", tag.getTagId());
             update.executeUpdate();            
         }
         catch (SQLException e) 
