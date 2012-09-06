@@ -1,6 +1,5 @@
 package net.kukido.blog.test.dataaccess;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -13,7 +12,6 @@ import static org.junit.Assert.* ;
 import net.kukido.blog.datamodel.Attachment;
 import net.kukido.blog.datamodel.LogEntry;
 import net.kukido.blog.datamodel.Tag;
-import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
 import net.kukido.blog.dataaccess.LogDao;
 import net.kukido.blog.dataaccess.TagDao;
@@ -103,8 +101,6 @@ public class LogDaoTest
         LogDao logDao = new LogDao();
         LogEntry created = logDao.findByEntryId(entryId);
         
-        
-        
         List<Tag> tempTags = new LinkedList<Tag>(tags);
         tempTags.remove(0); // Test tag removal
         tempTags.add(new Tag("update-tag")); // Test updating tags.
@@ -162,7 +158,6 @@ public class LogDaoTest
     @After
     public void test_delete() throws DataAccessException
     {
-        System.out.println("test_delete()");
         LogDao dao = new LogDao();
         dao.delete(entryId);
         
