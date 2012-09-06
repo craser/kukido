@@ -13,7 +13,7 @@
 		<fileset dir="${local.j2ee.lib.dir}" includes="**/*.jar" />
 	</path>
 	
-	<target name="deploy-prod" depends="build-war, tag-build">
+	<target name="deploy-prod" depends="build-war, tag-build, test-java">
 		<echo message="Deploying WAR file to production server." />
 		<echo message="    host: ${prod.host}" />
 		<echo message="    user: ${prod.user}" />
@@ -30,6 +30,17 @@
 				<include name="${local.war.file}" />
 			</fileset>
 		</ftp>
+	</target>
+	
+	<target name="test-java" depends="compile-all">
+		<junit showoutput="true" haltonerror="false" haltonfailure="true">
+			<classpath refid="project.class.path" />
+			<classpath location="${local.classes.dir}" />
+			<batchtest>
+				<formatter type="plain" usefile="false" />
+				<fileset dir="${local.src.dir}" includes="**/*Test.java" />
+			</batchtest>
+		</junit>
 	</target>
 	
 	<target name="tag-build" depends="init-tag-name">
