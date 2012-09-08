@@ -13,9 +13,11 @@ import org.apache.struts.action.ActionMapping;
 
 public class ThrowAction extends Action
 {
+    static public final String EXCEPTION_MESSAGE = "Damnit, Beavis!";
+    
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException
     {
-        throw new ServletException("Dammit, Beavis!");
+        throw new ServletException(EXCEPTION_MESSAGE);
     }
 }
