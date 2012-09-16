@@ -7,10 +7,14 @@
 	</path>
 
 	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="ant.classpath" />
+	<taskdef classpathref="ant.classpath" resource="tasks.properties" />
 	
 	<path id="project.class.path">
 		<fileset dir="${local.lib.dir}" includes="**/*.jar" />
 		<fileset dir="${local.j2ee.lib.dir}" includes="**/*.jar" />
+	</path>
+	
+	<path id="cobertura.class.path">
 	</path>
 	
 	<target name="deploy-prod" depends="build-war, tag-build, test-java">
@@ -42,6 +46,14 @@
 			</batchtest>
 		</junit>
 	</target>
+	
+	<target name="jar-coverage" depends="kukido-jar">
+		<cobertura-instrument todir="${local.test.dir}">
+			<classpath refid="project.class.path" />
+			<fileset file="${local.build.dir}/${kukido.jar.file}" />
+		</cobertura-instrument>
+	</target>
+		
 	
 	<target name="tag-build" depends="init-tag-name">
 		<echo message="Tagging build: ${svn.tag.name}" />
@@ -92,7 +104,8 @@
 		<javac 
 			classpathref="project.class.path"
 			srcdir="${local.src.dir}"
-			destdir="${local.classes.dir}">
+			destdir="${local.classes.dir}"
+			debug="true">
 		</javac>
 		<copy todir="${local.classes.dir}">
 			<fileset dir="${local.src.dir}" includes="**/*.properties" />
@@ -102,6 +115,7 @@
 	<target name="clean">
 		<delete dir="${local.build.dir}" />
 		<mkdir dir="${local.build.dir}" />
+		<mkdir dir="${local.test.dir}" />
 		<mkdir dir="${local.classes.dir}" />
 	</target>
 </project>
