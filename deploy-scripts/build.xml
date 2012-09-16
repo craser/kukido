@@ -94,7 +94,7 @@
 			/>
 	</target>
 	
-	<target name="kukido-jar" depends="compile-all">
+	<target name="jar-kukido" depends="compile-all">
 		<jar destfile="${local.build.dir}/${kukido.jar.file}">
 			<fileset dir="${local.classes.dir}" />
 		</jar>
