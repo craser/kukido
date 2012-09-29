@@ -31,7 +31,9 @@ public class BucketMap extends HashMap
         Collection bucket = containsKey(key)
             ? (Collection)get(key)
             : getNewBucket();
-        bucket.add(val);
+        if (!bucket.contains(val)) {
+            bucket.add(val);
+        }
         return super.put(key, bucket);
     }
     
@@ -41,6 +43,6 @@ public class BucketMap extends HashMap
      */
     protected Collection getNewBucket()
     {
-        return new HashSet();
+        return new ArrayList();
     }
 }
