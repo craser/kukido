@@ -5,7 +5,7 @@ function includeTwitterTimeline()
     // The callback parameter is given the name of the JavaScript
     // function we want called when the JSON data loads.  In this
     // case, we use displayTimeline.
-    var url = "http://twitter.com/statuses/user_timeline.json?callback=displayTimeline&count=10&id=DeathB4Decaf";
+    var url = "http://api.twitter.com/1/statuses/user_timeline.json?callback=displayTimeline&count=10&id=DeathB4Decaf";
     
     var script = document.createElement("script");
     script.setAttribute("src", url);
