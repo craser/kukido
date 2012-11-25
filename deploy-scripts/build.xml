@@ -47,7 +47,7 @@
 		</junit>
 	</target>
 	
-	<target name="jar-coverage" depends="kukido-jar">
+	<target name="jar-coverage" depends="jar-kukido">
 		<cobertura-instrument todir="${local.test.dir}">
 			<classpath refid="project.class.path" />
 			<fileset file="${local.build.dir}/${kukido.jar.file}" />
@@ -83,7 +83,7 @@
 		</war>
 	</target>
 	
-	<target name="build-war-template" depends="kukido-jar">
+	<target name="build-war-template" depends="jar-kukido">
 		<copy todir="${local.war.template}">
 			<fileset dir="${local.web.dir}">
 				<exclude name="**/.svn" />
