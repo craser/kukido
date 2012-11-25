@@ -159,9 +159,15 @@ import java.text.*;
         throws ParseException
     {
         //System.out.println("GPX Time   : " + dateString);
-        dateString = dateString.replace('T', ' '); // I feel dirty.
-        dateString = dateString.substring(0, dateString.lastIndexOf('Z'));
-        dateString += "GMT";
+        if (dateString.charAt(10) == 'T') {
+            char[] chars = dateString.toCharArray();
+            chars[10] = ' ';
+            dateString = new String(chars);
+        }
+        if (dateString.endsWith("Z")) {
+            dateString = dateString.substring(0, dateString.lastIndexOf('Z'));
+            dateString += "GMT";
+        }
         Date timestamp = gpxDateFormat.parse(dateString);
         //System.out.println("Parsed Date: " + gpxDateFormat.format(timestamp));
         
