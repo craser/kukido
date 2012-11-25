@@ -42,6 +42,15 @@ public class AttachmentDao extends Dao {
 			// + ",Bytes = :Bytes" // Bytes
 			+ " where Attachment_ID = :Attachment_ID"; // Attachment_ID
 
+	static private final String SAVE_ORIGINAL_BYTES_SQL = "update ATTACHMENTS set"
+			+ " Original_Bytes = Bytes"
+	        + " where Attachment_ID = :Attachment_ID"
+			+ " and Original_Bytes is null";
+	        
+    static private final String UPDATE_BYTES_SQL = "update ATTACHMENTS set"
+            + " Bytes = :Bytes" // Bytes
+            + " where Attachment_ID = :Attachment_ID"; // Attachment_ID
+
 	static private final String FIND_BY_FILE_TYPE_SQL = "select"
 			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
 			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
@@ -252,6 +261,52 @@ public class AttachmentDao extends Dao {
 			}
 		}
 	}
+
+    public void updateBytes(Attachment attachment) throws DataAccessException {
+        Connection conn = null;
+        NamedParamStatement update = null;
+        try {
+            saveOriginalBytes(attachment.getAttachmentId());
+            conn = getConnection();
+            update = new NamedParamStatement(conn, UPDATE_BYTES_SQL);
+            update.setInt("Entry_ID", attachment.getEntryId());
+            update.setBytes("Bytes", attachment.getBytes());
+            update.executeUpdate();
+
+            ThumbnailDao thumbDao = new ThumbnailDao();
+            thumbDao.deleteByAttachmentId(attachment.getAttachmentId());
+
+        } catch (Exception e) {
+            throw new DataAccessException(
+                    "Unable to update attachment with name "
+                            + attachment.getFileName(), e);
+        } finally {
+            try {
+                update.close();
+            } catch (Exception ignored) {
+            }
+            try {
+                conn.close();
+            } catch (Exception ignored) {
+            }
+        }
+    }
+    
+    private void saveOriginalBytes(int entryId) throws DataAccessException, SQLException {
+        Connection conn = null;
+        NamedParamStatement update = null;
+        try {
+            conn = getConnection();
+            update = new NamedParamStatement(conn, SAVE_ORIGINAL_BYTES_SQL);
+            update.setInt("Entry_ID", entryId);
+            update.executeUpdate();
+        }
+        finally {
+            try { update.close(); } catch (Exception ignored) {}
+            try { conn.close(); } catch (Exception ignored) {}
+        }
+        
+    }
 
 	public Attachment populateBytes(Attachment attachment)
 			throws DataAccessException {
