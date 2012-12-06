@@ -550,6 +550,13 @@
           <forward name="success" path="/" redirect="true" />
         </action>
             
+        <action
+            path="/ResolveElevation"
+            type="net.kukido.blog.action.ResolveElevation"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
+            
     </action-mappings>
     
     <global-forwards>

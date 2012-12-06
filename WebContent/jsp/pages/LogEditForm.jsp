@@ -165,6 +165,17 @@
             </nested:form>
           </tiles:put>
         </tiles:insert>
+        
+        <tiles:insert definition="sidebarElement" flush="false">
+          <tiles:put type="string" name="title">Elevation Correction</tiles:put>
+          <tiles:put type="string" name="content">
+            <nested:iterate name="logEditForm" property="entry.attachments" id="a" type="Attachment">
+              <nested:equal property="fileType" value="map">
+                .../ResolveElevation?fileName=<bean:write name="a" property="fileName" />
+              </nested:equal>
+            </nested:iterate>
+          </tiles:put>
+        </tiles:insert>
 
         <tiles:insert definition="sidebarElement" flush="false">
           <tiles:put type="string" name="title">Gallery</tiles:put>
