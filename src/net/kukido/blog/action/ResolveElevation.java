@@ -28,6 +28,7 @@ public class ResolveElevation extends Action
     		throws ServletException, IOException
 	{
     	try {
+    		int entryId = Integer.parseInt(req.getParameter("entryId"));
 	    	String fileName = req.getParameter("file");
 	    	AttachmentDao dao = new AttachmentDao();
 	    	Attachment gpx = dao.findByFileName(fileName);
@@ -41,7 +42,8 @@ public class ResolveElevation extends Action
 	    	gpx.setFileName("RESOLVED-" + gpx.getFileName());
 	    	dao.create(gpx);
 	    	
-	    	return mapping.findForward("success");
+	    	ActionForward success = getSuccessForward(mapping, entryId);
+	    	return success;
     	}
     	catch (Exception e) {
     		throw new ServletException(e);
@@ -56,6 +58,15 @@ public class ResolveElevation extends Action
     	new GpxFormatter().format(tracks, out);
     	
     	return out.toByteArray();
+    }
+    
+    private ActionForward getSuccessForward(ActionMapping mapping, int entryId)
+    {
+    	ActionForward fw = mapping.findForward("success");
+        String newPath = fw.getPath() + entryId;
+        ActionForward newFw = new ActionForward(fw);
+        newFw.setPath(newPath);
+        return newFw;
     }
 
 }

@@ -171,7 +171,8 @@
           <tiles:put type="string" name="content">
             <nested:iterate name="logEditForm" property="entry.attachments" id="a" type="Attachment">
               <nested:equal property="fileType" value="map">
-                .../ResolveElevation?fileName=<bean:write name="a" property="fileName" />
+                <bean:define id="url">/ResolveElevation?entryId=<bean:write name="entry" property="entryId" />&amp;fileName=<bean:write name="a" property="fileName" /></bean:define>
+                <a href="${url}"><bean:write name="a" property="fileName" /></a>
               </nested:equal>
             </nested:iterate>
           </tiles:put>
