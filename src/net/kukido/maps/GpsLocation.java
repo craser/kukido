@@ -175,9 +175,13 @@ public class GpsLocation implements Comparable
     public boolean equals(Object o) {        
         GpsLocation loc = (GpsLocation)o;
         return loc.latitude == this.latitude
-            && loc.longitude == this.longitude
-            && loc.elevation == this.elevation
-            && loc.timestamp.equals(this.timestamp);
+            && loc.longitude == this.longitude;
+    }
+    
+    
+    
+    public String toString() {
+    	return "GpsLocation[" + getLatitude() + ", " + getLongitude() + "]";
     }
     
 }
