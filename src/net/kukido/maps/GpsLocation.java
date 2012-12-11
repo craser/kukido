@@ -178,6 +178,10 @@ public class GpsLocation implements Comparable
             && loc.longitude == this.longitude;
     }
     
+    public int hashCode() {
+    	return toString().hashCode();
+    }
+    
     
     
     public String toString() {
