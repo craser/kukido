@@ -51,21 +51,23 @@ public class ElevationResponse
 	 * Assigns new elevations to the locations in the given GpsTrack
 	 * based on the information provided by Google.
 	 */
-	public GpsTrack fixElevations(GpsTrack track)
+	public void fixElevations(GpsTrack track)
 	{
-		for (GpsLocation loc : track) {
+		System.out.println("track.size(): " + track.size());
+		System.out.println("locs.size() : " + locs.size());
+		LOCATIONS: for (GpsLocation loc : track) {
+			System.out.println("looking for location for " + format(loc));
 			for (GpsLocation e : locs) {
+				System.out.println("    testing: " + format(e));
 				if (haveSameLocation(loc, e)) {
 					loc.setElevation(e.getElevation());
-					break;
+					continue LOCATIONS;
 				}
 			}
 			// Signal a warning if we don't find a match before
 			// running off the end of the list.
 			System.out.println("WARNING: No match found for location " + format(loc));
 		}
-
-		return track;
 	}
 
 	private String format(GpsLocation loc) 
