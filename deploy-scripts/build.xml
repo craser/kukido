@@ -36,6 +36,23 @@
 		</ftp>
 	</target>
 	
+	<target name="deploy-test" depends="build-test-war">
+		<echo message="Deploying WAR file to test server." />
+		<echo message="    dir: ${resin.deploy.dir}" />
+		<echo message="    Deleting ALL contents of ${resin.deploy.dir}" />
+		<delete>
+			<fileset dir="${resin.deploy.dir}">
+				<include name="**" />
+			</fileset>
+		</delete>
+		<echo message="    Copying WAR file: ${local.war.file}" />
+		<copy todir="${resin.deploy.dir}">
+			<fileset dir="${local.build.dir}">
+				<include name="${local.war.file}" />
+			</fileset>
+	 	</copy>
+	</target>
+	
 	<target name="test-java" depends="compile-all">
 		<junit showoutput="true" haltonerror="false" haltonfailure="true">
 			<classpath refid="project.class.path" />
@@ -83,10 +100,22 @@
 		</war>
 	</target>
 	
+	<target name="build-test-war" depends="build-war-template">
+		<delete>
+			<fileset dir="${local.war.template}">
+			    <include name="**/resin-web.xml"/>
+			</fileset>
+		</delete>
+		<war destfile="${local.build.dir}/${local.war.file}">
+			<fileset dir="${local.war.template}" />
+		</war>
+	</target>	
+	
 	<target name="build-war-template" depends="jar-kukido">
 		<copy todir="${local.war.template}">
 			<fileset dir="${local.web.dir}">
 				<exclude name="**/.svn" />
+				<exclude name="**/resin-web.xml" />
 			</fileset>
 		</copy>
 		<copy file="${local.build.dir}/${kukido.jar.file}"
