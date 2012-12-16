@@ -36,6 +36,21 @@
 		</ftp>
 	</target>
 	
+	<target name="local-resin-start">
+		<echo message="(Re)starting local Resin instance." />
+		<exec executable="${resin.bin.dir}/httpd.sh">
+			<arg value="restart" />
+		</exec>
+	</target>
+	
+	<target name="local-resin-stop">
+		<echo message="(Re)starting local Resin instance." />
+		<exec executable="${resin.bin.dir}/httpd.sh">
+			<arg value="stop" />
+		</exec>
+	</target>
+	
+	
 	<target name="deploy-test" depends="build-test-war">
 		<echo message="Deploying WAR file to test server." />
 		<echo message="    dir: ${resin.deploy.dir}" />
