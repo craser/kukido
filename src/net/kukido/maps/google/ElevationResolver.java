@@ -5,9 +5,13 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import net.kukido.blog.log.Logging;
 import net.kukido.maps.GpsLocation;
 import net.kukido.maps.GpsTrack;
 
@@ -20,28 +24,71 @@ import net.kukido.maps.GpsTrack;
  */
 public class ElevationResolver 
 {
-	public GpsTrack resolve(GpsTrack track) throws IOException, SAXException 
-	{
-		ElevationResponseParser parser = new ElevationResponseParser();
-		URL url = buildUrl(track);
-		URLConnection conn = url.openConnection();
-		InputStream in = conn.getInputStream();
-		ElevationResponse response = parser.parse(in);
-		GpsTrack resolved = response.fixElevations(track);
-		
-		return resolved;
+	static private final int MAX_URL_LENGTH = 1000; // De-facto limit of 2048 chars.
+	static private final int MAX_POINTS_PER_REQUEST = 512;
+	
+	private Logger log;
+	
+	public ElevationResolver() {
+		this.log = Logging.getLogger(this.getClass());
 	}
 	
-	private URL buildUrl(GpsTrack track) throws MalformedURLException
+	public GpsTrack resolve(GpsTrack track) throws IOException, SAXException 
 	{
-		StringBuffer url = new StringBuffer("http://maps.googleapis.com/maps/api/elevation/xml?locations=");
+		System.out.println("Resolving track...");
+		int start = 0;
+		ElevationResponseParser parser = new ElevationResponseParser();
+		List<URL> urls = buildUrls(track);
+		for (URL url : urls) {
+			System.out.println("    Resolving section...");
+			System.out.println("    start: " + start);
+			System.out.println("    url  : " + url);
+			URLConnection conn = url.openConnection();
+			InputStream in = conn.getInputStream();
+			ElevationResponse response = parser.parse(in);
+			response.fixElevations(track, start);
+			start += response.getLocations().size();
+		}
+		System.out.println("...done resolving track.");
+		return track;
+	}
+	
+	/**
+	 * max points: 512
+	 * max url length: 2048
+	 * 
+	 * @param track
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	private List<URL> buildUrls(GpsTrack track) throws MalformedURLException
+	{
+		System.out.println("buildUrls()");
+		List<URL> urls = new ArrayList<URL>();
+		int count = 0;
+		StringBuffer url = getUrl();
 		for (GpsLocation loc : track) {
+			count++;
 			url.append(loc.getLatitude());
 			url.append(",");
 			url.append(loc.getLongitude()).append("|"); // Don't forget to strip off the last one.
+			if (url.length() > MAX_URL_LENGTH || count >= MAX_POINTS_PER_REQUEST) {
+				System.out.println("done building urls for track section. (count: " + count + ")");
+				count = 0;
+				urls.add(new URL(url.substring(0, url.length() - 1)));
+				url = getUrl();
+			}
 		}
+		System.out.println("built " + urls.size() + "urls");
+		return urls;
+	}
+	
+	private StringBuffer getUrl() {
+		StringBuffer url = new StringBuffer("http://maps.googleapis.com/maps/api/elevation/xml?");
+		url.append("sensor=true");
+		url.append("&locations=");
 		
-		return new URL(url.substring(0, url.length() - 1));
+		return url;
 	}
 
 }

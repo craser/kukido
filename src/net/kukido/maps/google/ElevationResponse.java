@@ -51,28 +51,26 @@ public class ElevationResponse
 	 * Assigns new elevations to the locations in the given GpsTrack
 	 * based on the information provided by Google.
 	 */
-	public void fixElevations(GpsTrack track)
+	public void fixElevations(GpsTrack track, int start)
 	{
-		System.out.println("track.size(): " + track.size());
-		System.out.println("locs.size() : " + locs.size());
-		LOCATIONS: for (GpsLocation loc : track) {
-			System.out.println("looking for location for " + format(loc));
-			for (GpsLocation e : locs) {
-				System.out.println("    testing: " + format(e));
-				if (haveSameLocation(loc, e)) {
-					loc.setElevation(e.getElevation());
-					continue LOCATIONS;
+		for (int i = 0; i < locs.size(); i++) {
+			GpsLocation t = track.get(start + i);
+			GpsLocation r = locs.get(i);
+			if (haveSameLocation(t, r)) {
+				t.setElevation(r.getElevation());
+			}
+			else {
+				System.out.println("i: " + i);
+				System.out.println("start: " + start);
+				System.out.println("Location at position " + i + " doesn't match track position " + (i + start));
+				for (int j = 0; j < track.size(); j++) {
+					GpsLocation l = track.get(j);
+					if (haveSameLocation(l, r)) {
+						System.out.println("Found match at index " + j);
+					}
 				}
 			}
-			// Signal a warning if we don't find a match before
-			// running off the end of the list.
-			System.out.println("WARNING: No match found for location " + format(loc));
 		}
-	}
-
-	private String format(GpsLocation loc) 
-	{
-		return "GpsLocation[" + loc.getLatitude() + ", " + loc.getLongitude() + "]";
 	}
 
 	/**

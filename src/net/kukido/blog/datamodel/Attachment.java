@@ -8,6 +8,7 @@ public class Attachment implements Serializable
     static public final String TYPE_IMAGE = "image";
     static public final String TYPE_MAP = "map";
     static public final String TYPE_DOCUMENT = "document";
+    static public final String TYPE_BACKUP = "backup";
     
     private int attachmentId;
     private int entryId;
@@ -38,6 +39,25 @@ public class Attachment implements Serializable
         options.add(TYPE_MAP);
         options.add(TYPE_DOCUMENT);
         return options;
+    }
+    
+    public Attachment copy() {
+    	Attachment copy = new Attachment();
+    	copy.entryId = this.entryId;
+    	copy.isGalleryImage = this.isGalleryImage;
+    	copy.fileName = this.fileName;
+    	copy.mimeType = this.mimeType;
+    	copy.fileType = this.fileType;
+    	copy.userId = this.userId;
+    	copy.userName = this.userName;
+    	copy.datePosted = this.datePosted;
+    	copy.dateTaken = this.dateTaken;
+    	copy.title = this.title;
+    	copy.description = this.description;
+    	copy.geotags = new ArrayList<Geotag>(this.geotags);
+    	copy.bytes = Arrays.copyOf(this.bytes, this.bytes.length);
+    	
+    	return copy;
     }
     
     public void setAttachmentId(int attachmentId)

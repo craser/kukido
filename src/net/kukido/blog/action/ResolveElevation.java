@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
+import net.kukido.blog.dataaccess.DataAccessException;
 import net.kukido.blog.datamodel.Attachment;
 import net.kukido.maps.GpsTrack;
 import net.kukido.maps.GpxFormatter;
@@ -33,14 +34,17 @@ public class ResolveElevation extends Action
 	    	AttachmentDao dao = new AttachmentDao();
 	    	Attachment gpx = dao.findByFileName(fileName);
 	    	dao.populateBytes(gpx);
+	    	
+	    	// Before we do anything, make a backup of the original data.
+	    	dao.makeBackup(gpx);
+	    	
+	    	// Now we can go ahead and monkey with the original data.
 	    	GpsTrack track = new GpxParser().parse(gpx.getBytes()).get(0); // Hackety hack.
 	    	track = new ElevationResolver().resolve(track);
 	    	
+	    	// Save the resolved version of the file
 	    	gpx.setBytes(formatGpx(track));
-
-	    	// Save the resolved version of the file as a new attachment.
-	    	gpx.setFileName("RESOLVED-" + gpx.getFileName());
-	    	dao.create(gpx);
+	    	dao.update(gpx);
 	    	
 	    	ActionForward success = getSuccessForward(mapping, entryId);
 	    	return success;

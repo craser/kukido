@@ -41,11 +41,6 @@ public class AttachmentDao extends Dao {
 			+ ",Date_Taken = :Date_Taken" // Date_Taken
 			// + ",Bytes = :Bytes" // Bytes
 			+ " where Attachment_ID = :Attachment_ID"; // Attachment_ID
-
-	static private final String SAVE_ORIGINAL_BYTES_SQL = "update ATTACHMENTS set"
-			+ " Original_Bytes = Bytes"
-	        + " where Attachment_ID = :Attachment_ID"
-			+ " and Original_Bytes is null";
 	        
     static private final String UPDATE_BYTES_SQL = "update ATTACHMENTS set"
             + " Bytes = :Bytes" // Bytes
@@ -62,6 +57,12 @@ public class AttachmentDao extends Dao {
 			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
 			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
 			+ ",Date_Taken" + " from ATTACHMENTS where File_Name = :File_Name";
+	
+	static private final String HAS_BACKUP_SQL = "select"
+			+ " count(*) as Num_Backups"
+			+ " from ATTACHMENTS"
+			+ " where File_Name = :File_Name"
+			+ " and File_Type = 'backup'";
 
 	static private final String FIND_BY_ENTRY_ID_SQL = "select"
 			+ " Attachment_ID"
@@ -261,12 +262,53 @@ public class AttachmentDao extends Dao {
 			}
 		}
 	}
+	
+	private String getBackupFileName(Attachment attachment) {
+		return "BACKUP-" + attachment.getFileName();
+	}
+	
+	public boolean hasBackup(Attachment attachment) throws DataAccessException {
+		Connection conn = null;
+		NamedParamStatement query = null;
+		ResultSet results = null;
+		try {
+			conn = getConnection();
+			query = new NamedParamStatement(conn, HAS_BACKUP_SQL);
+			query.setString("File_Name", getBackupFileName(attachment));
+			results = query.executeQuery();
+			if (!results.next()) {
+				throw new DataAccessException("Unable to determine whether there's already a backup of file " + attachment.getFileName());
+			}
+			int numBackups = results.getInt("Num_Backups");
+			return numBackups > 0;
+		}
+		catch (Exception e) {
+			String fn = attachment == null ? "[null attachment]" : attachment.getFileName();
+			throw new DataAccessException("Error counting backups for file " + fn, e);
+		}
+		finally {
+			try { results.close(); } catch (Exception ignored) {}
+			try { query.close(); } catch (Exception ignored) {}
+			try { conn.close(); } catch (Exception ignored) {}
+		}
+	}
+	
+	public void makeBackup(Attachment attachment) throws DataAccessException {
+		if (!hasBackup(attachment)) {
+			Attachment backup = attachment.copy();
+			if (backup.getBytes() == null) {
+				populateBytes(backup);
+			}
+			backup.setFileType(Attachment.TYPE_BACKUP);
+			backup.setFileName(getBackupFileName(attachment));
+			create(backup);
+		}
+	}
 
     public void updateBytes(Attachment attachment) throws DataAccessException {
         Connection conn = null;
         NamedParamStatement update = null;
         try {
-            saveOriginalBytes(attachment.getAttachmentId());
             conn = getConnection();
             update = new NamedParamStatement(conn, UPDATE_BYTES_SQL);
             update.setInt("Entry_ID", attachment.getEntryId());
@@ -290,22 +332,6 @@ public class AttachmentDao extends Dao {
             } catch (Exception ignored) {
             }
         }
-    }
-    
-    private void saveOriginalBytes(int entryId) throws DataAccessException, SQLException {
-        Connection conn = null;
-        NamedParamStatement update = null;
-        try {
-            conn = getConnection();
-            update = new NamedParamStatement(conn, SAVE_ORIGINAL_BYTES_SQL);
-            update.setInt("Entry_ID", entryId);
-            update.executeUpdate();
-        }
-        finally {
-            try { update.close(); } catch (Exception ignored) {}
-            try { conn.close(); } catch (Exception ignored) {}
-        }
-        
     }
 
 	public Attachment populateBytes(Attachment attachment)

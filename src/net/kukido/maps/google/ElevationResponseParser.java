@@ -19,12 +19,6 @@ public class ElevationResponseParser extends DefaultHandler
 	private GpsLocation loc;
 	private ElevationResponse res;
 
-	public ElevationResponseParser() {
-		state = new Stack<String>();
-		chars = new StringBuffer();
-		res = new ElevationResponse();
-	}
-
 	public ElevationResponse parse(byte[] bytes)
 		throws SAXException, IOException
 	{
@@ -72,7 +66,9 @@ public class ElevationResponseParser extends DefaultHandler
 	public void startDocument()
 		throws SAXException
 	{
-		//noop
+		state = new Stack<String>();
+		chars = new StringBuffer();
+		res = new ElevationResponse();
 	}
 
 	public void startElement(String namespaceUri, String locale, String name, Attributes atts)
@@ -102,7 +98,7 @@ public class ElevationResponseParser extends DefaultHandler
 		}
 		else if ("lng".equals(name)) {
 			float lon = Float.parseFloat(val);
-			loc.setLatitude(lon);
+			loc.setLongitude(lon);
 		}
 		else if ("elevation".equals(name)) {
 			float ele = Float.parseFloat(val);
