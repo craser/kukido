@@ -1,15 +1,13 @@
 package net.kukido.blog.test.maps;
 
-import net.kukido.maps.ArrayList;
-import net.kukido.maps.ByteArrayOutputStream;
-import net.kukido.maps.Date;
-import net.kukido.maps.Exception;
+import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import net.kukido.maps.GpsLocation;
 import net.kukido.maps.GpsTrack;
 import net.kukido.maps.GpxFormatter;
 import net.kukido.maps.GpxParser;
-import net.kukido.maps.List;
-import net.kukido.maps.String;
+import java.util.List;
 
 public class GpxFormatterTest 
 {
@@ -59,7 +57,5 @@ public class GpxFormatterTest
         return tracks;
     }
 	
-	@Test
-	public void test_
 
 }
