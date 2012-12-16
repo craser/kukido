@@ -1,16 +1,19 @@
 body {
       width: auto;
-      margin: 10px;
+      margin: 0px;
 }
 
 #titlebanner {
-  font: bold 50px sans-serif;
-  line-height: 60px;
-  letter-spacing: -6px;
+  font: bold 40px sans-serif;
+  line-height: 50px;
+  letter-spacing: -4px;
   margin: 0;
   padding: 0;
 }
 
+.header {
+  margin: 3px 0px 3px 0px;
+}
 
 .sidebar {
   width: 210px;
@@ -18,7 +21,7 @@ body {
 
 .content {
   margin-right: 220px;
-  padding: 5px;
+  padding: 0px;
 }
 
 td.numeric {

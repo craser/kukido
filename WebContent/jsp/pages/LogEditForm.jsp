@@ -169,12 +169,14 @@
         <tiles:insert definition="sidebarElement" flush="false">
           <tiles:put type="string" name="title">Elevation Correction</tiles:put>
           <tiles:put type="string" name="content">
-            <nested:iterate name="logEditForm" property="entry.attachments" id="a" type="Attachment">
-              <nested:equal property="fileType" value="map">
-                <bean:define id="url">/ResolveElevation?entryId=<bean:write name="entry" property="entryId" />&amp;fileName=<bean:write name="a" property="fileName" /></bean:define>
-                <a href="${url}"><bean:write name="a" property="fileName" /></a>
-              </nested:equal>
-            </nested:iterate>
+            <ul class="navmenu">
+              <nested:iterate name="logEditForm" property="entry.attachments" id="a" type="Attachment">
+                <nested:equal property="fileType" value="map">
+                  <bean:define id="url">/ResolveElevation?entryId=<bean:write name="entry" property="entryId" />&amp;fileName=<bean:write name="a" property="fileName" /></bean:define>
+                  <li><a href="<%= url %>"><bean:write name="a" property="fileName" /></a></li>
+                </nested:equal>
+              </nested:iterate>
+            </ul>
           </tiles:put>
         </tiles:insert>
 

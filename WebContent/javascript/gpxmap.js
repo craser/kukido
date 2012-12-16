@@ -51,7 +51,7 @@ function fitToScreen() {
     var windowHeight = (window.innerHeight)
         ? window.innerHeight
         : document.documentElement.clientHeight;
-    var dh = windowHeight - (bodyHeight + 20); // Set this to the margin of the body.
+    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
 
     var div = document.getElementById("map");
     var sidebar = document.getElementById("sidebarcontainer");
@@ -96,7 +96,7 @@ function closeSlide()
     var content = document.getElementById("map").parentNode;
     var slider = document.getElementById("slider");
     
-    content.style.marginRight = "5px";
+    content.style.marginRight = "0px";
     sidebar.style.display = "none";
     slider.className = "closed";
 }
