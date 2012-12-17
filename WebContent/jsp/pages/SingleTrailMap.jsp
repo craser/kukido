@@ -12,13 +12,18 @@
   <tiles:put name="title" type="string"><bean:write name="map" property="title" /></tiles:put>
   <tiles:put name="head" type="string">
     <link rel="stylesheet" type="text/css" href="css/map.css" />
+    <script type="text/JavaScript" src="https://www.google.com/jsapi"> </script>
+    <script type="text/JavaScript">
+      google.load('visualization', '1.0', {'packages': ['corechart']});
+    </script>
     <script type="text/JavaScript" src="javascript/gpxmap.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- GpxGmap.jsp -->
-    <div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div>
+    <!--  div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div -->
     <div id="map"></div>
+    <div id="elevationgraph"></div>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->
     <script>
@@ -78,7 +83,13 @@
       var markers = new Object();
       
       // Assign the actual Google Map obj. to the global var.
-      window.onload = function() { fitToScreen(); map = bindMap('map'); map.setMapType(G_PHYSICAL_MAP); addMarkers(descriptions, markers); parseAnchor(); renderMapByName('<nested:write name="map" property="fileName" />', getDefaultColor); };
+      window.onload = function() { 
+    	  fitToScreen(); 
+    	  map = bindMap('map'); map.setMapType(G_PHYSICAL_MAP); 
+    	  addMarkers(descriptions, markers); 
+    	  parseAnchor(); 
+    	  renderPageByName('<nested:write name="map" property="fileName" />', getDefaultColor); 
+      };
       window.onresize = function() { fitToScreen(); };
     </script>
     <!-- End of GpxGmap.jsp -->

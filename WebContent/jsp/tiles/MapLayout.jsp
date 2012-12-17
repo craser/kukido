@@ -30,11 +30,6 @@
         <li><html:link href="http://del.icio.us/rss/DeathBeforeDecaf"><img src="img/feed-icon.gif" /> del.icio.us</html:link></li>
       </ul>
     </div>
-    <div class="sidebar">
-      <!-- sidebar -->
-      <tiles:get name="sidebar" />
-      <!-- end of sidebar -->
-    </div>
     <div class="content">
       <!-- main content area -->
       <tiles:get name="content" ignore="false" />

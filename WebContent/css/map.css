@@ -15,12 +15,8 @@ body {
   margin: 3px 0px 3px 0px;
 }
 
-.sidebar {
-  width: 210px;
-}
-
 .content {
-  margin-right: 220px;
+  margin: 0px;
   padding: 0px;
 }
 
@@ -31,11 +27,15 @@ td.numeric {
 #map {
     border: 1px solid black;
     height: 600px;
-    margin-right: 8px;
 }
 
 #map a {
     border: 0;
+}
+
+#elevationgraph {
+	height: 150px;
+	width: 400px;
 }
 
 #slider {

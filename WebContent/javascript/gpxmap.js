@@ -54,22 +54,16 @@ function fitToScreen() {
     var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
 
     var div = document.getElementById("map");
-    var sidebar = document.getElementById("sidebarcontainer");
-    var slider = document.getElementById("slider");
 
 
-    var divHeight = div.offsetHeight - 2; // offsetHeight includes the border, but the style.height doesn't.
+    // 150 = height of elevation graph
+    var divHeight = div.offsetHeight - 2 - 150; // offsetHeight includes the border, but the style.height doesn't.
     var newHeight = (divHeight + dh) + "px";
     div.style.height = newHeight;
-    sidebar.style.height = newHeight;
-    slider.style.height = newHeight;
-
 }
 
 function toggleSlide() {
     var sidebar = document.getElementById("sidebarcontainer").parentNode;
-    var content = document.getElementById("map").parentNode;
-    var slider = document.getElementById("slider");
     
     if ("none" == sidebar.style.display) {
         openSlide();
@@ -83,22 +77,43 @@ function openSlide()
 {
     var sidebar = document.getElementById("sidebarcontainer").parentNode;
     var content = document.getElementById("map").parentNode;
-    var slider = document.getElementById("slider");
     
     content.style.marginRight = "220px";
     sidebar.style.display = "block";
-    slider.className = "open";
 }
     
 function closeSlide()
 {
     var sidebar = document.getElementById("sidebarcontainer").parentNode;
     var content = document.getElementById("map").parentNode;
-    var slider = document.getElementById("slider");
     
     content.style.marginRight = "0px";
     sidebar.style.display = "none";
-    slider.className = "closed";
+}
+
+function renderElevation(div, gpxTrack)
+{
+	// Create and populate the data table.
+	var data = new google.visualization.DataTable();
+	data.addColumn('number', 'Time');
+	data.addColumn('number', 'Elevation');
+	var n = 0;
+	for (i in gpxTrack.points) {
+		var p = gpxTrack.points[i];
+		var r = [n++, p.elv];
+		try { data.addRow(r); }
+		catch (e) {
+			console.log(e);
+		}
+	}
+
+	// Create and draw the visualization.
+	new google.visualization.LineChart(div).
+		draw(data, {curveType: "function",
+					width: 400, 
+					height: 150,
+					vAxis: {maxValue: 10}}
+			);
 }
 
 function renderTrack(map, gpxTrack, getColor)
@@ -123,6 +138,22 @@ function renderTrack(map, gpxTrack, getColor)
     }
 
     return overlays;
+}
+
+function renderPageByName(gpxFileName, getColor) {
+    // Default to a "rich blue" color for map rendering.
+    getColor = (getColor == null) ? function(p) { return "#FF0000"; } : getColor;
+    var url = "json/maps/" + gpxFileName;
+    var k = function (mapJson) {
+        var gpxTracks = eval(mapJson);
+        for (var i = 0; i < gpxTracks.length; i++) {
+        	var gpxTrack = gpxTracks[i];
+        	renderTrack(map, gpxTrack, getColor);
+        	var div = document.getElementById("elevationgraph");
+        	renderElevation(div, gpxTrack);
+        }
+    };
+    GDownloadUrl(url, k);	
 }
       
 // Requires ajax.js
