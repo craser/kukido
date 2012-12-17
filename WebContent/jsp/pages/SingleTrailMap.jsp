@@ -131,33 +131,6 @@
   </tiles:put>  
 
   <tiles:put type="string" name="sidebar">
-    <div id="sidebarcontainer">
-        <tiles:insert definition="sidebarElement" flush="false">
-          <tiles:put type="string" name="title">Route Info</tiles:put>
-          <tiles:put type="string" name="content">
-
-          </tiles:put>
-        </tiles:insert>
-
-        <nested:notEmpty name="entry" property="attachments">
-          <tiles:insert definition="sidebarElement" flush="false">
-            <tiles:put type="string" name="title">Gallery</tiles:put>
-            <tiles:put type="string" name="content">
-              <ul class="gallerymenu">
-                <nested:iterate name="entry" property="attachments" id="attachment" type="net.kukido.blog.datamodel.Attachment">
-                  <logic:equal name="attachment" property="fileType" value="image">
-                      <logic:notEmpty name="attachment" property="geotags">
-                        <li><a href="javascript:showImageOnMap('<%= attachment.getFileName() %>')" title="<%= attachment.getTitle() %>">
-                        <img alt="<%= attachment.getTitle() %>" class="thumbnail" src="attachments/thumbs/<%= attachment.getFileName() %>" />
-                        </a></li>
-                      </logic:notEmpty>
-                  </logic:equal>
-                </nested:iterate>
-              </ul>
-            </tiles:put>
-          </tiles:insert>
-        </nested:notEmpty>
-    </div>
   </tiles:put>
   
 </tiles:insert>

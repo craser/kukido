@@ -108,10 +108,14 @@ function renderElevation(div, gpxTrack)
 	}
 
 	// Create and draw the visualization.
-	new google.visualization.LineChart(div).
+	new google.visualization.AreaChart(div).
 		draw(data, {curveType: "function",
-					width: 400, 
-					height: 150,
+					title: 'Elevation Profile',
+					backgroundColor: 'transparent',
+					legend: {
+						position: 'none'
+					},
+					colors: ['#9c9'],
 					vAxis: {maxValue: 10}}
 			);
 }
