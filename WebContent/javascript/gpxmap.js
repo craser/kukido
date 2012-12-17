@@ -57,7 +57,7 @@ function fitToScreen() {
 
 
     // 150 = height of elevation graph
-    var divHeight = div.offsetHeight - 2 - 150; // offsetHeight includes the border, but the style.height doesn't.
+    var divHeight = div.offsetHeight - 2; // offsetHeight includes the border, but the style.height doesn't.
     var newHeight = (divHeight + dh) + "px";
     div.style.height = newHeight;
 }

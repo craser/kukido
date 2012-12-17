@@ -24,6 +24,41 @@
     <!--  div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div -->
     <div id="map"></div>
     <div id="elevationgraph"></div>
+    <div id="routeinfo">
+            <table border="0">
+              <tr>
+                <td>Total Time:</td>
+                <td class="numeric"><nested:write name="track" property="formattedDuration" /></td>
+              </tr>
+              <tr>
+                <td>Distance (miles):</td>
+                <td class="numeric"><nested:write name="track" property="miles" format="0.00" /></td>
+              </tr>
+              <tr>
+                <td>Distance (km):</td>
+                <td class="numeric"><nested:write name="track" property="kilometers" format="0.00" /></td>
+              </tr>
+              <tr>
+                <td>Climbing (Vert. ft):</td>
+                <%-- Since GPX (and therefore my mapping code) uses meter for elevation, convert to feet. --%>
+                <td class="numeric"><%= new java.text.DecimalFormat("0").format(track.getClimbingVertical() * 3.2808399f) %> </td>
+              </tr>
+              <tr>
+                <td>Climbing (Vert. m):</td>
+                <td class="numeric"><nested:write name="track" property="climbingVertical" format="0" /></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <dmg:entrylink entryId="<%= entry.getEntryId() %>">Trip Report</dmg:entrylink>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <a href="attachments/<%= map.getFileName() %>"><dmg:attachmentIcon attachmentType="map" /> Download GPX file</a>
+                </td>
+              </tr>
+            </table>
+    </div>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->
     <script>
@@ -100,39 +135,7 @@
         <tiles:insert definition="sidebarElement" flush="false">
           <tiles:put type="string" name="title">Route Info</tiles:put>
           <tiles:put type="string" name="content">
-            <table border="0" width="100%">
-              <tr>
-                <td>Total Time:</td>
-                <td class="numeric"><nested:write name="track" property="formattedDuration" /></td>
-              </tr>
-              <tr>
-                <td>Distance (miles):</td>
-                <td class="numeric"><nested:write name="track" property="miles" format="0.00" /></td>
-              </tr>
-              <tr>
-                <td>Distance (km):</td>
-                <td class="numeric"><nested:write name="track" property="kilometers" format="0.00" /></td>
-              </tr>
-              <tr>
-                <td>Climbing (Vert. ft):</td>
-                <%-- Since GPX (and therefore my mapping code) uses meter for elevation, convert to feet. --%>
-                <td class="numeric"><%= new java.text.DecimalFormat("0").format(track.getClimbingVertical() * 3.2808399f) %> </td>
-              </tr>
-              <tr>
-                <td>Climbing (Vert. m):</td>
-                <td class="numeric"><nested:write name="track" property="climbingVertical" format="0" /></td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <dmg:entrylink entryId="<%= entry.getEntryId() %>">Trip Report</dmg:entrylink>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <a href="attachments/<%= map.getFileName() %>"><dmg:attachmentIcon attachmentType="map" /> Download GPX file</a>
-                </td>
-              </tr>
-            </table>
+
           </tiles:put>
         </tiles:insert>
 
