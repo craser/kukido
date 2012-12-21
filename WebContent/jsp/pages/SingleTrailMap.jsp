@@ -23,8 +23,8 @@
     <!-- GpxGmap.jsp -->
     <!--  div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div -->
     <div id="map"></div>
-    <div id="elevationgraph"></div>
     <div id="routeinfo">
+    	<div id="elevationgraph"></div>
             <table border="0">
               <tr>
                 <td>Total Time:</td>
@@ -58,6 +58,7 @@
                 </td>
               </tr>
             </table>
+            <div style="clear: both"></div>
     </div>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->

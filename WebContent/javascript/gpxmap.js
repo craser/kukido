@@ -115,9 +115,8 @@ function renderElevation(div, gpxTrack)
 					legend: {
 						position: 'none'
 					},
-					colors: ['#9c9'],
-					vAxis: {maxValue: 10}}
-			);
+					colors: ['#9c9']
+		});
 }
 
 function renderTrack(map, gpxTrack, getColor)
