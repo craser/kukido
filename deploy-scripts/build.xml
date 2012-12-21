@@ -44,7 +44,7 @@
 	</target>
 	
 	<target name="local-resin-stop">
-		<echo message="(Re)starting local Resin instance." />
+		<echo message="Stopping local Resin instance." />
 		<exec executable="${resin.bin.dir}/httpd.sh">
 			<arg value="stop" />
 		</exec>
