@@ -51,7 +51,7 @@
 	</target>
 	
 	
-	<target name="deploy-test" depends="build-test-war">
+	<target name="deploy-test-restart" depends="build-test-war, local-resin-stop">
 		<echo message="Deploying WAR file to test server." />
 		<echo message="    dir: ${resin.deploy.dir}" />
 		<echo message="    Deleting ALL contents of ${resin.deploy.dir}" />
@@ -66,6 +66,7 @@
 				<include name="${local.war.file}" />
 			</fileset>
 	 	</copy>
+		<antcall target="local-resin-start" />
 	</target>
 	
 	<target name="test-java" depends="compile-all">
