@@ -91,16 +91,16 @@ function closeSlide()
     sidebar.style.display = "none";
 }
 
-function renderElevation(div, gpxTrack)
+
+function renderElevation(div, map, gpxTrack)
 {
 	// Create and populate the data table.
 	var data = new google.visualization.DataTable();
-	data.addColumn('number', 'Time');
+	data.addColumn('datetime', 'Time');
 	data.addColumn('number', 'Elevation');
-	var n = 0;
 	for (i in gpxTrack.points) {
 		var p = gpxTrack.points[i];
-		var r = [n++, p.elv];
+		var r = [new Date(p.time), p.elv];
 		try { data.addRow(r); }
 		catch (e) {
 			console.log(e);
@@ -108,15 +108,36 @@ function renderElevation(div, gpxTrack)
 	}
 
 	// Create and draw the visualization.
-	new google.visualization.AreaChart(div).
-		draw(data, {curveType: "function",
-					title: 'Elevation Profile',
-					backgroundColor: 'transparent',
-					legend: {
-						position: 'none'
-					},
-					colors: ['#9c9']
+	var chart = new google.visualization.AreaChart(div);
+	chart.draw(data, {curveType: "function",
+			   title: 'Elevation Profile',
+			   backgroundColor: 'transparent',
+			   legend: {
+				   position: 'none'
+			   },
+			   colors: ['#9c9']
 		});
+	
+	var add = function(p) { 
+		var mark = markLocation(map, gpxTrack.points[p.row]);
+		var remove = function(p) {
+			map.removeOverlay(mark);
+		};
+		var out = google.visualization.events.addListener(chart, 'onmouseout', remove);
+	};
+	var onMouseOver = google.visualization.events.addListener(chart, 'onmouseover', add);
+}
+
+
+function markLocation(map, p)
+{
+	var loc = new GLatLng(p.lat, p.lon);
+	var mark = new GMarker(loc, {
+		clickable: false,
+		dragable: false
+	});
+	map.addOverlay(mark);
+	return mark;
 }
 
 function renderTrack(map, gpxTrack, getColor)
@@ -153,7 +174,7 @@ function renderPageByName(gpxFileName, getColor) {
         	var gpxTrack = gpxTracks[i];
         	renderTrack(map, gpxTrack, getColor);
         	var div = document.getElementById("elevationgraph");
-        	renderElevation(div, gpxTrack);
+        	renderElevation(div, map, gpxTrack);
         }
     };
     GDownloadUrl(url, k);	
