@@ -18,6 +18,7 @@ public class GpsLocation implements Comparable
     private float longitude;
     private float elevation;
     private float grade; 
+    private float bpm; // Heart Rate in beats per minute
     private Date timestamp;
     /** 
      * Earth's radius in km. 
@@ -28,16 +29,25 @@ public class GpsLocation implements Comparable
     }
     
     public GpsLocation(float lat, float lon, float ele, Date time) {
-        this(lat, lon, ele, 0f, time);
+        this(lat, lon, ele, 0f, 0f, time);
     }
     
     /** Creates a new instance of GpsLocation */
-    public GpsLocation(float lat, float lon, float ele, float grade, Date time) {
+    public GpsLocation(float lat, float lon, float ele, float grade, float bpm, Date time) {
         this.latitude = lat;
         this.longitude = lon;
         this.elevation = ele;
         this.timestamp = time;
+        this.bpm = bpm;
         this.grade = grade;
+    }
+    
+    public float getHeartRate() {
+    	return bpm;
+    }
+    
+    public void setHeartRate(float bpm) {
+    	this.bpm = bpm;
     }
     
     public float getGrade() {
