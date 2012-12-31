@@ -1,0 +1,63 @@
+<TrainingCenterDatabase 
+xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v1" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v1
+http://www.garmin.com/xmlschemas/TrainingCenterDatabasev1.xsd"> 
+
+  <History> 
+    <Running Name="Löpning"> 
+      <Run> 
+        <Lap StartTime="2006-05-24T17:12:44Z"> 
+          <TotalTimeSeconds>2185.570000</TotalTimeSeconds> 
+          <DistanceMeters>7247.200684</DistanceMeters> 
+          <MaximumSpeed>4.046249</MaximumSpeed> 
+          <Calories>954</Calories> 
+          <AverageHeartRateBpm>153</AverageHeartRateBpm> 
+          <MaximumHeartRateBpm>171</MaximumHeartRateBpm> 
+          <Intensity>Active</Intensity> 
+          <Cadence>0</Cadence> 
+          <TriggerMethod>Manual</TriggerMethod> 
+          <Track> 
+            <Trackpoint> 
+              <Time>2006-05-24T17:12:44Z</Time> 
+              <Position> 
+                <LatitudeDegrees>60.084179</LatitudeDegrees> 
+                <LongitudeDegrees>23.679762</LongitudeDegrees> 
+              </Position> 
+              <AltitudeMeters>50.125977</AltitudeMeters> 
+              <DistanceMeters>0.000000</DistanceMeters> 
+              <HeartRateBpm>43</HeartRateBpm> 
+              <SensorState>Absent</SensorState> 
+            </Trackpoint> 
+            <Trackpoint> 
+              <Time>2006-05-24T17:12:50Z</Time> 
+              <Position> 
+                <LatitudeDegrees>60.084154</LatitudeDegrees> 
+                <LongitudeDegrees>23.679851</LongitudeDegrees> 
+              </Position> 
+              <AltitudeMeters>52.048584</AltitudeMeters> 
+              <DistanceMeters>4.777966</DistanceMeters> 
+              <HeartRateBpm>43</HeartRateBpm> 
+              <SensorState>Absent</SensorState> 
+            </Trackpoint> 
+            <Trackpoint> 
+              <Time>2006-05-24T17:12:51Z</Time> 
+              <Position> 
+                <LatitudeDegrees>60.084152</LatitudeDegrees> 
+                <LongitudeDegrees>23.679884</LongitudeDegrees> 
+              </Position> 
+              <AltitudeMeters>51.567871</AltitudeMeters> 
+              <DistanceMeters>6.704688</DistanceMeters> 
+              <HeartRateBpm>43</HeartRateBpm> 
+              <SensorState>Absent</SensorState> 
+            </Trackpoint> 
+          </Track> 
+        </Lap> 
+      </Run> 
+    </Running> 
+    <Biking Name="Cykling"/> 
+    <Other Name="Övrigt"/> 
+    <MultiSport Name="MultiSport"/> 
+  </History> 
+
+</TrainingCenterDatabase> 
