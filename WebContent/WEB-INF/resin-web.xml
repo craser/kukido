@@ -3,7 +3,7 @@
     <driver type="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
       <url>jdbc:mysql://localhost/dreade2_web</url>
       <user>dreade2_webuser</user>
-      <password>spiderman</password>
+      <password>T3RTUrBamZVu</password>
     </driver>
   </database>
 </web-app>

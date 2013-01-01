@@ -19,10 +19,12 @@
     <!--
 <% 
 try {
-	while (exception.getCause() != null) {
-		exception = exception.getCause();
+	if ("romantic".equals(request.getParameter("cjr"))) {
+		while (exception.getCause() != null) {
+			exception = exception.getCause();
+		}
+	    exception.printStackTrace(new PrintWriter(out));
 	}
-    exception.printStackTrace(new PrintWriter(out)); 
 }
 catch (Exception ignored) {}
 %>

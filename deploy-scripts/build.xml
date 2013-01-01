@@ -131,7 +131,6 @@
 		<copy todir="${local.war.template}">
 			<fileset dir="${local.web.dir}">
 				<exclude name="**/.svn" />
-				<exclude name="**/resin-web.xml" />
 			</fileset>
 		</copy>
 		<copy file="${local.build.dir}/${kukido.jar.file}"
