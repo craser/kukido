@@ -94,7 +94,20 @@
 			<fileset file="${local.build.dir}/${kukido.jar.file}" />
 		</cobertura-instrument>
 	</target>
-		
+
+	<target name="test-tag-build" depends="init-tag-name">
+		<echo message="Tagging build: test-${svn.tag.name}" />
+		<svn>
+			<wcversion
+				path="${svn.work.dir}"
+			/>
+			<copy srcPath="${svn.work.dir}" 
+				destUrl="${svn.tags.url}/test-${svn.tag.name}"
+				message="Testing the automated tagging system."
+			/>
+		</svn>
+		<echo message="Repository URL: ${repository.url}" />
+	</target>
 	
 	<target name="tag-build" depends="init-tag-name">
 		<echo message="Tagging build: ${svn.tag.name}" />
