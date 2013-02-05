@@ -61,8 +61,8 @@ public class AttachmentDao extends Dao {
 	static private final String HAS_BACKUP_SQL = "select"
 			+ " count(*) as Num_Backups"
 			+ " from ATTACHMENTS"
-			+ " where File_Name = :File_Name"
-			+ " and File_Type = 'backup'";
+			+ " where File_Name = :File_Name";
+			//+ " and File_Type = 'backup'";
 
 	static private final String FIND_BY_ENTRY_ID_SQL = "select"
 			+ " Attachment_ID"
@@ -295,12 +295,13 @@ public class AttachmentDao extends Dao {
 	
 	public void makeBackup(Attachment attachment) throws DataAccessException {
 		if (!hasBackup(attachment)) {
-			Attachment backup = attachment.copy();
-			if (backup.getBytes() == null) {
-				populateBytes(backup);
+			if (attachment.getBytes() == null) {
+				populateBytes(attachment);
 			}
-			backup.setFileType(Attachment.FileType.backup);
+			Attachment backup = attachment.copy();
+			//backup.setFileType(Attachment.FileType.backup);
 			backup.setFileName(getBackupFileName(attachment));
+			
 			create(backup);
 		}
 	}

@@ -54,7 +54,9 @@ public class Attachment implements Serializable
     	copy.title = this.title;
     	copy.description = this.description;
     	copy.geotags = new ArrayList<Geotag>(this.geotags);
-    	copy.bytes = Arrays.copyOf(this.bytes, this.bytes.length);
+    	if (this.bytes != null) {
+    		copy.bytes = Arrays.copyOf(this.bytes, this.bytes.length);
+    	}
     	
     	return copy;
     }
@@ -221,6 +223,7 @@ public class Attachment implements Serializable
      * try to save this object to the database.
      *
      * @param Either "document", "map", or "image"
+     * @deprecated - Use setFileType(Attachment.FileType)
      */
     public void setFileType(String fileType) {
     	setFileType(FileType.valueOf(fileType));
