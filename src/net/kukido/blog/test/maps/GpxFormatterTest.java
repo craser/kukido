@@ -9,35 +9,37 @@ import net.kukido.maps.GpxFormatter;
 import net.kukido.maps.GpxParser;
 import java.util.List;
 
+import org.junit.* ;
+import static org.junit.Assert.* ;
+
+
 public class GpxFormatterTest 
 {
 
-    static public void main(String... args)
-        throws Exception
+	@Test
+    public void main()
     {
-        // Test this class, since I evidently started this branch from 
-        // before I added automated testing.  Bah. 
-    	
-        
-        List<GpsTrack> tracks = buildTestGpsTracks(5);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        new GpxFormatter().format(tracks, out);
-        String gpx = out.toString();
-        System.out.println("done formatting gpx");
-        System.out.println("---");
-        System.out.println(gpx);
-        System.out.println("---");
-        
-        GpxParser parser = new GpxParser();
-        List<GpsTrack> parsed = parser.parse(gpx.getBytes());
-        
-        out = new ByteArrayOutputStream();
-        new GpxFormatter().format(parsed, out);
-        String newGpx = out.toString();
-        
-        System.out.println(newGpx.equals(gpx));
-        
-        
+		try {
+	        // Test this class, since I evidently started this branch from 
+	        // before I added automated testing.  Bah. 
+	        
+	        List<GpsTrack> tracks = buildTestGpsTracks(5);
+	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        new GpxFormatter().format(tracks, out);
+	        String gpx = out.toString();
+	        
+	        GpxParser parser = new GpxParser();
+	        List<GpsTrack> parsed = parser.parse(gpx.getBytes());
+	        
+	        out = new ByteArrayOutputStream();
+	        new GpxFormatter().format(parsed, out);
+	        String newGpx = out.toString();
+	        
+	        assertTrue(newGpx.equals(gpx));
+		}
+		catch (Exception e) {
+			fail("Exception: " + e);
+		}
     }
     
     static private List<GpsTrack> buildTestGpsTracks(int n)
