@@ -27,7 +27,7 @@ public class AttachmentIcon extends org.apache.struts.taglib.html.ImgTag
     
     private int scope;
     private String attachment;
-    private String attachmentType;
+    private Attachment.FileType attachmentType;
     private String comment;
     private int commentId = DEFAULT_COMMENT_ID;
     private boolean absolute; // Make this an absolute link?
@@ -45,10 +45,15 @@ public class AttachmentIcon extends org.apache.struts.taglib.html.ImgTag
     
     public void setAttachmentType(String attachmentType)
     {
-	this.attachmentType = attachmentType;
+    	setAttachmentType(Attachment.FileType.valueOf(attachmentType));
     }
     
-    public String getAttachmentType()
+    public void setAttachmentType(Attachment.FileType attachmentType)
+    {
+    	this.attachmentType = attachmentType;
+    }
+    
+    public Attachment.FileType getAttachmentType()
     {
         return this.attachmentType;
     }
@@ -99,26 +104,26 @@ public class AttachmentIcon extends org.apache.struts.taglib.html.ImgTag
         return super.doStartTag();
     }
     
-    protected void setSrc()
-    {
-        try
-	{
-            if (attachment != null)
-            {
-                setAttachmentType(getAttachment().getFileType());
-            }
+	protected void setSrc() {
+		try {
+			if (attachment != null) {
+				setAttachmentType(getAttachment().getFileType());
+			}
 
-	    String path = "img/" + getAttachmentType() + ".png";
-            
-	    if (absolute) setSrc(getBaseUrl() + path);
-	    else setSrc(path);
-            
-            setAlt(getAttachmentType());
-        }
-        catch (Exception ignored) {
-            ignored.printStackTrace(System.out);
-        }
-    }
+			String type = getAttachmentType().toString();
+			String path = "img/" + type + ".png";
+
+			if (absolute)
+				setSrc(getBaseUrl() + path);
+			else
+				setSrc(path);
+
+			setAlt(type);
+		} 
+		catch (Exception ignored) {
+			ignored.printStackTrace(System.out);
+		}
+	}
 
 
     /**

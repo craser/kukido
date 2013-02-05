@@ -207,16 +207,16 @@ public class LoadMailAttachments extends Action {
         }
     }
     
-    private String guessFileType(Part part) throws IOException, MessagingException
+    private Attachment.FileType guessFileType(Part part) throws IOException, MessagingException
     {
         if (part.isMimeType("image/*")) {
-            return Attachment.TYPE_IMAGE;
+            return Attachment.FileType.image;
         }
         else if (part.getFileName() != null && part.getFileName().endsWith(".gpx")) {
-            return Attachment.TYPE_MAP;
+            return Attachment.FileType.map;
         }
         else {
-            return Attachment.TYPE_DOCUMENT;
+            return Attachment.FileType.document;
         }
     }
 

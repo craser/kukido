@@ -37,7 +37,7 @@ public class AttachmentTest
 		boolean isGalleryImage = true;
 		String fileName = "FILE_NAME";
 		String mimeType = "MIME_TYPE";
-		String fileType = Attachment.TYPE_IMAGE;
+		Attachment.FileType fileType = Attachment.FileType.image;
 		int userId = 1138;
 		String userName = "USER_NAME";
 		Date datePosted = new Date();

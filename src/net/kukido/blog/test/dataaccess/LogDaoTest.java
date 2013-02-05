@@ -38,7 +38,7 @@ public class LogDaoTest
         entry.setDatePosted(now);
         entry.setEntryId(-1); // Confirm later that this got properly set.
         entry.setImageFileName("image-file-name");
-        entry.setImageFileType(Attachment.TYPE_DOCUMENT);
+        entry.setImageFileType(Attachment.FileType.document);
         entry.setIntro("intro");
         entry.setLastUpdated(now);
         entry.setTitle("title");
@@ -58,7 +58,7 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(created.getDatePosted(), now));
         assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("image-file-name".equals(created.getImageFileName()));
-        assertTrue(Attachment.TYPE_DOCUMENT.equals(created.getImageFileType()));
+        assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
         assertTrue("intro".equals(created.getIntro()));
         assertTrue(withinFiveMinutes(created.getLastUpdated(), now));
         assertTrue("title".equals(created.getTitle()));
@@ -83,7 +83,7 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(created.getDatePosted(), now));
         assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("image-file-name".equals(created.getImageFileName()));
-        assertTrue(Attachment.TYPE_DOCUMENT.equals(created.getImageFileType()));
+        assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
         assertTrue("intro".equals(created.getIntro()));
         assertTrue(withinFiveMinutes(created.getLastUpdated(), now));
         assertTrue("title".equals(created.getTitle()));
@@ -111,7 +111,7 @@ public class LogDaoTest
         assertTrue(created.getAllowComments());
         assertFalse("update-body".equals(created.getBody()));
         assertFalse("update-image-file-name".equals(created.getImageFileName()));
-        assertFalse(Attachment.TYPE_IMAGE.equals(created.getImageFileType()));
+        assertFalse(Attachment.FileType.image.equals(created.getImageFileType()));
         assertFalse("update-intro".equals(created.getIntro()));
         assertFalse("update-title".equals(created.getTitle()));
         assertFalse(-3 == created.getUserId());
@@ -125,7 +125,7 @@ public class LogDaoTest
         created.setAllowComments(false);
         created.setBody("update-body");
         created.setImageFileName("update-image-file-name");
-        created.setImageFileType(Attachment.TYPE_IMAGE);
+        created.setImageFileType(Attachment.FileType.image);
         created.setIntro("update-intro");
         created.setTitle("update-title");
         created.setUserId(-3);
@@ -143,7 +143,7 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(updated.getDatePosted(), now));
         assertFalse(updated.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("update-image-file-name".equals(updated.getImageFileName()));
-        assertTrue(Attachment.TYPE_IMAGE.equals(updated.getImageFileType()));
+        assertTrue(Attachment.FileType.image.equals(updated.getImageFileType()));
         assertTrue("update-intro".equals(updated.getIntro()));
         assertTrue(withinFiveMinutes(updated.getLastUpdated(), now));
         assertTrue("update-title".equals(updated.getTitle()));

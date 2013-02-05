@@ -81,7 +81,7 @@ public class LogDao extends Dao implements Iterator
             create.setString("User_Name", logEntry.getUserName());
             create.setString("Title", logEntry.getTitle());
             create.setString("Image_File_Name", logEntry.getImageFileName());
-            create.setString("Image_File_Type", logEntry.getImageFileType());
+            create.setString("Image_File_Type", logEntry.getImageFileType().toString());
             create.setString("Intro", logEntry.getIntro());
             create.setString("Body", logEntry.getBody());
             create.setString("Via_Title", logEntry.getViaTitle());
@@ -169,7 +169,7 @@ public class LogDao extends Dao implements Iterator
             update.setString("User_Name", logEntry.getUserName());
             update.setString("Title", logEntry.getTitle());
             update.setString("Image_File_Name", logEntry.getImageFileName());
-            update.setString("Image_File_Type", logEntry.getImageFileType());
+            update.setString("Image_File_Type", logEntry.getImageFileType().toString());
             update.setString("Intro", logEntry.getIntro());
             update.setString("Body", logEntry.getBody());
             update.setInt("Entry_ID", logEntry.getEntryId());
@@ -498,7 +498,7 @@ public class LogDao extends Dao implements Iterator
         header.setUserName(results.getString("User_Name"));
         header.setTitle(results.getString("Title"));
         header.setImageFileName(results.getString("Image_File_Name"));
-        header.setImageFileType(results.getString("Image_File_Type"));
+        header.setImageFileType(Attachment.FileType.valueOf(results.getString("Image_File_Type")));
         header.setIntro(results.getString("Intro"));
         header.setBody(results.getString("Body"));
         header.setViaTitle(results.getString("Via_Title"));

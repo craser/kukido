@@ -196,7 +196,7 @@ public class GeotagDao extends Dao
         }   
     }
     
-    public Collection<Geotag> findByFileType(String fileType)
+    public Collection<Geotag> findByFileType(Attachment.FileType fileType)
         throws DataAccessException
     {
         Connection conn = null;
@@ -206,7 +206,7 @@ public class GeotagDao extends Dao
         {
             conn = getConnection();
             find = new NamedParamStatement(conn, FIND_BY_FILE_TYPE_SQL);
-            find.setString("File_Type", fileType);
+            find.setString("File_Type", fileType.toString());
             rs = find.executeQuery();
             
             Collection<Geotag> geotags = new ArrayList<Geotag>();

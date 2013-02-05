@@ -5,17 +5,16 @@ import java.util.*;
 
 public class Attachment implements Serializable
 {
-    static public final String TYPE_IMAGE = "image";
-    static public final String TYPE_MAP = "map";
-    static public final String TYPE_DOCUMENT = "document";
-    static public final String TYPE_BACKUP = "backup";
+	// Java convention is to use all caps for names of enum values.
+	// For historical reasons, I scoff at convention.
+	public enum FileType { image, map, document, backup };
     
     private int attachmentId;
     private int entryId;
     private boolean isGalleryImage;
     private String fileName;
     private String mimeType;
-    private String fileType;
+    private FileType fileType;
     private int userId;
     private String userName;
     private Date datePosted;
@@ -35,9 +34,9 @@ public class Attachment implements Serializable
      */
     static public Collection<String> getFileTypeOptions() {
         List<String> options = new ArrayList<String>(3);
-        options.add(TYPE_IMAGE);
-        options.add(TYPE_MAP);
-        options.add(TYPE_DOCUMENT);
+        for (FileType t : FileType.values()) {
+        	options.add(t.toString());
+        }
         return options;
     }
     
@@ -92,7 +91,7 @@ public class Attachment implements Serializable
     
     public boolean getIsMap()
     {
-        return TYPE_MAP.equals(getFileType());
+        return FileType.map.equals(getFileType());
     }
 
     public void setFileName(String fileName)
@@ -211,7 +210,7 @@ public class Attachment implements Serializable
      * Getter for property fileType.
      * @return Either "document", "map", or "image"
      */
-    public String getFileType() {
+    public FileType getFileType() {
         return fileType;
     }
     
@@ -224,7 +223,11 @@ public class Attachment implements Serializable
      * @param Either "document", "map", or "image"
      */
     public void setFileType(String fileType) {
-        this.fileType = fileType;
+    	setFileType(FileType.valueOf(fileType));
+    }
+    
+    public void setFileType(FileType fileType) {
+    	this.fileType = fileType;
     }
     
 }
