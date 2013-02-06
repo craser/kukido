@@ -32,22 +32,7 @@ public class LogDaoTest
         LogDao logDao = new LogDao();
         this.tags = new TagDao().create(tags); // Tested in TagDaoTest.  Rely on its correct functioning here.
         
-        LogEntry entry = new LogEntry();
-        entry.setAllowComments(true);
-        entry.setBody("body");
-        entry.setDatePosted(now);
-        entry.setEntryId(-1); // Confirm later that this got properly set.
-        entry.setImageFileName("image-file-name");
-        entry.setImageFileType(Attachment.FileType.document);
-        entry.setIntro("intro");
-        entry.setLastUpdated(now);
-        entry.setTitle("title");
-        entry.setUserId(-1);
-        entry.setUserName("junit");
-        entry.setViaText("via-text");
-        entry.setViaTitle("via-title");
-        entry.setViaUrl("via-url");
-        entry.setTags(tags);
+        LogEntry entry = buildLogEntry();
         
         LogEntry created = logDao.create(entry);
         entryId = created.getEntryId();
@@ -58,7 +43,8 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(created.getDatePosted(), now));
         assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("image-file-name".equals(created.getImageFileName()));
-        assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
+        //assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
+        assertNull(created.getImageFileType());
         assertTrue("intro".equals(created.getIntro()));
         assertTrue(withinFiveMinutes(created.getLastUpdated(), now));
         assertTrue("title".equals(created.getTitle()));
@@ -68,6 +54,49 @@ public class LogDaoTest
         assertTrue("via-title".equals(created.getViaTitle()));
         assertTrue("via-url".equals(created.getViaUrl()));
         assertTrue(sameTags(created.getTags(), tags));
+    }
+
+	private LogEntry buildLogEntry() {
+		LogEntry entry = new LogEntry();
+        entry.setAllowComments(true);
+        entry.setBody("body");
+        entry.setDatePosted(now);
+        entry.setEntryId(-1); // Confirm later that this got properly set.
+        entry.setImageFileName("image-file-name");
+        //entry.setImageFileType(Attachment.FileType.document);
+        entry.setImageFileType(null);
+        entry.setIntro("intro");
+        entry.setLastUpdated(now);
+        entry.setTitle("title");
+        entry.setUserId(-1);
+        entry.setUserName("junit");
+        entry.setViaText("via-text");
+        entry.setViaTitle("via-title");
+        entry.setViaUrl("via-url");
+        entry.setTags(tags);
+		return entry;
+	}
+	
+	@Test
+    public void test_fileTypes_update() throws DataAccessException
+    {
+        LogDao logDao = new LogDao();
+        Attachment.FileType[] types = Attachment.FileType.values();
+        Attachment.FileType[] typesWithNull = Arrays.copyOf(types, types.length + 1); // padded with a null value.
+        
+        for (Attachment.FileType fileType : typesWithNull) {
+        	try {
+		        LogEntry entry = logDao.findByEntryId(entryId);
+		        entry.setImageFileType(fileType);
+		        logDao.update(entry);
+		        LogEntry updated = logDao.findByEntryId(entryId);
+		        entryId = updated.getEntryId();
+		        assertEquals(fileType, updated.getImageFileType());
+        	}
+        	catch (Exception e) {
+        		fail("Error setting thumnail file type to " + fileType + ": " + e);
+        	}
+        }
     }
     
     @Test
@@ -83,7 +112,8 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(created.getDatePosted(), now));
         assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("image-file-name".equals(created.getImageFileName()));
-        assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
+        //assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
+        assertNull(created.getImageFileType());
         assertTrue("intro".equals(created.getIntro()));
         assertTrue(withinFiveMinutes(created.getLastUpdated(), now));
         assertTrue("title".equals(created.getTitle()));
