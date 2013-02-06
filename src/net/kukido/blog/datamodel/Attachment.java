@@ -7,7 +7,7 @@ public class Attachment implements Serializable
 {
 	// Java convention is to use all caps for names of enum values.
 	// For historical reasons, I scoff at convention.
-	public enum FileType { image, map, document, backup };
+	public enum FileType { image, map, document }; //, backup };
     
     private int attachmentId;
     private int entryId;
