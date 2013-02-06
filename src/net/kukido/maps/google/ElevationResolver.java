@@ -35,21 +35,21 @@ public class ElevationResolver
 	
 	public GpsTrack resolve(GpsTrack track) throws IOException, SAXException 
 	{
-		System.out.println("Resolving track...");
+		log.debug("Resolving track...");
 		int start = 0;
 		ElevationResponseParser parser = new ElevationResponseParser();
 		List<URL> urls = buildUrls(track);
 		for (URL url : urls) {
-			System.out.println("    Resolving section...");
-			System.out.println("    start: " + start);
-			System.out.println("    url  : " + url);
+			log.debug("    Resolving section...");
+			log.debug("    start: " + start);
+			log.debug("    url  : " + url);
 			URLConnection conn = url.openConnection();
 			InputStream in = conn.getInputStream();
 			ElevationResponse response = parser.parse(in);
 			response.fixElevations(track, start);
 			start += response.getLocations().size();
 		}
-		System.out.println("...done resolving track.");
+		log.debug("...done resolving track.");
 		return track;
 	}
 	
@@ -63,7 +63,7 @@ public class ElevationResolver
 	 */
 	private List<URL> buildUrls(GpsTrack track) throws MalformedURLException
 	{
-		System.out.println("buildUrls()");
+		log.debug("buildUrls()");
 		List<URL> urls = new ArrayList<URL>();
 		int count = 0;
 		StringBuffer url = getUrl();
@@ -73,13 +73,13 @@ public class ElevationResolver
 			url.append(",");
 			url.append(loc.getLongitude()).append("|"); // Don't forget to strip off the last one.
 			if (url.length() > MAX_URL_LENGTH || count >= MAX_POINTS_PER_REQUEST) {
-				System.out.println("done building urls for track section. (count: " + count + ")");
+				log.debug("done building urls for track section. (count: " + count + ")");
 				count = 0;
 				urls.add(new URL(url.substring(0, url.length() - 1)));
 				url = getUrl();
 			}
 		}
-		System.out.println("built " + urls.size() + "urls");
+		log.debug("built " + urls.size() + "urls");
 		return urls;
 	}
 	
