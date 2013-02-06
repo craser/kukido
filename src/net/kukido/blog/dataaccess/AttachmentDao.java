@@ -305,6 +305,10 @@ public class AttachmentDao extends Dao {
 			create(backup);
 		}
 	}
+	
+	public Attachment findBackup(Attachment attachment) throws DataAccessException {
+		return findByFileName(getBackupFileName(attachment));
+	}
 
     public void updateBytes(Attachment attachment) throws DataAccessException {
         Connection conn = null;
