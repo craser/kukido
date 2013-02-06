@@ -36,7 +36,7 @@ public class ResolveElevation extends Action
 	    	dao.populateBytes(gpx);
 	    	
 	    	// Before we do anything, make a backup of the original data.
-	    	//dao.makeBackup(gpx);
+	    	dao.makeBackup(gpx);
 	    	
 	    	// Now we can go ahead and monkey with the original data.
 	    	GpsTrack track = new GpxParser().parse(gpx.getBytes()).get(0); // Hackety hack.

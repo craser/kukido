@@ -30,7 +30,12 @@ public class ResolveElevationTest
     	ActionForward fwd = action.execute(map, null, req, res);
     	
     	Attachment att = dao.findByFileName(fileName);
-    	//assertTrue(dao.hasBackup(att));
+    	assertTrue(dao.hasBackup(att));
+    	
+    	Attachment backup = dao.findBackup(att);
+    	dao.delete(backup);
+    	assertFalse(dao.hasBackup(att));
+    	
     	assertTrue(fwd.getPath().endsWith("42"));
     	assertTrue("success".equals(fwd.getName()));
     }
