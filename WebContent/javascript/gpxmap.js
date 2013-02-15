@@ -18,7 +18,7 @@ function buildWayPoint(point, name, handler)
 
 function buildClickHandler(fileName)
 {
-    return function() { showImageOnMap(fileName); }
+    return function() { showImageOnMap(fileName); };
 }
 
 function showImageOnMap(fileName)
@@ -123,9 +123,9 @@ function renderElevation(div, map, gpxTrack)
 		var remove = function(p) {
 			map.removeOverlay(mark);
 		};
-		var out = google.visualization.events.addListener(chart, 'onmouseout', remove);
+		google.visualization.events.addListener(chart, 'onmouseout', remove);
 	};
-	var onMouseOver = google.visualization.events.addListener(chart, 'onmouseover', add);
+	google.visualization.events.addListener(chart, 'onmouseover', add);
 }
 
 
@@ -144,11 +144,12 @@ function renderTrack(map, gpxTrack, getColor)
 {
     var overlays = [];
     var points = [];
+    var color = null;
     for (var i = 0; i < gpxTrack.points.length; i++) {
         var p = gpxTrack.points[i]; // GPS point
         var g = new GLatLng(p.lat, p.lon);
         points.push(g);
-        var color = getColor(p); // Get the color for this point.
+        color = getColor(p); // Get the color for this point.
         if ((i % 100) == 0) {
             overlays.push(new GPolyline(points, color));
             points = [];
