@@ -164,7 +164,7 @@ function renderTrack(map, gpxTrack, getColor)
     return overlays;
 }
 
-function renderPageByName(gpxFileName, getColor) {
+function renderPageByName(gpxFileName, map, getColor) {
     // Default to a "rich blue" color for map rendering.
     getColor = (getColor == null) ? function(p) { return "#FF0000"; } : getColor;
     var url = "json/maps/" + gpxFileName;
@@ -178,19 +178,4 @@ function renderPageByName(gpxFileName, getColor) {
         }
     };
     GDownloadUrl(url, k);	
-}
-      
-// Requires ajax.js
-function renderMapByName(gpxFileName, getColor) {
-    // Default to a "rich blue" color for map rendering.
-    getColor = (getColor == null) ? function(p) { return "#FF0000"; } : getColor;
-    var url = "json/maps/" + gpxFileName;
-    var k = function (mapJson) {
-        var gpxTracks = eval(mapJson);
-        for (var i = 0; i < gpxTracks.length; i++) {
-        	var gpxTrack = gpxTracks[i];
-        	renderTrack(map, gpxTrack, getColor);
-        }
-    };
-    GDownloadUrl(url, k);
 }
