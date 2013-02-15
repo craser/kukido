@@ -101,35 +101,50 @@ function buildTr(thData, tdData)
     var th = document.createElement("th");
     th.appendChild(document.createTextNode(thData));
     var td = document.createElement("td");
-    td.appendChild(document.createTextNode(tdData))
+    td.appendChild(document.createTextNode(tdData));
     tr.appendChild(th);
     tr.appendChild(td);
     return tr;
 }
 
 function buildDesc(gpxTrack, color, divId) {
-    return "<div id=\"" + divId + "\"  class=\"trackInfo\">"
-        + "<h4 id=\"" + divId + "-title\" style=\"background-color: " + color + "\">" + gpxTrack.title + "</h4>"
+	var values = {
+		divId: divId,
+		color: color
+	};
+	
+    var template = "<div id=\"{divId}\"  class=\"trackInfo\">"
+        + "<h4 id=\"{divId}-title\" style=\"background-color: {color}\">{title}</h4>"
         + "<table>"
         + "<tr>"
         + "<th>Date:</th>"
-        + "<td>" + gpxTrack.date + "</td>"
+        + "<td>{date}</td>"
         + "</tr>"
         + "<tr>"
         + "<th>Duration:</th>"
-        + "<td>" + gpxTrack.duration + "</td>"
+        + "<td>{duration}</td>"
         + "</tr>"
         + "<tr>"
         + "<th>Distance (km):</th>"
-        + "<td>" + gpxTrack.kilometers + "</td>"
+        + "<td>{kilometers}</td>"
         + "</tr>"
         + "<tr>"
         + "<th>Climbing (m):</th>"
-        + "<td>" + gpxTrack.climbing + "</td>"
+        + "<td>{climbing}</td>"
         + "</tr>"
         + "<tr>"
         + "<td colspan=\"2\" align=\"right\"></td>"
         + "</tr>"
         + "</table>"
         + "</div>";
+    
+    var t = format(template, values);
+    return format(t, gpxTrack);
 }
+
+function format(s, map) {
+    return s.replace(/\{(foo)\}/g, function(a, b) {
+        return map[b] ? map[b] : a;
+    });
+}
+

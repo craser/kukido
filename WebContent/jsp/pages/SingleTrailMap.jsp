@@ -21,43 +21,17 @@
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->
     <script>
-      
-      function bindMap(elementId)
-      {
-          if (GBrowserIsCompatible()) {
-              var div = document.getElementById(elementId);
-              var gmap = new GMap2(div);
-              gmap.addControl(new GLargeMapControl());
-              gmap.addControl(new GMapTypeControl());
-              gmap.addControl(new GScaleControl());
-              gmap.removeMapType(G_HYBRID_MAP);
-              gmap.addMapType(G_PHYSICAL_MAP);
-              gmap.enableScrollWheelZoom();
-              
-              // applying trkpt center:
-              zoomToBounds(gmap, 
-                           <nested:write name="track" property="bounds.minLatitude" />, 
-                           <nested:write name="track" property="bounds.maxLatitude" />, 
-                           <nested:write name="track" property="bounds.minLongitude" />, 
-                           <nested:write name="track" property="bounds.maxLongitude" />);
-
-              GEvent.addListener(gmap, "click", function(marker, point) {
-                  if (!marker) { gmap.closeInfoWindow(); }
-              });
-
-              return gmap; 
-          }
-      }
-      
-      var map = [];      
-      var descriptions = new Object();
-      var markers = new Object();
-      
-      // Assign the actual Google Map obj. to the global var.
       window.addEventListener("load", function() { 
     	  fitToScreen(); 
-    	  map = bindMap('map'); map.setMapType(G_PHYSICAL_MAP); 
-    	  renderPageByName('<nested:write name="map" property="fileName" />', getDefaultColor); 
+    	  var map = bindMap('map'); 
+    	  map.setMapType(G_PHYSICAL_MAP); 
+          zoomToBounds(map, 
+                       <nested:write name="track" property="bounds.minLatitude" />, 
+                       <nested:write name="track" property="bounds.maxLatitude" />, 
+                       <nested:write name="track" property="bounds.minLongitude" />, 
+                       <nested:write name="track" property="bounds.maxLongitude" />);
+    	  
+    	  renderPageByName('<nested:write name="map" property="fileName" />', map, getDefaultColor); 
       });
       window.addEventListener("resize", function() { fitToScreen(); });
     </script>

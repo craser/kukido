@@ -39,36 +39,18 @@
       </nested:iterate>
       ];
       
-      function bindMap(elementId)
-      {
-          if (GBrowserIsCompatible()) {
-              var div = document.getElementById(elementId);
-              
-              var gmap = new GMap2(div);
-              gmap.addControl(new GLargeMapControl());
-              gmap.addControl(new GMapTypeControl());
-              gmap.addControl(new GScaleControl());
-              gmap.removeMapType(G_HYBRID_MAP);
-              gmap.addMapType(G_PHYSICAL_MAP);
-              gmap.enableScrollWheelZoom();
-              
-              // applying trkpt center:
-              zoomToBounds(gmap,
-                           <nested:write name="bounds" property="minLatitude" />, 
-                           <nested:write name="bounds" property="maxLatitude" />, 
-                           <nested:write name="bounds" property="minLongitude" />, 
-                           <nested:write name="bounds" property="maxLongitude" />);
-                           
-              return gmap;
-          }
-      }
-      
       function window_onload() 
       {
           fitToScreen();
           closeSlide();
           map = bindMap('map'); 
           map.setMapType(G_PHYSICAL_MAP); 
+          zoomToBounds(map,
+                       <nested:write name="bounds" property="minLatitude" />, 
+                       <nested:write name="bounds" property="maxLatitude" />, 
+                       <nested:write name="bounds" property="minLongitude" />, 
+                       <nested:write name="bounds" property="maxLongitude" />);
+          
           markMaps(map, gpsMaps, displayFuncs);
       }
       

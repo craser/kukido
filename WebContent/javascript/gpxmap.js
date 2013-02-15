@@ -1,5 +1,30 @@
 // Some functions in this file require the prior import of ajax.js
 
+var descriptions = new Object();
+var markers = new Object();
+      
+
+
+function bindMap(elementId)
+{
+    if (GBrowserIsCompatible()) {
+        var div = document.getElementById(elementId);
+        var gmap = new GMap2(div);
+        gmap.addControl(new GLargeMapControl());
+        gmap.addControl(new GMapTypeControl());
+        gmap.addControl(new GScaleControl());
+        gmap.removeMapType(G_HYBRID_MAP);
+        gmap.addMapType(G_PHYSICAL_MAP);
+        gmap.enableScrollWheelZoom();
+
+        GEvent.addListener(gmap, "click", function(marker, point) {
+            if (!marker) { gmap.closeInfoWindow(); }
+        });
+
+        return gmap; 
+    }
+}
+
 function resizeMap(elementId) {
     var div = document.getElementById(elementId);
     var hw = window.innerHeight;
