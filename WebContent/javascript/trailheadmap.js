@@ -107,44 +107,4 @@ function buildTr(thData, tdData)
     return tr;
 }
 
-function buildDesc(gpxTrack, color, divId) {
-	var values = {
-		divId: divId,
-		color: color
-	};
-	
-    var template = "<div id=\"{divId}\"  class=\"trackInfo\">"
-        + "<h4 id=\"{divId}-title\" style=\"background-color: {color}\">{title}</h4>"
-        + "<table>"
-        + "<tr>"
-        + "<th>Date:</th>"
-        + "<td>{date}</td>"
-        + "</tr>"
-        + "<tr>"
-        + "<th>Duration:</th>"
-        + "<td>{duration}</td>"
-        + "</tr>"
-        + "<tr>"
-        + "<th>Distance (km):</th>"
-        + "<td>{kilometers}</td>"
-        + "</tr>"
-        + "<tr>"
-        + "<th>Climbing (m):</th>"
-        + "<td>{climbing}</td>"
-        + "</tr>"
-        + "<tr>"
-        + "<td colspan=\"2\" align=\"right\"></td>"
-        + "</tr>"
-        + "</table>"
-        + "</div>";
-    
-    var t = format(template, values);
-    return format(t, gpxTrack);
-}
-
-function format(s, map) {
-    return s.replace(/\{(foo)\}/g, function(a, b) {
-        return map[b] ? map[b] : a;
-    });
-}
 
