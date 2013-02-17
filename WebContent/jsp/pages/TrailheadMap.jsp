@@ -21,7 +21,6 @@
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- TrailheadMap.jsp -->
-    <div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div>
     <div id="map"></div>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->
