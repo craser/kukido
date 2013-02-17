@@ -5,6 +5,7 @@ function Map(div) {
     var markers = new Object();
     
 	this.div = div;
+	resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
 	this.map = bind(this.div);
 	this.bounds = null; // Set in zoomToBounds
 	
@@ -32,6 +33,10 @@ function Map(div) {
 	this.resize = function(w, h) {
 		if (!!w) this.div.style.width = w + "px";
 		if (!!h) this.div.style.height = h + "px";
+	};
+	
+	this.resizeBy = function(dw, dh) {
+		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
 	this.zoomToBounds = function(minLat, maxLat, minLon, maxLon) {
@@ -65,10 +70,6 @@ function Map(div) {
 	
 	this.getWidth = function() {
 		return this.div.offsetWidth;
-	};
-	
-	this.resizeBy = function(dw, dh) {
-		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
 	function bind(div) {

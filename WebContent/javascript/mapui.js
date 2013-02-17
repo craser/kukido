@@ -1,16 +1,23 @@
 function MapUI(mapDiv, elevationDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
+	this.mapDiv = mapDiv;
+	this.elevationDiv = elevationDiv;
+	
+	this.resizeMapDiv = function() {
+	    var hw = window.innerHeight;
+	    var hd = document.getElementsByTagName("body")[0].offsetHeight;
+	    var hc = this.mapDiv.offsetHeight;
+	    var dhc = (hd > hw) ? (hd - hw) : 0;
+	    this.mapDiv.style.height = (hc - dhc) + "px";
+	};
 	
 	this.fitToScreen = function() {
 	    var body = document.getElementsByTagName("body")[0];
 	    var bodyHeight = body.offsetHeight;
-	    var windowHeight = (window.innerHeight)
-	        ? window.innerHeight
-	        : document.documentElement.clientHeight;
+	    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
 	    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
-	    
 	    this.map.resizeBy(0, dh);
-		this.map.zoomToBounds();
+		//this.map.zoomToBounds(); This is a hacky little work-around.
 	};
 	
 	this.renderPageByName = function(gpxFileName, getColor) {
@@ -63,6 +70,7 @@ function MapUI(mapDiv, elevationDiv) {
 		google.visualization.events.addListener(chart, 'onmouseover', add);
 	};
 
+    this.resizeMapDiv();
 	this.map = new Map(mapDiv);
     window.addEventListener("resize", function() { self.fitToScreen(); });
 }
