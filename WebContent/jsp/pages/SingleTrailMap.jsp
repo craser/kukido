@@ -26,10 +26,8 @@
     	  var mapDiv = document.getElementById("map");
     	  var elevationDiv = document.getElementById("elevationgraph");
     	  window.mapui = new MapUI(mapDiv, elevationDiv);
-    	  mapui.fitToScreen(); 
     	  mapui.renderPageByName('<nested:write name="map" property="fileName" />', getDefaultColor); 
       });
-      window.addEventListener("resize", function() { fitToScreen(); });
     </script>
   </tiles:put>
   <tiles:put name="content" type="string">

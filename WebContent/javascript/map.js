@@ -6,6 +6,7 @@ function Map(div) {
     
 	this.div = div;
 	this.map = bind(this.div);
+	this.bounds = null; // Set in zoomToBounds
 	
 	this.renderTrack = function(gpxTrack, getColor) {
 	    var color = null;
@@ -34,11 +35,11 @@ function Map(div) {
 	};
 	
 	this.zoomToBounds = function(minLat, maxLat, minLon, maxLon) {
-	    var bounds = buildBounds(minLat, maxLat, minLon, maxLon);
-	    var lat = (minLat + maxLat) / 2;
-	    var lon = (minLon + maxLon) / 2;
-	    var zoom = this.map.getBoundsZoomLevel(bounds);
-	    this.map.setCenter(new GLatLng(lat,lon), zoom);
+		if (!!minLat) {
+		    this.bounds = buildBounds(minLat, maxLat, minLon, maxLon);
+		}
+	    var zoom = this.map.getBoundsZoomLevel(this.bounds);
+	    this.map.setCenter(this.bounds.getCenter(), zoom);
 	};
 
 	this.showImageOnMap = function(fileName)
