@@ -16,29 +16,24 @@
     <script type="text/JavaScript">
       google.load('visualization', '1.0', {'packages': ['corechart']});
     </script>
-    <script type="text/JavaScript" src="javascript/gpxmap.js"> </script>
+    <script type="text/JavaScript" src="javascript/mapui.js"> </script>
+    <script type="text/JavaScript" src="javascript/map.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
     <!-- script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTFRfqDGOwfXAlOK-54sJyR4NNS5RRcymeccR_BOTGOd_RmVO8QutZgJg" type="text/javascript"script -->
     <script>
       window.addEventListener("load", function() { 
-    	  fitToScreen(); 
-    	  var map = bindMap('map'); 
-    	  map.setMapType(G_PHYSICAL_MAP); 
-          zoomToBounds(map, 
-                       <nested:write name="track" property="bounds.minLatitude" />, 
-                       <nested:write name="track" property="bounds.maxLatitude" />, 
-                       <nested:write name="track" property="bounds.minLongitude" />, 
-                       <nested:write name="track" property="bounds.maxLongitude" />);
-    	  
-    	  renderPageByName('<nested:write name="map" property="fileName" />', map, getDefaultColor); 
+    	  var mapDiv = document.getElementById("map");
+    	  var elevationDiv = document.getElementById("elevationgraph");
+    	  window.mapui = new MapUI(mapDiv, elevationDiv);
+    	  mapui.fitToScreen(); 
+    	  mapui.renderPageByName('<nested:write name="map" property="fileName" />', getDefaultColor); 
       });
       window.addEventListener("resize", function() { fitToScreen(); });
     </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- GpxGmap.jsp -->
-    <!--  div id="slider" class="open" onclick="toggleSlide()">&nbsp;</div -->
     <div id="map"></div>
     <div id="routeinfo">
     	<div id="elevationgraph"></div>

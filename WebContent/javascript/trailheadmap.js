@@ -58,12 +58,10 @@ function buildColorGetter(n) {
 function displayTrackInfo(marker, gpxTrack, getColor, hideTrackInfo) {
     openSlide();
     
-    // BUG! FIXME: Adding to the innerHTML property strips off
+    // Adding to the innerHTML property strips off
     // all the click handlers in the existing sub-elements.  So
-    // I've got to build the actual DOM tree rather than just 
+    // I've got to build the actual DOM tree rather than just
     // catting together some HTML.
-    //var routeDescHtml = buildDesc(gpxTrack, color, gpxTrack.fileName);
-    //sidebar.innerHTML += routeDescHtml;
 
     var div = document.createElement("div");
     div.setAttribute("id", gpxTrack.fileName);
