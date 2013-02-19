@@ -1,7 +1,5 @@
-function MapUI(mapDiv, elevationDiv) {
+function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
-	this.mapDiv = mapDiv;
-	this.elevationDiv = elevationDiv;
 	
 	this.resizeMapDiv = function() {
 	    var hw = window.innerHeight;
@@ -20,57 +18,36 @@ function MapUI(mapDiv, elevationDiv) {
 		//this.map.zoomToBounds(); This is a hacky little work-around.
 	};
 	
-	this.renderPageByName = function(gpxFileName, getColor) {
-	    // Default to a "rich blue" color for map rendering.
-	    getColor = (getColor == null) ? function(p) { return "#FF0000"; } : getColor;
-	    var url = "json/maps/" + gpxFileName;
-	    var k = function (mapJson) {
-	        var gpxTracks = eval(mapJson);
-	        for (var i = 0; i < gpxTracks.length; i++) {
-	        	var gpxTrack = gpxTracks[i];
-	        	self.map.renderTrack(gpxTrack, getColor);
-	        	self.renderElevation(elevationDiv, self.map.map, gpxTrack);
-	        }
-	    };
-	    GDownloadUrl(url, k);
-	};
-	
-	this.renderElevation = function(div, map, gpxTrack) {
-		// Create and populate the data table.
-		var data = new google.visualization.DataTable();
-		data.addColumn('datetime', 'Time');
-		data.addColumn('number', 'Elevation');
-		for (i in gpxTrack.points) {
-			var p = gpxTrack.points[i];
-			var r = [new Date(p.time), p.elv];
-			try { data.addRow(r); }
-			catch (e) {
-				console.log(e);
-			}
-		}
-
-		// Create and draw the visualization.
-		var chart = new google.visualization.AreaChart(div);
-		chart.draw(data, {curveType: "function",
-				   title: 'Elevation Profile',
-				   backgroundColor: 'transparent',
-				   legend: {
-					   position: 'none'
-				   },
-				   colors: ['#9c9']
-			});
-		
+	function addElevationListeners(gpxTrack) {
 		var add = function(p) { 
 			var mark = self.map.markLocation(gpxTrack.points[p.row]);
 			var remove = function(p) {
-				self.map.map.removeOverlay(mark);
+				self.map.removeMark(mark);
 			};
-			google.visualization.events.addListener(chart, 'onmouseout', remove);
+			self.elevation.addListener('onmouseout', remove);
 		};
-		google.visualization.events.addListener(chart, 'onmouseover', add);
-	};
+		self.elevation.addListener('onmouseover', add);
+	}
+	
+	function init(gpxTracks) {
+		var gpxTrack = gpxTracks[0]; // brain dead hack.
+		self.resizeMapDiv();
+		self.map = new Map(mapDiv);
+    	self.map.renderTrack(gpxTrack);
+		self.elevation = new Elevation(elevationDiv, gpxTrack);
+		addElevationListeners(gpxTrack);
+	    window.addEventListener("resize", function() { self.fitToScreen(); });
+	}
 
-    this.resizeMapDiv();
-	this.map = new Map(mapDiv);
-    window.addEventListener("resize", function() { self.fitToScreen(); });
+	(function() {
+		self.elevationDiv = elevationDiv;
+		self.mapDiv = mapDiv;
+		
+	    var url = "json/maps/" + gpxFileName;
+	    var k = function (mapJson) {
+	        var gpxTracks = eval(mapJson);
+	        init(gpxTracks);
+	    };
+	    GDownloadUrl(url, k);
+	})();
 }

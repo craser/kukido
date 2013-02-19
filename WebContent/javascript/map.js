@@ -3,13 +3,9 @@ function Map(div) {
     var points = [];
     var descriptions = new Object();
     var markers = new Object();
-    
-	this.div = div;
-	resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
-	this.map = bind(this.div);
-	this.bounds = null; // Set in zoomToBounds
 	
 	this.renderTrack = function(gpxTrack, getColor) {
+	    getColor = getColor || function(p) { return "#FF0000"; };
 	    var color = null;
 	    with (gpxTrack.bounds) { this.zoomToBounds(minLat, maxLat, minLon, maxLon); }
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
@@ -64,6 +60,10 @@ function Map(div) {
 		return mark;
 	};
 	
+	this.removeMark = function(mark) {
+		this.map.removeOverlay(mark);
+	};
+	
 	this.getHeight = function() {
 		return this.div.offsetHeight;
 	};
@@ -87,28 +87,30 @@ function Map(div) {
 	            if (!marker) { gmap.closeInfoWindow(); }
 	        });
 
-	        return gmap; 
+	        return gmap;
 	    }
 	}
 
-	function buildClickHandler(fileName)
-	{
+	function buildClickHandler(fileName) {
 	    return function() { showImageOnMap(fileName); };
 	}
 
-	function buildBounds(minLat, maxLat, minLon, maxLon)
-	{
+	function buildBounds(minLat, maxLat, minLon, maxLon) {
 	    var ne = new GLatLng(maxLat, maxLon);
 	    var sw = new GLatLng(minLat, minLon);
 	    return new GLatLngBounds(sw, ne);
 	}
 	
-	function buildWayPoint(point, name, handler)
-	{
+	function buildWayPoint(point, name, handler) {
 	    var marker = new GMarker(point);
 	    GEvent.addListener(marker, "click", handler);
 	    return marker;
 	}
+    
+	this.div = div;
+	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
+	this.map = bind(this.div);
+	this.bounds = null; // Set in zoomToBounds
 }
 
 

@@ -17,6 +17,7 @@
       google.load('visualization', '1.0', {'packages': ['corechart']});
     </script>
     <script type="text/JavaScript" src="javascript/mapui.js"> </script>
+    <script type="text/JavaScript" src="javascript/elevation.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA" type="text/javascript"></script>
@@ -25,7 +26,7 @@
       window.addEventListener("load", function() { 
     	  var mapDiv = document.getElementById("map");
     	  var elevationDiv = document.getElementById("elevationgraph");
-    	  window.mapui = new MapUI(mapDiv, elevationDiv);
+    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', mapDiv, elevationDiv);
     	  mapui.renderPageByName('<nested:write name="map" property="fileName" />', getDefaultColor); 
       });
     </script>
