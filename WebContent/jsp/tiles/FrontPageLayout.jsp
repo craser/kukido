@@ -14,9 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/handheld.css" media="handheld"/>
     <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
-    <link rel="stylesheet" type="text/css" href="css/twitter_timeline.css" />
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
-    <script type="text/javascript" src="javascript/twitter_timeline.js"> </script>
     <!-- page-specific header information -->
     <tiles:get name="head" />
     <!-- end of page-specific header information -->
@@ -36,13 +34,7 @@
       <!-- sidebar -->
       <tiles:get name="sidebar" />
       <!-- end of sidebar -->
-    </div>
-    <div class="sidebar-left">
-      <!-- sidebar -->
-      <div id="twitterDisplay"></div>
-      <script> includeTwitterTimeline(); </script>
-      <!-- end of sidebar -->
-    </div>    
+    </div>  
     <div class="content">
       <!-- main content area -->
       <tiles:get name="content" ignore="false" />
