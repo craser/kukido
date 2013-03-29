@@ -161,10 +161,8 @@ public class LogDao extends Dao implements Iterator
         try {
             conn = getConnection();
             update = new NamedParamStatement(conn, UPDATE_SQL);
-            update.setTimestamp("Date_Posted", new java.sql.Timestamp(logEntry.getDatePosted()
-                    .getTime()));
-            update.setTimestamp("Last_Updated",
-                    new java.sql.Timestamp(new java.util.Date().getTime()));
+            update.setTimestamp("Date_Posted", new java.sql.Timestamp(logEntry.getDatePosted().getTime()));
+            update.setTimestamp("Last_Updated", new java.sql.Timestamp(new java.util.Date().getTime()));
             update.setInt("User_ID", logEntry.getUserId());
             update.setString("User_Name", logEntry.getUserName());
             update.setString("Title", logEntry.getTitle());
