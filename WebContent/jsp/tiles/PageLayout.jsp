@@ -20,33 +20,35 @@
   </head>
   <body>
     <h1 id="titlebanner"><html:link page="/">dreadedmonkeygod . net</html:link></h1>
-    <div class="header">
-      <ul class="sitenav">
-        <li><html:link href="trailmaps">trail maps</html:link></li>
-        <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
-        <li><html:link href="about">about the author</html:link></li>
-        <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
-        <li><html:link href="http://del.icio.us/rss/DeathBeforeDecaf"><img src="img/feed-icon.gif" /> del.icio.us</html:link></li>
-      </ul>
-    </div>
-    <div class="sidebar">
-      <!-- sidebar -->
-      <tiles:get name="sidebar" />
-      <!-- end of sidebar -->
-    </div>
-    <div class="content">
-      <!-- main content area -->
-      <tiles:get name="content" ignore="false" />
-      <!-- end main content area -->
-    </div>
-    <div class="footer">
-      <ul class="sitenav">
-        <li><html:link href="trailmaps">trail maps</html:link></li>
-        <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
-        <li><html:link href="about">about the author</html:link></li>
-        <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
-        <li><html:link href="http://del.icio.us/rss/DeathBeforeDecaf"><img src="img/feed-icon.gif" /> del.icio.us</html:link></li>
-      </ul>
+    <div id="page">
+      <div class="header">
+        <ul class="sitenav">
+          <li><html:link href="trailmaps">trail maps</html:link></li>
+          <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
+          <li><html:link href="about">about the author</html:link></li>
+          <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
+          <li><html:link href="http://del.icio.us/rss/DeathBeforeDecaf"><img src="img/feed-icon.gif" /> del.icio.us</html:link></li>
+        </ul>
+      </div>
+      <div class="sidebar">
+        <!-- sidebar -->
+        <tiles:get name="sidebar" />
+        <!-- end of sidebar -->
+      </div>
+      <div class="content">
+        <!-- main content area -->
+        <tiles:get name="content" ignore="false" />
+        <!-- end main content area -->
+      </div>
+      <div class="footer">
+        <ul class="sitenav">
+          <li><html:link href="trailmaps">trail maps</html:link></li>
+          <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
+          <li><html:link href="about">about the author</html:link></li>
+          <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
+          <li><html:link href="http://del.icio.us/rss/DeathBeforeDecaf"><img src="img/feed-icon.gif" /> del.icio.us</html:link></li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>

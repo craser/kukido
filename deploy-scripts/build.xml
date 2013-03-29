@@ -77,7 +77,18 @@
 	 	</copy>
 	</target>
 	
-	<target name="test-java" depends="jar-coverage">
+	<target name="deploy-test-css" depends="">
+		<echo message="Deploying css files to test server." />
+		<echo message="    src: ${local.css.dir}" />
+		<echo message="    dst: ${resin.css.dir}" />
+		<copy todir="${resin.css.dir}">
+			<fileset dir="${local.css.dir}" includes="*" />
+	 	</copy>
+	</target>
+	
+	
+	
+	<target name="test-java" depends="compile-all">
 		<junit showoutput="true" haltonerror="false" haltonfailure="true">
 			<classpath refid="project.class.path" />
 			<classpath location="${local.classes.dir}" />
@@ -93,12 +104,6 @@
 			<classpath refid="project.class.path" />
 			<fileset file="${local.build.dir}/${kukido.jar.file}" />
 		</cobertura-instrument>
-		<delete>
-			<fileset dir="${local.build.dir}">
-				<include name="${kukido.jar.file}" />
-			</fileset>
-		</delete>
-		<copy file="${local.test.dir}/${kukido.jar.file}" tofile="${local.build.dir}/${kukido.jar.file}" />
 	</target>
 
 	<target name="test-tag-build" depends="init-tag-name">
