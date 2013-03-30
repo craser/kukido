@@ -5,13 +5,14 @@
 
 /**********************************************************************
  * General Guidelines
+  font-family: georgia, serif;
  */
 body {
   background: url(../img/clouds-bg.jpg);
-  font-family: georgia, serif;
+  font-family: HelveticaNeue-condensed, sans-serif;
   color: #222;
   margin: 0px;
-  width: 55em;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1em;
@@ -157,14 +158,13 @@ p {
 }
 
 .content {
-  padding: 1.5em;
   padding-top: 0;
   border-right: 0;
-  margin-right: 185px;
+  margin-right: 200px;
+  width: 600px;
 }
 
 .sidebar {
-  font-family: Verdana, Arial, sans-serif;
   font-size: 0.8em;
   float: right;
   width: 180px;
@@ -174,9 +174,8 @@ p {
 
 .traversallinks {
   text-transform: lowercase;
-  font: bold 1.2em sans-serif;
+  font-size: 1.2em;
   line-height: 1.2em;
-  letter-spacing: -1px;
 }
 
 .traversallinks a {
