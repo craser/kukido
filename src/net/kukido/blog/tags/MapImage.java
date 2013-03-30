@@ -91,7 +91,7 @@ public class MapImage extends ImgTag
     protected String getDimensions()
     {
         if ("postcard".equalsIgnoreCase(size)) {
-            return "600x300";
+            return "426x318";
         }
         else if ("thumbnail".equalsIgnoreCase(size)) {
             return "83x64";

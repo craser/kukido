@@ -7,22 +7,15 @@
  * General Guidelines
  */
 body {
-  font-family: HelveticaNeue-condensed, sans-serif;
-  background-color: #fff;
-  color: #000;
-  padding: 0px;
-  margin: 0px;
-}
-
-#page {
-  font-family: HelveticaNeue-condensed, sans-serif;
-  background-color: #fff;
+  background: url(../img/clouds-bg.jpg);
+  font-family: georgia, serif;
   color: #222;
   margin: 0px;
-  width: 1000px;
+  width: 55em;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 img {
@@ -34,15 +27,17 @@ h1 {
   padding: 5px;
 }
 
+#page {
+}
 
 #layouttable {
   width: 100%;
   border-collapse: collapse;
 }
 
-a:link {
-  color: #333;
-  background-color: #ef0;
+a {
+  color: #456;
+  border-bottom: 1px solid #e88c49;
   text-decoration: none;
 }
 
@@ -50,9 +45,8 @@ a.unmarked {
   border: 0;
 }
 
-a:link:hover {
-  color: #777;
-  text-decoration: underline;
+a:hover {
+  color: #e88c49;
 }
 
 a img {
@@ -70,10 +64,18 @@ p {
   border: 0;
 }
 
+.title a:hover {
+ color: #e88c49;
+}
+
 .sidebar a {
   border: 0;
 }
 
+.sidebar a:hover {
+  border: 0;
+  color: #e88c49;
+}
 
 
 /**********************************************************************
@@ -115,6 +117,8 @@ p {
   list-style-type: none;
   text-transform: lowercase;
   letter-spacing: -1px;
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
 .sitenav a {
@@ -122,38 +126,45 @@ p {
   padding: 3px 0.5em 3px 0.5em;
   margin: 3px;
   border: 0;
-  background-color: inherit;
+}
+
+.sitenav a:hover {
+  color: #e88c49;
 }
 
 #titlebanner {
-  background-color: #333;
-  font-size: 80px;
-  font-weight: 500;
+  font: bold 80px sans-serif;
   line-height: 120px;
+  letter-spacing: -10px;
   margin: 0;
   padding: 0;
 }
 
+#titlebanner a, #titlebanner img {
+  border: 0;
+}
+
 #titlebanner a {
-  background-color: inherit;
   display: block;
-  color: #ef0;
+  color: #000;
   padding: 0;
   text-align: left;
   margin: 0px;
-  text-decoration: none;
-  width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+#titlebanner a:hover {
+  color: #e88c49;
 }
 
 .content {
-  padding: 0;
-  margin-right: 200px;
+  padding: 1.5em;
+  padding-top: 0;
+  border-right: 0;
+  margin-right: 185px;
 }
 
 .sidebar {
-  font-family: HelveticaNeue-condensed, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 0.8em;
   float: right;
   width: 180px;
@@ -174,7 +185,11 @@ p {
   color: #555;
   line-height: 25px;
   height: 30px;
-} 
+}
+
+.traversallinks a:hover {
+  color: #e88c49;
+}  
 
 div.nextentrylink a {
   background: url(../img/left-arrows-sm.png) no-repeat left top;
@@ -197,11 +212,25 @@ div.preventrylink a {
  */
 
 .comments h2 {
+  font-family: georgia, sans-serif;
   font-size: 1.2em;
-  font-weight: normal;
-  color: #ef0;
-  background-color: #333;
+  color: #555;
   margin: 0.5em 0px 0px 0px;
+  font-variant: small-caps;
+  letter-spacing: -1px;
+  border-bottom: 1px solid #555;
+}
+
+.comments h2 a {
+  border: 0;
+}
+
+.comments h2 a:hover {
+  color: #555;
+  border: 0;
+}
+
+.comments {
 }
 
 .comments table {
@@ -249,24 +278,22 @@ div.preventrylink a {
 }
 
 .title {
-  background-color: #ef0;
-  font-size: 1.6em;
-  font-weight: 500;
+  border-bottom: 1px solid #555;
+  font-size: 1.4em;
+  font-family: sans-serif;
+  font-weight: bold;
+  letter-spacing: -1px;
   display: block;
   margin: 0;
-  padding-left: 200px;
 }
 
 .title a {
   color: #000;
 }
 
-.title a:hover {
-	text-decoration: none;
-}
-
 .topicname {
   color: #456;
+  font-variant: small-caps;
 }
 
 .sectionname a {
@@ -274,9 +301,8 @@ div.preventrylink a {
 }
 
 .entrymetainfo {
-  font-size: 0.6em;
-  margin-left: 200px;
-  color: #000;
+  font-size: 0.8em;
+  color: #555;
   display: block;
   padding-top: 2px;
   font-family: sans-serif;
@@ -284,8 +310,7 @@ div.preventrylink a {
 
 .entrymetainfo a {
   border: 0;
-  color: #000;
-  background-color: inherit;
+  color: #e88c49;
 }
 
 .entrymetainfo a:hover {
@@ -293,26 +318,32 @@ div.preventrylink a {
 }
 
 .entrycontent {
-  margin: 0;
-  margin-left: 200px;
   display: block;
   line-height: 1.2em;
+  margin: 0;
 }
 
 .entrycontent img {
   border: 1px solid #555;
-}
-
-.entrycontent a {
-	background-color: #ef0;
+  background-color: #fff;
+  padding: 5px;
 }
 
 .postcard {
   border: 1px solid #555;
+  background-color: #fff;
+  padding: 5px;
 }
 
 img.thumbnail {
+  padding: 3px;
+  background-color: #fff;
   border: 1px solid #555;
+}
+
+.recentimages:hover {
+  background-color: #e88c49;
+  border: 1px solid #777;
 }
 
 .entrycontent img.thumbnail {
@@ -351,6 +382,12 @@ p.postcard {
   padding: 3px;
 }
 
+.gallerymenu a:hover {
+  background: #efe8d0;
+  border: 1px solid #dbd1af;
+  padding: 2px;
+}
+
 .continuedlink {
   background: url(../img/right-arrows-sm.png) no-repeat right top;
   display: block;
@@ -366,7 +403,6 @@ p.postcard {
 
 .continuedlink:hover, .paginglink:hover {
   color: #e88c49;
-  text-decoration: none;
 }
 
 
@@ -428,17 +464,11 @@ a.prevpagelink {
 
 .navtitle {
   display: block;
-  color: #ef0;
-  background-color: #333;
+  color: #555;
   padding-left: 2px;
-  font-size: 1.2em;
+  font: small-caps bold 1.2em sans-serif;
+  border-bottom: 1px solid #e88c49;
   margin-bottom: 0.5em;
-}
-
-.navtitle a {
-	color: #ef0;
-	background-color: inherit;
-	
 }
 
 .navmenu {
@@ -450,25 +480,24 @@ a.prevpagelink {
 .navmenu a {
   display: block;
   padding: 2px;
-  background-color: inherit;
 }
 
 .navmenu a.headerlink {
   padding: 1px 2px 1px 2px;
+  border-top: 1px solid #dbd1af;
+  border-bottom: 1px solid #dbd1af;
   text-transform: uppercase;
-  font-size: 0.8em;	
-  color: #ef0;
+  font-size: 0.8em;
+  color: #555;
   margin-bottom: 1px;
-  background: #333;
-}
-
-.navmenu a.headerlink:hover {
-  color: #000;
+  background: #efe8d0;
 }
 
 .navmenu a:hover {
-  background: #ef0;
-  text-decoration: none;
+  background: #fbf1cf;
+  border: 1px solid #dbd1af;
+  color: #000;
+  padding: 1px;
 }
 
 
@@ -477,6 +506,10 @@ a.prevpagelink {
   background-position: 0 7px;
   background-repeat: no-repeat;
   padding-left: 8px;
+}
+
+.navtitle a {
+  color: #000;
 }
 
 .feedsmenu li {
@@ -498,11 +531,11 @@ a.prevpagelink {
 }
 
 .blogrollfolder {
-  padding: 2px;
+  padding-left: 2px;
+  border-bottom: 1px dotted #555;
   text-transform: uppercase;
   font-size: 0.8em;
-  color: #333;
-  background-color: #ef0;
+  color: #888;
   margin-bottom: 1px;
 }
 
@@ -513,8 +546,9 @@ a.prevpagelink {
 }
 
 .blogrollitem a:hover {
-  background: #ef0;
-  text-decoration: none;
+  background: #efe8d0;
+  border: 1px solid #dbd1af;
+  color: #000;
 }
 
 /**********************************************************************
@@ -527,8 +561,7 @@ a.prevpagelink {
 
 .tagcloud a:hover {
   color: #333;
-  background: #ef0;
-  text-decoration: none;
+  background: #e88c49;
 }
 
 /**********************************************************************
@@ -637,11 +670,10 @@ textarea {
 }
 
 blockquote {
-  font-family: georgia, serif;
-  font-size: 0.9em;
-  font-style: italic;
-  line-height: 1.5em;
-  margin: 2em 1em 2em 1em;
+  border: 1px solid #aaa;
+  background-color: #eee;
+  margin: 1em 0.5em 1em 0.5em;
+  padding: 0.5em;
 }
 
 code, .code {

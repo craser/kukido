@@ -1,0 +1,39 @@
+#twitterDisplay {
+    position: relative;
+}
+
+div.twitterProfile {
+    background: #fff;
+    border: 2px solid #E88C49;
+    left: -65px;
+    padding: 3px;
+    position: absolute;
+}
+
+div.twitterProfile a {
+    border: none;
+}
+
+img.twitterProfile {
+    border: 0px;
+}
+
+div.tweetDate {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 0.6em;
+  font-style: italic;
+  color: #777;
+  text-align: right;
+  padding: 3px;
+  margin-bottom: 1em;
+}
+
+.tweetDate a {
+    border: none;
+    color: inherit;
+}
+
+.tweetDate a:hover {
+    color: #E88C49;
+}
+
