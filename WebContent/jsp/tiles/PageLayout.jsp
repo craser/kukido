@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/handheld.css" media="handheld"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
+    <tiles:get name="analytics" />
     <!-- page-specific header information -->
     <tiles:get name="head" />
     <!-- end of page-specific header information -->

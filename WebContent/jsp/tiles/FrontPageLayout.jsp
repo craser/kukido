@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
     <link rel="stylesheet" type="text/css" href="css/twitter_timeline.css" />
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
+    <tiles:get name="analytics" />
     <script type="text/javascript" src="javascript/twitter_timeline.js"> </script>
     <!-- page-specific header information -->
     <tiles:get name="head" />
