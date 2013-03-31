@@ -53,6 +53,11 @@ a img {
   border: 0;
 }
 
+a.maplink {
+	border: none;
+	font-style: italic;
+}
+
 p {
   margin: 0.5em 0 1em 0;
 }
@@ -329,7 +334,7 @@ div.preventrylink a {
 }
 
 img.thumbnail {
-  padding: 3px;
+  padding: 1px;
   background-color: #fff;
   border: 1px solid #555;
 }

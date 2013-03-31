@@ -57,7 +57,7 @@
 
         <nested:iterate name="entry" property="attachments" id="a" type="net.kukido.blog.datamodel.Attachment">
           <nested:equal name="a" property="fileType" value="map">
-              <p>(<a href="maps/<%= a.getFileName()%>" title="<%= a.getTitle() %>">Map: "<bean:write name="a" property="title" />"</a>)
+              <p><a class="maplink" href="maps/<%= a.getFileName() %>" title="<%= a.getTitle() %>"><dmg:mapImage size="thumbnail" styleClass="thumbnail" map="<%= a.getFileName() %>" /> <bean:write name="a" property="title" /></a>
               </p>
           </nested:equal>
         </nested:iterate>        

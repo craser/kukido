@@ -94,7 +94,7 @@ public class MapImage extends ImgTag
             return "588x288";
         }
         else if ("thumbnail".equalsIgnoreCase(size)) {
-            return "83x64";
+            return "20x20";
         }
         else {
             throw new IllegalStateException("Unrecognized size specifier: " + size);
