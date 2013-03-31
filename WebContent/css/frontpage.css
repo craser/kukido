@@ -1,3 +1,8 @@
+body {
+	width: 1000px;
+}
+
+
 .sidebar-left {
   float: left;
   width: 180px;

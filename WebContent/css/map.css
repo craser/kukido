@@ -21,6 +21,7 @@ body {
 .content {
   margin: 0px;
   padding: 0px;
+  width: auto;
   background-color: #fff;
   font-family: sans-serif;
   font-size: 0.8em;
