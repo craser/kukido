@@ -38,7 +38,6 @@ public class LogUpdate extends Action
         }
         catch (Exception e)
         {
-	    e.printStackTrace();
             throw new ServletException(e);
         }
     }
