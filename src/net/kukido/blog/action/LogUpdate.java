@@ -26,7 +26,7 @@ public class LogUpdate extends Action
     {
         try
         {
-            net.kukido.blog.forms.LogUpdateForm updateForm = (net.kukido.blog.forms.LogUpdateForm)form;            
+            LogUpdateForm updateForm = (LogUpdateForm)form;            
             User user = (User)req.getSession().getAttribute("user");
             LogEntry entry = updateForm.getEntry();
             entry.setUserId(user.getUserId());
