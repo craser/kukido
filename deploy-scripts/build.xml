@@ -77,7 +77,7 @@
 	 	</copy>
 	</target>
 	
-	<target name="test-java" depends="jar-coverage">
+	<target name="test-java"> <!-- depends="jar-coverage"> -->
 		<junit showoutput="true" haltonerror="false" haltonfailure="true">
 			<classpath refid="project.class.path" />
 			<classpath location="${local.classes.dir}" />
