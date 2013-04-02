@@ -31,7 +31,8 @@ public class LogUpdate extends Action
             LogEntry entry = updateForm.getEntry();
             entry.setUserId(user.getUserId());
             entry.setUserName(user.getUserName());
-            new LogDao().create(entry);
+            LogEntry created = new LogDao().create(entry);
+            req.setAttribute("entry", created);
             
             return mapping.findForward("success");
         }

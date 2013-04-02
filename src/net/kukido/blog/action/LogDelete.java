@@ -27,8 +27,7 @@ public class LogDelete extends Action
     {
         try
         {
-            LogEditForm updateForm = (LogEditForm)form;
-	    int entryId = Integer.parseInt(req.getParameter("entryId"));
+        	int entryId = Integer.parseInt(req.getParameter("entryId"));
             
             LogDao logDao = new LogDao();
             AttachmentDao attachmentDao = new AttachmentDao();
