@@ -100,7 +100,7 @@ public class UploadAttachment extends Action
             a.setUserId(user.getUserId());
             a.setUserName(user.getUserName());
             a.setFileName(z.getName());
-            a.setFileType(Attachment.FileType.document);
+            a.setFileType(Attachment.TYPE_DOCUMENT);
             a.setTitle(zipAttachment.getTitle());
             a.setEntryId(zipAttachment.getEntryId());
 

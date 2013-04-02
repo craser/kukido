@@ -1,7 +1,9 @@
 package net.kukido.blog.test.dataaccess;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,10 +83,11 @@ public class LogDaoTest
     public void test_fileTypes_update() throws DataAccessException
     {
         LogDao logDao = new LogDao();
-        Attachment.FileType[] types = Attachment.FileType.values();
-        Attachment.FileType[] typesWithNull = Arrays.copyOf(types, types.length + 1); // padded with a null value.
+        Collection<String> types = Attachment.getFileTypeOptions();
+        Collection<String> typesWithNull = new ArrayList<String>(types);
+        typesWithNull.add(null);
         
-        for (Attachment.FileType fileType : typesWithNull) {
+        for (String fileType : typesWithNull) {
         	try {
 		        LogEntry entry = logDao.findByEntryId(entryId);
 		        entry.setImageFileType(fileType);
@@ -141,7 +144,7 @@ public class LogDaoTest
         assertTrue(created.getAllowComments());
         assertFalse("update-body".equals(created.getBody()));
         assertFalse("update-image-file-name".equals(created.getImageFileName()));
-        assertFalse(Attachment.FileType.image.equals(created.getImageFileType()));
+        assertFalse(Attachment.TYPE_IMAGE.equals(created.getImageFileType()));
         assertFalse("update-intro".equals(created.getIntro()));
         assertFalse("update-title".equals(created.getTitle()));
         assertFalse(-3 == created.getUserId());
@@ -155,7 +158,7 @@ public class LogDaoTest
         created.setAllowComments(false);
         created.setBody("update-body");
         created.setImageFileName("update-image-file-name");
-        created.setImageFileType(Attachment.FileType.image);
+        created.setImageFileType(Attachment.TYPE_IMAGE);
         created.setIntro("update-intro");
         created.setTitle("update-title");
         created.setUserId(-3);
@@ -173,7 +176,7 @@ public class LogDaoTest
         assertTrue(withinFiveMinutes(updated.getDatePosted(), now));
         assertFalse(updated.getEntryId() == -1); // Confirm that an ID was assigned.
         assertTrue("update-image-file-name".equals(updated.getImageFileName()));
-        assertTrue(Attachment.FileType.image.equals(updated.getImageFileType()));
+        assertTrue(Attachment.TYPE_IMAGE.equals(updated.getImageFileType()));
         assertTrue("update-intro".equals(updated.getIntro()));
         assertTrue(withinFiveMinutes(updated.getLastUpdated(), now));
         assertTrue("update-title".equals(updated.getTitle()));

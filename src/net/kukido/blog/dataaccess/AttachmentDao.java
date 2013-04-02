@@ -190,7 +190,7 @@ public class AttachmentDao extends Dao {
 					.getIsGalleryImage()));
 			create.setString("File_Name", attachment.getFileName());
 			create.setString("Mime_Type", attachment.getMimeType());
-			create.setString("File_Type", attachment.getFileType().toString());
+			create.setString("File_Type", attachment.getFileType());
 			create.setInt("User_ID", attachment.getUserId());
 			create.setString("User_Name", attachment.getUserName());
 			create.setDate("Date_Posted", new java.util.Date());
@@ -233,7 +233,7 @@ public class AttachmentDao extends Dao {
 					.getIsGalleryImage()));
 			update.setString("File_Name", attachment.getFileName());
 			update.setString("Mime_Type", attachment.getMimeType());
-			update.setString("File_Type", attachment.getFileType().toString());
+			update.setString("File_Type", attachment.getFileType());
 			update.setInt("User_ID", attachment.getUserId());
 			update.setString("User_Name", attachment.getUserName());
 			update.setDate("Date_Posted", new java.sql.Date(attachment
@@ -299,9 +299,8 @@ public class AttachmentDao extends Dao {
 				populateBytes(attachment);
 			}
 			Attachment backup = attachment.copy();
-			//backup.setFileType(Attachment.FileType.backup);
+			backup.setFileType(Attachment.TYPE_BACKUP);
 			backup.setFileName(getBackupFileName(attachment));
-			
 			create(backup);
 		}
 	}
@@ -505,7 +504,7 @@ public class AttachmentDao extends Dao {
 		}
 	}
 
-	public Collection findByFileType(Attachment.FileType fileType) // File_Name is a KEY
+	public Collection findByFileType(String fileType) // File_Name is a KEY
 			throws DataAccessException {
 		Connection conn = null;
 		NamedParamStatement findByName = null;
@@ -513,7 +512,7 @@ public class AttachmentDao extends Dao {
 		try {
 			conn = getConnection();
 			findByName = new NamedParamStatement(conn, FIND_BY_FILE_TYPE_SQL);
-			findByName.setString("File_Type", fileType.toString());
+			findByName.setString("File_Type", fileType);
 			results = findByName.executeQuery();
 
 			Collection attachments = new ArrayList();

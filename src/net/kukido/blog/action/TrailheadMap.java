@@ -38,7 +38,7 @@ public class TrailheadMap extends ViewAttachment
         {
             GeotagDao geotagDao = new GeotagDao();
                 AttachmentDao attachmentDao = new AttachmentDao();
-                Collection geotags = geotagDao.findByFileType(Attachment.FileType.map);
+                Collection geotags = geotagDao.findByFileType(Attachment.TYPE_MAP);
                 Collection maps = new LinkedList();
                 for (Iterator i = geotags.iterator(); i.hasNext(); ) {
                     Geotag geotag = (Geotag)i.next();

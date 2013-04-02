@@ -22,7 +22,7 @@ public class LogEntryHeader implements Serializable
     private boolean allowComments;
     private String title;
     private String imageFileName;
-    private Attachment.FileType imageFileType;
+    private String imageFileType;
     private String intro;
     private String body;
     private String viaTitle;
@@ -130,12 +130,12 @@ public class LogEntryHeader implements Serializable
         return imageFileName;
     }
     
-    public void setImageFileType(Attachment.FileType imageFileType)
+    public void setImageFileType(String imageFileType)
     {
         this.imageFileType = imageFileType;
     }
     
-    public Attachment.FileType getImageFileType()
+    public String getImageFileType()
     {
         return imageFileType;
     }

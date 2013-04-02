@@ -37,7 +37,7 @@ public class GeotagMaps extends Action
             AttachmentDao attachmentDao = new AttachmentDao();
             GeotagDao geotagDao = new GeotagDao();
             
-            Collection attachments = attachmentDao.findByFileType(Attachment.FileType.map);
+            Collection attachments = attachmentDao.findByFileType(Attachment.TYPE_MAP);
             for (Iterator i = attachments.iterator(); i.hasNext(); ) 
             {
                 Attachment a = (Attachment)i.next();
