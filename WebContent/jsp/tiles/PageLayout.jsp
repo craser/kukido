@@ -25,7 +25,7 @@
         <li><html:link href="trailmaps">trail maps</html:link></li>
         <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
         <li><html:link href="about">about the author</html:link></li>
-        <li><html:link href="https://twitter.com/dmgblog">@dmgblog</html:link></li>
+        <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
       </ul>
     </div>
@@ -44,7 +44,7 @@
         <li><html:link href="trailmaps">trail maps</html:link></li>
         <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
         <li><html:link href="about">about the author</html:link></li>
-        <li><html:link href="https://twitter.com/dmgblog">@dmgblog</html:link></li>
+        <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
       </ul>
     </div>
