@@ -1,7 +1,6 @@
 colors = [
     "#9F5F9F", // Blue Violet
     "#B5A642", // Brass
-    "#8C7853", // Bronze
     "#A67D3D", // Bronze II
     "#FF7F00", // Coral
     "#42426F", // Corn Flower
@@ -21,8 +20,6 @@ colors = [
     "#FF7F00", // Orange
     "#FF2400", // Orange Red
     "#DB70DB", // * Orchid
-    "#EAADEA", // Plum
-    "#D9D9F3", // Quartz
     "#5959AB", // Rich Blue
     "#6F4242", // Salmon
     "#8C1717", // * Scarlet
