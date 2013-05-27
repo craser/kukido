@@ -1,7 +1,5 @@
 colors = [
     "#9F5F9F", // Blue Violet
-    "#B5A642", // Brass
-    "#A67D3D", // Bronze II
     "#FF7F00", // Coral
     "#42426F", // Corn Flower
     "#9932CD", // * Dark Orchid
@@ -16,7 +14,6 @@ colors = [
     "#4D4DFF", // * Neon Blue
     "#FF6EC7", // Neon Pink
     "#00009C", // New Midnight Blue
-    "#CFB53B", // Old Gold
     "#FF7F00", // Orange
     "#FF2400", // Orange Red
     "#DB70DB", // * Orchid
@@ -31,8 +28,6 @@ colors = [
     "#236B8E", // Steel Blue
     "#38B0DE", // Summer Sky
     "#D8BFD8", // Thistle
-    "#ADEAEA", // Turquoise
-    "#CDCDCD", // Very Light Grey
     "#4F2F4F", // Violet
     "#CC3299", // Violet Red
 ];
