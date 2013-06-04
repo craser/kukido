@@ -255,7 +255,7 @@
     </init-param>
     <init-param>
       <param-name>template12</param-name>
-      <param-value>/ViewAttachment.do?fileName=$1</param-value>
+      <param-value>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=75</param-value>
     </init-param>
     <init-param>
       <param-name>pattern13</param-name>

@@ -24,7 +24,7 @@
       <div>
         <div style="text-align: center">
           <a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>"><img class="postcard" src="attachments/postcards/<%= galleryImage.getFileName() %>" /></a>
-          <div style="font: 0.8em sans-serif"><a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>">(click to zoom)</a></div>
+          <%-- <div style="font: 0.8em sans-serif"><a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>">(click to zoom)</a></div> --%>
         </div>
         
         <span class="entrycontent"><bean:write name="galleryImage" property="description" filter="false"/></span>
