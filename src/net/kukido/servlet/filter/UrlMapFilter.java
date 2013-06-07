@@ -18,8 +18,7 @@ import net.kukido.blog.log.Logging;
  */
 public class UrlMapFilter implements Filter
 {
-    static public final String PATTERN_PARAM = "pattern";
-    static public final String TEMPLATE_PARAM = "template";
+    static public final String CONFIG_FILE_PARAM = "config";
 
     private Logger log;
     private List<UrlMapping> mappings;
@@ -65,15 +64,16 @@ public class UrlMapFilter implements Filter
 
     public void init(javax.servlet.FilterConfig config) throws javax.servlet.ServletException
     {
-        log = Logging.getLogger(getClass());
-        mappings = new ArrayList<UrlMapping>();
-        for (int i = 1; config.getInitParameter(PATTERN_PARAM + i) != null; i++) {
-            String pattern = config.getInitParameter(PATTERN_PARAM + i);
-            String template = config.getInitParameter(TEMPLATE_PARAM + i);
-            UrlMapping mapping = new UrlMapping(pattern, template);
-            log.debug("adding: " + mapping);
-            mappings.add(mapping);
-        }
-
+    	try {
+	        log = Logging.getLogger(getClass());
+	        String fileName = config.getServletContext().getRealPath(config.getInitParameter(CONFIG_FILE_PARAM));
+	        System.out.println("Parsing: " + fileName);
+	        UrlMapConfigParser parser = new UrlMapConfigParser();
+	        UrlMapConfig conf = parser.parse(fileName);
+	        mappings = conf.getMappings();
+    	}
+    	catch (Exception e) {
+    		throw new ServletException(e);
+    	}
     }
 }
