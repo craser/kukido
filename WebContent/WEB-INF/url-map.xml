@@ -1,0 +1,142 @@
+<url-mappings>
+	<mapping>
+		<pattern>.*/json/maps/(.+.)$</pattern>
+		<template>/JsonGpsTrack.do?fileName=$1</template>
+	</mapping>
+	<!-- Main -->
+	<mapping>
+		<pattern>.*/home/?</pattern>
+		<template>/LogEntryListing.do?pageSize=5</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/home/?(\d*)$</pattern>
+		<template>/LogEntryListing.do?page=$1&amp;pageSize=5</template>
+	</mapping>
+	<!-- Archives (more at template ~19) -->
+	<mapping>
+		<pattern>.*/archive/(\d+)</pattern>
+		<template>/ViewLogEntry.do?entryId=$1</template>
+	</mapping>
+	<!-- Sections -->
+	<mapping>
+		<pattern>.*/sections/([^/]+)/?(\d*)$</pattern>
+		<template>/LogEntryListing.do?section=$1&amp;page=$2</template>
+	</mapping>
+	<!-- Topics -->
+	<mapping>
+		<pattern>.*/topics/([^/]+)/?(\d*)$</pattern>
+		<template>/SearchLogEntries.do?topic=$1&amp;page=$2</template>
+	</mapping>
+	<!-- Quick Links -->
+	<mapping>
+		<pattern>.*/quicklinks/?(\d*)$</pattern>
+		<template>/QuickLinkListing.do?page=$1</template>
+	</mapping>
+	<!-- RSS -->
+	<mapping>
+		<pattern>.*/monkeyfeed.xml$</pattern>
+		<template>/Monkeyfeed.do</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/feeds/([^/]+).xml</pattern>
+		<template>/Monkeyfeed.do?tags=$1</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/feeds/rss2html.xslt</pattern>
+		<template>/jsp/pages/Rss2Html.jsp</template>
+	</mapping>
+	<!-- Loggin in -->
+	<mapping>
+		<pattern>.*/login$</pattern>
+		<template>/Login.do</template>
+	</mapping>
+	<!-- Attachments -->
+	<mapping>
+		<pattern>.*/attachments/([^/]*)</pattern>
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=75</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/attachments/thumbs/(.*)</pattern>
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=75</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/attachments/postcards/(.*)</pattern>
+		<!-- Note that setting the maxDimension here will NOT affect the size of 
+			map thumnails. For that, see MapImage JSP tag impl. -->
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=588</template> <!-- 600 total, with 5px padding, and 1px border from CSS -->
+	</mapping>
+	<!-- Galleries -->
+	<mapping>
+		<pattern>.*/galleries/(.*)</pattern>
+		<template>/Gallery.do?attachmentId=$1</template>
+	</mapping>
+	<!-- Mopho Entries -->
+	<mapping>
+		<pattern>.*/mopho/(\d+)$</pattern>
+		<template>/MophoEntryListing.do?page=$1</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/mopho/?$</pattern>
+		<template>/MophoEntryListing.do</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/mopho/(.+)</pattern>
+		<template>/ViewMophoImage.do?fileName=$1</template>
+	</mapping>
+	<!-- About Me -->
+	<mapping>
+		<pattern>.*/about/?</pattern>
+		<template>/WhatsAllThis.do</template>
+	</mapping>
+	<!-- Archives by Date -->
+	<mapping>
+		<pattern>.*/archive/bydate/(\d+)/?(\d*)/?(\d*)$</pattern>
+		<template>/SearchLogEntries.do?year=$1&amp;month=$2&amp;date=$3</template>
+	</mapping>
+	<!-- Archives by Tag -->
+	<mapping>
+		<pattern>.*/tags/([^/]*)(/(\d*))?</pattern>
+		<template>/SearchLogEntries.do?tags=$1&amp;pageSize=30&amp;page=$3</template>
+	</mapping>
+	<!-- Searching -->
+	<mapping>
+		<pattern>.*/search</pattern>
+		<template>/SearchLogEntries.do</template>
+	</mapping>
+	<!-- Comment Feeds -->
+	<mapping>
+		<pattern>.*/feeds/comments/(\d+).xml</pattern>
+		<template>/CommentRss.do?entryId=$1</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/commentspam.xml</pattern>
+		<template>/CommentRss.do?spam=true</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/recentcommentsnav</pattern>
+		<template>/RecentCommentsNav.do</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/comments.xml</pattern>
+		<template>/RecentCommentsFeed.do?numComments=10</template>
+	</mapping>
+	<!-- GPX to Google Mapping -->
+	<mapping>
+		<pattern>.*/maps/(.+.)$</pattern>
+		<template>/ViewMap.do?fileName=$1&amp;xsl=Gpx2Html.xsl&amp;height=600px&amp;width=auto</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/trailmaps</pattern>
+		<template>/TrailheadMap.do</template>
+	</mapping>
+	<!-- Trackback Processing -->
+	<mapping>
+		<pattern>.*/trackback/(\d+)\??(.*)$</pattern>
+		<template>/ReceiveTrackback.do?entryId=$1&amp;$2</template>
+	</mapping>
+	<!-- Testing Error Handling -->
+	<mapping>
+		<pattern>.*/throw$</pattern>
+		<template>/ThrowAction.do</template>
+	</mapping>
+</url-mappings>
