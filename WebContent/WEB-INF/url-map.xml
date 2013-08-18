@@ -51,9 +51,15 @@
 		<template>/Login.do</template>
 	</mapping>
 	<!-- Attachments -->
+	<!-- This semi-disables access to original image files.  Files uploaded from my phone contain GPS info, which points to my house. (Resizing strips the GPS.) -->
+	<mapping>
+		<pattern>.*/attachments/([^/]*jpg)</pattern>
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=588</template>
+		<casesensitive>false</casesensitive>
+	</mapping>
 	<mapping>
 		<pattern>.*/attachments/([^/]*)</pattern>
-		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=75</template>
+		<template>/ViewAttachment.do?fileName=$1</template>
 	</mapping>
 	<mapping>
 		<pattern>.*/attachments/thumbs/(.*)</pattern>
