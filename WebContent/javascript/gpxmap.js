@@ -78,13 +78,15 @@ function fitToScreen() {
         : document.documentElement.clientHeight;
     var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
 
-    var div = document.getElementById("map");
+    var mapDiv = document.getElementById("map");
+    var sidebar = document.getElementById("sidebarcontainer").parentNode;
 
 
     // 150 = height of elevation graph
-    var divHeight = div.offsetHeight - 2; // offsetHeight includes the border, but the style.height doesn't.
+    var divHeight = mapDiv.offsetHeight - 2; // offsetHeight includes the border, but the style.height doesn't.
     var newHeight = (divHeight + dh) + "px";
-    div.style.height = newHeight;
+    mapDiv.style.height = newHeight;
+    sidebar.style.height = newHeight;
 }
 
 function toggleSlide() {

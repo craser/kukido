@@ -73,11 +73,6 @@ td.numeric {
     background: #000 url(../img/left-arrows-sm.png) no-repeat center left;
 }
 
-#sidebarcontainer {
-    height: 600px;
-    overflow: auto;
-}
-
 .sidebar { 
     border: 0;
 }
