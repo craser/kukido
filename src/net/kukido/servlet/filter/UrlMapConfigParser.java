@@ -15,6 +15,7 @@ public class UrlMapConfigParser extends DefaultHandler
     private StringBuffer chars;
     private String pattern;
     private String template;
+    private boolean caseSensitive;
     private UrlMapConfig conf;
     
     /** Creates a new instance of GpxHandler */
@@ -90,6 +91,11 @@ public class UrlMapConfigParser extends DefaultHandler
     {
         //System.out.println("startElement(\"" + name + "\")");
         state.push(name);
+        if ("mapping".equals(name)) {
+        	pattern = "";
+        	template = "";
+        	caseSensitive = true;
+        }
         if ("pattern".equals(name)) {
             pattern = "";
             chars = new StringBuffer();
@@ -97,6 +103,10 @@ public class UrlMapConfigParser extends DefaultHandler
         else if ("template".equals(name)) {
         	template = "";
             chars = new StringBuffer();
+        }
+        else if ("casesensitive".equals(name)) {
+        	caseSensitive = true;
+        	chars = new StringBuffer();
         }
     }
     
@@ -121,8 +131,15 @@ public class UrlMapConfigParser extends DefaultHandler
         	template = val;
         }
         else if ("mapping".equals(currentState)) {
-        	UrlMapping mapping = new UrlMapping(pattern, template);
+        	UrlMapping mapping = new UrlMapping(pattern, template, caseSensitive);
         	conf.addMapping(mapping);
+        	caseSensitive = true;
+        }
+        else if ("casesensitive".equals(currentState)) {
+        	try { 
+        		caseSensitive = Boolean.parseBoolean(val); 
+        	}
+        	catch (Exception e) { caseSensitive = true; }
         }
     }
     

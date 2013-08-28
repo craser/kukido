@@ -16,24 +16,29 @@ import javax.servlet.http.*;
 import org.apache.struts.action.*;
 
 /**
- *
- * @author  craser
+ * 
+ * @author craser
  */
-public class DeleteAttachment extends Action
+public class DeleteAttachment extends Action 
 {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
-        throws ServletException, IOException
-    {
-        try
-        {
-	    AttachmentDao attachmentDao = new AttachmentDao();
-	    int attachmentId = Integer.parseInt(req.getParameter("attachmentId"));
-	    attachmentDao.delete(attachmentId);
-            return mapping.findForward("success");
-        }
-        catch (Exception e)
-        {
-            throw new ServletException(e);
-        }
-    }    
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException 
+	{
+		try {
+			AttachmentDao attachmentDao = new AttachmentDao();
+			LogDao logDao = new LogDao();
+			
+			int attachmentId = Integer.parseInt(req.getParameter("attachmentId"));
+			Attachment attachment = attachmentDao.findByAttachmentId(attachmentId);
+			LogEntry entry = logDao.findByEntryId(attachment.getEntryId());
+			if (attachment.getFileName().equals(entry.getImageFileName())) {
+				entry.setImageFileName(null);
+				logDao.update(entry);
+			}
+			attachmentDao.delete(attachmentId);
+			return mapping.findForward("success");
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
 }

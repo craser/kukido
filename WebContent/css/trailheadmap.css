@@ -8,3 +8,7 @@
     padding: 2px;
 }
 
+.sidebar {
+  width: 210px;
+  overflow: scroll;
+}
