@@ -16,7 +16,7 @@ import java.net.*;
  */
 public class DmgConfig extends java.util.Properties 
 {
-    static public final String PROPERTIES_NAME = "datasource.properties";
+    static public final String PROPERTIES_NAME = "kukido.properties";
     
     /** Creates a new instance of DmgConfig */
     public DmgConfig()
