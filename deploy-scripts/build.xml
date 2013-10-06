@@ -18,10 +18,10 @@
 	</path>
 	
 	<target name="deploy-prod" depends="build-war">
+		<input addproperty="prod.pass" message="Enter password for ${prod.user}@${prod.host}:" /> 
 		<echo message="Deploying WAR file to production server." />
 		<echo message="    host: ${prod.host}" />
 		<echo message="    user: ${prod.user}" />
-		<echo message="    pass: ${prod.pass}" />
 		<echo message="    dir : ${prod.war.dir}" />
 		<ftp server="${prod.host}" 
 			userid="${prod.user}" 
@@ -165,7 +165,31 @@
 			/>
 	</target>
 	
-	<target name="jar-kukido" depends="compile-all">
+	<target name="check-database-properties">
+		<condition property="database.properties.exists" value="true">
+			<available file="${db.props.file}" />
+		</condition>
+		<echo message="${db.props.file} exists: ${database.properties.exists}" />
+	</target>
+	
+	<target name="create-database-properties" depends="check-database-properties" unless="database.properties.exists">
+		<input addproperty="database.user" message="Database user:" />
+		<input addproperty="database.pass" message="Password for database user ${database.user}:" />
+		<echo append="false" file="${db.props.file}">{database.user}=${database.user}
+</echo>
+		<echo append="true" file="${db.props.file}">{database.pass}=${database.pass}
+</echo>
+	</target>
+	
+	<target name="clear-database-properties">
+		<delete file="${db.props.file}" />
+	</target>
+	
+	<target name="jar-kukido" depends="compile-all, create-database-properties">
+		<replace file="${local.classes.dir}/net/kukido/blog/config/dmg.properties" propertyfile="${db.props.file}">
+			<replacefilter token="{database.user}" />
+			<replacefilter token="{database.pass}" />
+	    </replace>
 		<jar destfile="${local.build.dir}/${kukido.jar.file}">
 			<fileset dir="${local.classes.dir}" />
 		</jar>
