@@ -1,9 +1,10 @@
 <web-app xmlns="http://caucho.com/ns/resin">
+  <!-- {database.user} -->
   <database jndi-name="jdbc/dreade2_web" max-connections="3" max-idle-time="15">
     <driver type="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
       <url>jdbc:mysql://localhost/dreade2_web</url>
-      <user>dreade2_webuser</user>
-      <password>T3RTUrBamZVu</password>
+      <user>{database.user}</user>
+      <password>{database.pass}</password>
     </driver>
   </database>
 </web-app>
