@@ -77,10 +77,20 @@
 	 	</copy>
 	</target>
 	
-	<target name="test-java" depends="jar-kukido"> <!-- depends="jar-coverage"> -->
-		<junit showoutput="true" haltonerror="false" haltonfailure="true">
+	<target name="coverage-report" depends="jar-coverage, test-java">
+		<echo message="Generating test coverage report in ${local.coverage.dir}" />
+		<cobertura-report format="html" destdir="${local.coverage.dir}">
+			<fileset file="${local.build.dir}/${kukido.jar.file}" />
+		</cobertura-report>
+		<echo message="Report: ${local.coverage.dir}/index.html" />
+	</target>
+	
+	<target name="test-java" depends="jar-kukido">
+		<junit showoutput="true" haltonerror="false" haltonfailure="true" fork="true">
+			<classpath path="${local.build.dir}/${kukido.jar.file}" />
 			<classpath refid="project.class.path" />
-			<classpath location="${local.classes.dir}" />
+			<classpath refid="ant.classpath" />
+			<!-- classpath location="${local.classes.dir}" / -->
 			<batchtest>
 				<formatter type="plain" usefile="false" />
 				<fileset dir="${local.src.dir}" includes="**/*Test.java" />
@@ -221,5 +231,6 @@
 		<mkdir dir="${local.build.dir}" />
 		<mkdir dir="${local.test.dir}" />
 		<mkdir dir="${local.classes.dir}" />
+		<mkdir dir="${local.coverage.dir}" />
 	</target>
 </project>
