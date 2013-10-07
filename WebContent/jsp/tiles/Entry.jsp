@@ -49,7 +49,9 @@
           </logic:equal>
           <logic:equal name="entry" property="imageFileType" value="map">
             <p style="text-align: center">
-              <dmg:mapImage map="<%= entry.getImageFileName() %>" />
+              <a class="maplink" href="maps/<%= entry.getImageFileName() %>" title="<%= entry.getTitle() %>">
+                <dmg:mapImage map="<%= entry.getImageFileName() %>" />
+              </a>
             </p>
           </logic:equal>
         </logic:present>
