@@ -79,7 +79,7 @@
 	
 	<target name="coverage-report" depends="jar-coverage, test-java">
 		<echo message="Generating test coverage report in ${local.coverage.dir}" />
-		<cobertura-report format="html" destdir="${local.coverage.dir}">
+		<cobertura-report format="html" destdir="${local.coverage.dir}" srcdir="${local.src.dir}">
 			<fileset file="${local.build.dir}/${kukido.jar.file}" />
 		</cobertura-report>
 		<echo message="Report: ${local.coverage.dir}/index.html" />
