@@ -77,7 +77,7 @@
 	 	</copy>
 	</target>
 	
-	<target name="test-java"> <!-- depends="jar-coverage"> -->
+	<target name="test-java" depends="jar-kukido"> <!-- depends="jar-coverage"> -->
 		<junit showoutput="true" haltonerror="false" haltonfailure="true">
 			<classpath refid="project.class.path" />
 			<classpath location="${local.classes.dir}" />
@@ -164,6 +164,7 @@
 			todir="${local.war.template}/WEB-INF/lib" 
 			/>
 		<replace file="${local.war.template}/WEB-INF/resin-web.xml" propertyFile="${db.props.file}">
+			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
 			<replacefilter token="{database.pass}" property="database.pass" />
 	    </replace>
@@ -177,9 +178,12 @@
 	</target>
 	
 	<target name="create-database-properties" depends="check-database-properties" unless="database.properties.exists">
-		<input addproperty="database.user" message="Database user:" />
-		<input addproperty="database.pass" message="Password for database user ${database.user}:" />
-		<echo append="false" file="${db.props.file}">database.user=${database.user}
+		<input addproperty="database.host" message="Database host:" />
+		<input addproperty="database.user" message="Database user for ${database.host}:" />
+		<input addproperty="database.pass" message="Password for database user ${database.user}@${database.host}:" />
+		<echo append="false" file="${db.props.file}">database.host=${database.host}
+</echo>
+		<echo append="true" file="${db.props.file}">database.user=${database.user}
 </echo>
 		<echo append="true" file="${db.props.file}">database.pass=${database.pass}
 </echo>
@@ -191,6 +195,7 @@
 	
 	<target name="jar-kukido" depends="compile-all, create-database-properties">
 		<replace file="${local.classes.dir}/net/kukido/blog/config/dmg.properties" propertyFile="${db.props.file}">
+			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
 			<replacefilter token="{database.pass}" property="database.pass" />
 	    </replace>
