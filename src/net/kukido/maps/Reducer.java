@@ -21,7 +21,7 @@ public class Reducer
         List<Segment> segments = new LinkedList<Segment>();
         segments.add(new Segment(track, 0, track.size() - 1));
         
-        while (segments.size() < maxPointes) {
+        while (segments.size() < (maxPointes - 1)) {
             int i = findMostInteresting(segments);
             Segment s = segments.remove(i);
             if (s.getInterest() >= minDistance) {

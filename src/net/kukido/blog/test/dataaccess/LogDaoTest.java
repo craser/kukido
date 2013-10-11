@@ -188,6 +188,40 @@ public class LogDaoTest
         assertTrue(sameTags(updated.getTags(), updateTags));
     }
     
+    /**
+     * 
+     * @throws DataAccessException
+     */
+    @Test
+    public void test_encoding() throws DataAccessException
+    {
+        LogDao logDao = new LogDao();
+        LogEntry entry = buildLogEntry();
+        entry.setTitle("La Petite Trotte ˆ LŽon?");
+        entry.setBody("Òan enlarged tour around Mont Blanc.Ó");
+        
+        LogEntry created = logDao.create(entry);
+        entryId = created.getEntryId();
+        
+        // Make sure that the original 
+        assertTrue(created.getAllowComments());
+        assertTrue(entry.getBody().equals(created.getBody()));
+        assertTrue(withinFiveMinutes(created.getDatePosted(), now));
+        assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
+        assertTrue("image-file-name".equals(created.getImageFileName()));
+        //assertTrue(Attachment.FileType.document.equals(created.getImageFileType()));
+        assertNull(created.getImageFileType());
+        assertTrue("intro".equals(created.getIntro()));
+        assertTrue(withinFiveMinutes(created.getLastUpdated(), now));
+        assertTrue(entry.getTitle().equals(created.getTitle()));
+        assertTrue(-1 == created.getUserId());
+        assertTrue("junit".equals(created.getUserName()));
+        assertTrue("via-text".equals(created.getViaText()));
+        assertTrue("via-title".equals(created.getViaTitle()));
+        assertTrue("via-url".equals(created.getViaUrl()));
+        assertTrue(sameTags(created.getTags(), tags));
+    }
+    
     @After
     public void test_delete() throws DataAccessException
     {
