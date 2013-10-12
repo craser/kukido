@@ -1,4 +1,6 @@
-package net.kukido.maps;
+package net.kukido.blog.datamodel;
+
+import net.kukido.maps.GpsLocation;
 
 public class LocationMask {
 	private GpsLocation location;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.kukido.maps.LocationMask;
+import net.kukido.blog.datamodel.LocationMask;
 import net.kukido.sql.NamedParamStatement;
 
 public class MaskedLocationsDao extends Dao {
