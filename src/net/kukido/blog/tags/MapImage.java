@@ -13,7 +13,9 @@ import javax.servlet.jsp.PageContext;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
+import net.kukido.blog.dataaccess.LocationMaskDao;
 import net.kukido.blog.datamodel.Attachment;
+import net.kukido.blog.datamodel.LocationMask;
 import net.kukido.blog.datamodel.LogEntry;
 import net.kukido.blog.log.Logging;
 import net.kukido.maps.GpsLocation;
@@ -117,22 +119,16 @@ public class MapImage extends ImgTag
     protected String getPathValue() throws DataAccessException, IOException, SAXException 
     {
         AttachmentDao dao = new AttachmentDao();
+        LocationMaskDao maskDao = new LocationMaskDao();
         Attachment attachment = getAttachment();
         dao.populateBytes(attachment);
         GpxParser parser = new GpxParser();
         GpsTrack track = parser.parse(attachment.getBytes()).get(0); // FIXME: Just uses the first track in a GPX file.
-        String pathValue = toPathValue(track);
-        double d = 5d;
-        double m = 100d;
-        log.info("'path' param of URL for " + attachment.getFileName() + " was too long (" + pathValue.length() + "); using thinned track instead.");
-        log.debug("d: " + d);
-        log.debug("m: " + m);
+        LocationMask mask = maskDao.findByUserId(attachment.getUserId());
+        track = mask.mask(track);
+        
         GpsTrack thinnedTrack = track.getThinnedTrack(85, 0);
-        log.debug("thinned size: " + thinnedTrack.size());
-        pathValue = toPathValue(thinnedTrack);
-        d = Math.min((d * 2d), 270d);
-        m = Math.round(m * 1.1);
-        log.info("Length of final path value: " + pathValue.length());
+        String pathValue = toPathValue(thinnedTrack);
         
         return pathValue;
     }

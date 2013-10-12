@@ -1,10 +1,16 @@
 package net.kukido.blog.datamodel;
 
 import net.kukido.maps.GpsLocation;
+import net.kukido.maps.GpsTrack;
 
 public class LocationMask {
 	private GpsLocation location;
 	private double radius;
+	
+	/**
+	 * Stupid and dangerous default constructor to enable subclassing.
+	 */
+	public LocationMask() {}
 	
 	/**
 	 * 
@@ -28,6 +34,24 @@ public class LocationMask {
 	
 	public boolean contains(GpsLocation l) {
 		return location.getMetersTo(l) <= this.radius;
+	}
+	
+	public GpsLocation getCenter() {
+		return this.location;
+	}
+	
+	public double getRadius() {
+		return this.radius;
+	}
+	
+	public GpsTrack mask(GpsTrack track) {
+		GpsTrack t = new GpsTrack();
+		for (GpsLocation loc : track) {
+			if (!contains(loc)) {
+				t.add(loc);
+			}
+		}
+		return t;
 	}
 
 }

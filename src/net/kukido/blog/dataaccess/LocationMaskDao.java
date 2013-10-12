@@ -10,13 +10,12 @@ import java.util.List;
 import net.kukido.blog.datamodel.LocationMask;
 import net.kukido.sql.NamedParamStatement;
 
-public class MaskedLocationsDao extends Dao {
+public class LocationMaskDao extends Dao {
 
     private static final String FIND_BY_USER_ID = "select * from MASKED_LOCATIONS where User_ID = :User_ID";
-    
 
 
-    public Collection<LocationMask> findByUserId(int userId) throws DataAccessException
+    public LocationMask findByUserId(int userId) throws DataAccessException
     {
         Connection conn = null;
         NamedParamStatement find = null;
@@ -27,9 +26,11 @@ public class MaskedLocationsDao extends Dao {
             find.setInt("User_ID", userId);
 
             rs = find.executeQuery();
+            if (!rs.next()) {
+            	throw new DataAccessException("No location mask found for user " + userId);
+            }
 
-            Collection<LocationMask> masks = populateLocationMasks(rs);
-            return masks;
+            return populateLocationMask(rs);
         }
         catch (Exception e) {
             throw new DataAccessException("Error retrieving location masks for user " + userId, e);
@@ -55,16 +56,10 @@ public class MaskedLocationsDao extends Dao {
     
 
 
-    private Collection<LocationMask> populateLocationMasks (ResultSet results) throws SQLException, DataAccessException
+    private LocationMask populateLocationMask(ResultSet results) throws SQLException, DataAccessException
     {
-    	List<LocationMask> masks = new ArrayList<LocationMask>();
-    	while (results.next()) {
-        	LocationMask mask = new LocationMask(results.getFloat("Latitude"), results.getFloat("Longitude"), results.getDouble("Radius"));
-        	masks.add(mask);
-    		
-    	}
-    	
-    	return masks;
+        LocationMask mask = new LocationMask(results.getFloat("Latitude"), results.getFloat("Longitude"), results.getDouble("Radius"));
+        return mask;
     }
 
 }
