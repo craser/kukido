@@ -6,6 +6,7 @@
 
 package net.kukido.blog.servlet;
 
+import net.kukido.blog.log.Logging;
 import net.kukido.blog.servlet.ssl.*;
 import java.io.*;
 import java.net.*;
@@ -17,6 +18,9 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.apache.log4j.Logger;
+
 import java.security.*;
 
 /**
@@ -25,6 +29,7 @@ import java.security.*;
  */
 public class CacheServlet extends HttpServlet
 {
+	Logger log = Logging.getLogger(getClass());
     
     private String getParameter(String param, ServletRequest req)
     {
@@ -104,7 +109,7 @@ public class CacheServlet extends HttpServlet
                 try { printStackTraceAsComment(e, new PrintWriter(res.getOutputStream())); }
                 catch (Exception ignored) {}
             }
-            finally { log("Caught while trying to cache " + cacheUrl, e); }
+            finally { log.error("Caught while trying to cache " + cacheUrl, e); }
         }
     }
     
@@ -231,8 +236,7 @@ public class CacheServlet extends HttpServlet
         }
         catch (Exception t)
         {
-            System.out.println("Caught: " + t);
-            t.printStackTrace(System.out);
+            log.error(t);
             throw new ServletException(t);
         }
     }

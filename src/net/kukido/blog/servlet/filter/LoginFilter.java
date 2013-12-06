@@ -49,7 +49,7 @@ public class LoginFilter implements Filter
             }
         }
         catch (Exception ignored) {
-            log.error(ignored);
+            log.info(ignored);
         }
         finally {
             try {
