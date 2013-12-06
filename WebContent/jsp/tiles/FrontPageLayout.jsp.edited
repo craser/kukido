@@ -4,18 +4,22 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/dmg-util.tld" prefix="dmg" %>
 <%@ page import="java.util.Collection" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    <title>DreadedMonkeyGod.net: <tiles:getAsString name="title" /></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>DreadedMonkeyGod.net</title>
     <dmg:BaseHrefTag />
     <link rel="search" type="application/opensearchdescription+xml" title="DMG" href="dmg-opensearch-descriptor.xml"/>
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/handheld.css" media="handheld"/>
-    <link rel="stylesheet" type="text/css" href="css/countdown.css"/>
+    <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
+<<<<<<< .working
+=======
     <tiles:get name="analytics" />
+    <script type="text/javascript" src="javascript/twitter_timeline.js"> </script>
+>>>>>>> .merge-right.r361
     <!-- page-specific header information -->
     <tiles:get name="head" />
     <!-- end of page-specific header information -->
