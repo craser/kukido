@@ -67,6 +67,7 @@ public class CacheFilter implements Filter
             cacheFile = getCacheFile(req);
             if (cacheFile.length() == 0 || isStale(cacheFile) || req.getParameter("nocache") == "true") {
                 log.info("Refreshing cached file for URL: " + req.getRequestURL());
+            	res.setHeader("Age", "0");
                 int httpStatus = updateCache(cacheFile, req, res, chain);
                 
                 if (httpStatus != HttpServletResponse.SC_OK) {
@@ -76,6 +77,7 @@ public class CacheFilter implements Filter
             }
             else {
                 log.info("Using cached output for URL: " + req.getRequestURL());
+                res.setHeader("Age", Integer.toString(getFileAge(cacheFile)));
                 res.setContentType(getMimeType(req));
                 outputCacheFile(cacheFile, res);
             }
@@ -113,6 +115,12 @@ public class CacheFilter implements Filter
             } 
             catch (Exception ignored) {}
         }
+    }
+    
+    private int getFileAge(File file) {
+    	long ms = new Date().getTime() - file.lastModified();
+    	int s = (int)(ms / 1000); // Just coerce the thing.
+    	return s;
     }
     
     private String getMimeType(HttpServletRequest req)
@@ -173,25 +181,10 @@ public class CacheFilter implements Filter
         }
     }
     
-    private boolean isStale(File cacheFile) {
-        
-        if (!cacheFile.exists()) {
-            log.debug("Cache file " + cacheFile.getName() + " does not exist.");
-            return true;
-        }
-        
-        // Check for changes <timeout> seconds after the last time we cached
-        // the file.
-        Calendar check = Calendar.getInstance();
-        check.setTime(new Date(cacheFile.lastModified()));
-        check.add(Calendar.SECOND, timeout);
-
-        // Figure out what time it is now, and see if we need to check
-        // again.
-        Calendar now = Calendar.getInstance(); // Right now.
-        boolean stale = now.after(check);
-        
-        log.debug("Cache file " + cacheFile.getName() + " is " + (stale ? "" : "not") + " older than " + timeout + " seconds.");
+    private boolean isStale(File cacheFile) 
+    {  
+        boolean stale = cacheFile.exists() && (getFileAge(cacheFile) > timeout);
+        log.debug("Cache file " + cacheFile.getName() + " is " + (stale ? "" : "not ") + "older than " + timeout + " seconds.");
         return stale;
     }
 
