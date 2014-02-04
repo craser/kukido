@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import sun.util.logging.resources.logging;
+
 import net.kukido.blog.datamodel.LocationMask;
+import net.kukido.blog.datamodel.Location;
 import net.kukido.sql.NamedParamStatement;
 
 public class LocationMaskDao extends Dao {
@@ -24,12 +27,7 @@ public class LocationMaskDao extends Dao {
             conn = getConnection();
             find = new NamedParamStatement(conn, FIND_BY_USER_ID);
             find.setInt("User_ID", userId);
-
             rs = find.executeQuery();
-            if (!rs.next()) {
-            	throw new DataAccessException("No location mask found for user " + userId);
-            }
-
             return populateLocationMask(rs);
         }
         catch (Exception e) {
@@ -54,11 +52,19 @@ public class LocationMaskDao extends Dao {
         }
     }
     
-
-
     private LocationMask populateLocationMask(ResultSet results) throws SQLException, DataAccessException
     {
-        LocationMask mask = new LocationMask(results.getFloat("Latitude"), results.getFloat("Longitude"), results.getDouble("Radius"));
+    	LocationMask mask = new LocationMask();
+    	while (results.next()) {
+    		Location loc = populateLocation(results);
+    		mask.add(loc);
+    	}
+    	return mask;
+    }
+
+    private Location populateLocation(ResultSet results) throws SQLException, DataAccessException
+    {
+        Location mask = new Location(results.getFloat("Latitude"), results.getFloat("Longitude"), results.getDouble("Radius"));
         return mask;
     }
 

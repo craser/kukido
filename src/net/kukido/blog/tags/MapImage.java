@@ -15,6 +15,7 @@ import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
 import net.kukido.blog.dataaccess.LocationMaskDao;
 import net.kukido.blog.datamodel.Attachment;
+import net.kukido.blog.datamodel.Location;
 import net.kukido.blog.datamodel.LocationMask;
 import net.kukido.blog.datamodel.LogEntry;
 import net.kukido.blog.log.Logging;

@@ -2,7 +2,7 @@ package net.kukido.blog.test.datamodel;
 
 import java.util.Date;
 
-import net.kukido.blog.datamodel.LocationMask;
+import net.kukido.blog.datamodel.Location;
 import net.kukido.maps.GpsLocation;
 
 import org.junit.*;
@@ -18,9 +18,9 @@ public class LocationMaskTest {
 		    }
 		};
 		GpsLocation b = new GpsLocation(0f, 0f, 0f, new Date());
-		LocationMask mask = new LocationMask(a, 10);
+		Location mask = new Location(a, 10);
 		assertTrue(mask.contains(b));
-		mask = new LocationMask(a, 3);
+		mask = new Location(a, 3);
 		assertFalse(mask.contains(b));
 	}
 

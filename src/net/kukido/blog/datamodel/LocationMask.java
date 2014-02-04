@@ -1,57 +1,49 @@
 package net.kukido.blog.datamodel;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import net.kukido.maps.GpsLocation;
 import net.kukido.maps.GpsTrack;
 
-public class LocationMask {
-	private GpsLocation location;
-	private double radius;
+public class LocationMask extends Location {
+
+	private Collection<Location> masks;
 	
-	/**
-	 * Stupid and dangerous default constructor to enable subclassing.
-	 */
-	public LocationMask() {}
-	
-	/**
-	 * 
-	 * @param lat
-	 * @param lon
-	 * @param radius in meters
-	 */
-	public LocationMask(float lat, float lon, double radius) {
-		this(new GpsLocation(lat, lon, 0, null), radius);
+	public LocationMask() {
+		this(new ArrayList<Location>());
 	}
 	
-	/**
-	 * 
-	 * @param location
-	 * @param radius in meters
-	 */
-	public LocationMask(GpsLocation location, double radius) {
-		this.location = location;
-		this.radius = radius;
+	public LocationMask(Collection<Location> masks) {
+		this.masks = masks;
 	}
 	
-	public boolean contains(GpsLocation l) {
-		return location.getMetersTo(l) <= this.radius;
+	public void add(Location mask) {
+		masks.add(mask);
 	}
 	
-	public GpsLocation getCenter() {
-		return this.location;
+	public boolean contains(GpsLocation loc) {
+		for (Location mask : masks) {
+			if (mask.contains(loc)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public double getRadius() {
-		return this.radius;
+	public Collection<Location> getLocations() {
+		return masks;
 	}
 	
 	public GpsTrack mask(GpsTrack track) {
 		GpsTrack t = new GpsTrack();
-		for (GpsLocation loc : track) {
-			if (!contains(loc)) {
-				t.add(loc);
+		for (Location m : masks) {
+			for (GpsLocation loc : track) {
+				if (!m.contains(loc)) {
+					t.add(loc);
+				}
 			}
 		}
 		return t;
 	}
-
 }
