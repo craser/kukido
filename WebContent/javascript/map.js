@@ -1,28 +1,27 @@
 function Map(div) {
-    var overlays = [];
-    var points = [];
     var descriptions = new Object();
     var markers = new Object();
 	
 	this.renderTrack = function(gpxTrack, getColor) {
-	    getColor = getColor || function(p) { return "#FF0000"; };
+	    var lines = [];
+	    var points = [];
 	    var color = null;
+	    getColor = getColor || function(p) { return "#FF0000"; };
 	    with (gpxTrack.bounds) { this.zoomToBounds(minLat, maxLat, minLon, maxLon); }
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
-	        var g = new GLatLng(p.lat, p.lon);
+	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
 	        color = getColor(p); // Get the color for this point.
 	        if ((i % 100) == 0) {
-	            overlays.push(new GPolyline(points, color));
+	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: this.map});
+	        	lines.push(line);
 	            points = [];
 	            points.push(g);
 	        }
 	    }
-	    if (points.length > 0) overlays.push(new GPolyline(points, color));
-
-	    for (var i = 0; i < overlays.length; i++) {
-	        this.map.addOverlay(overlays[i]);
+	    if (points.length > 0) {
+	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: this.map}));
 	    }
 	};
 	
@@ -37,10 +36,11 @@ function Map(div) {
 	
 	this.zoomToBounds = function(minLat, maxLat, minLon, maxLon) {
 		if (!!minLat) {
-		    this.bounds = buildBounds(minLat, maxLat, minLon, maxLon);
+			var ne = new google.maps.LatLng(maxLat, maxLon);
+		    var sw = new google.maps.LatLng(minLat,  minLon);
+		    this.bounds = new google.maps.LatLngBounds(sw, ne);
 		}
-	    var zoom = this.map.getBoundsZoomLevel(this.bounds);
-	    this.map.setCenter(this.bounds.getCenter(), zoom);
+	    this.map.fitBounds(this.bounds);
 	};
 
 	this.showImageOnMap = function(fileName)
@@ -51,17 +51,17 @@ function Map(div) {
 	};
 	
 	this.markLocation = function(p) {
-		var loc = new GLatLng(p.lat, p.lon);
-		var mark = new GMarker(loc, {
+		var loc = new google.maps.LatLng(p.lat, p.lon);
+		var mark = new google.maps.Marker(loc, {
 			clickable: false,
 			dragable: false
 		});
-		this.map.addOverlay(mark);
+		mark.setMap(this.map);
 		return mark;
 	};
 	
 	this.removeMark = function(mark) {
-		this.map.removeOverlay(mark);
+		mark.setMap(null);
 	};
 	
 	this.getHeight = function() {
@@ -73,38 +73,22 @@ function Map(div) {
 	};
 	
 	function bind(div) {
-	    if (GBrowserIsCompatible()) {
-	        var gmap = new GMap2(div);
-	        gmap.addControl(new GLargeMapControl());
-	        gmap.addControl(new GMapTypeControl());
-	        gmap.addControl(new GScaleControl());
-	        gmap.removeMapType(G_HYBRID_MAP);
-	        gmap.addMapType(G_PHYSICAL_MAP);
-	    	gmap.setMapType(G_PHYSICAL_MAP); 
-	        gmap.enableScrollWheelZoom();
+	    var options = {
+	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
+	    	mapTypeControlOptions: {
+	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
+	    		position: google.maps.ControlPosition.TOP_RIGHT,
+	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+	    	},
+	    	scroll: true,
+	    	panControl: false,
+	    	scaleControl: true,
+	    	streetViewControl: false, // FIXME: Configure this.
+	    	center: new google.maps.LatLng(0, 0, false) // FIXME: Pass in the actual center of the route.	    		
+	    };
+	    var gmap = new google.maps.Map(div, options);
 
-	        GEvent.addListener(gmap, "click", function(marker, point) {
-	            if (!marker) { gmap.closeInfoWindow(); }
-	        });
-
-	        return gmap;
-	    }
-	}
-
-	function buildClickHandler(fileName) {
-	    return function() { showImageOnMap(fileName); };
-	}
-
-	function buildBounds(minLat, maxLat, minLon, maxLon) {
-	    var ne = new GLatLng(maxLat, maxLon);
-	    var sw = new GLatLng(minLat, minLon);
-	    return new GLatLngBounds(sw, ne);
-	}
-	
-	function buildWayPoint(point, name, handler) {
-	    var marker = new GMarker(point);
-	    GEvent.addListener(marker, "click", handler);
-	    return marker;
+	    return gmap;
 	}
     
 	this.div = div;
