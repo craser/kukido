@@ -49,7 +49,8 @@ function Map(div) {
 	
 	this.markLocation = function(p) {
 		var loc = new google.maps.LatLng(p.lat, p.lon);
-		var mark = new google.maps.Marker(loc, {
+		var mark = new google.maps.Marker({
+			position: loc,
 			clickable: false,
 			dragable: false
 		});
