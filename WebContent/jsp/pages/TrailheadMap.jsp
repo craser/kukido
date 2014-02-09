@@ -49,8 +49,6 @@
                        <nested:write name="bounds" property="maxLatitude" />, 
                        <nested:write name="bounds" property="minLongitude" />, 
                        <nested:write name="bounds" property="maxLongitude" />);
-          
-          markMaps(map, gpsMaps, displayFuncs);
       }
       
       // Assign the actual Google Map obj. to the global var.

@@ -1,27 +1,29 @@
 function Map(div) {
     var descriptions = new Object();
     var markers = new Object();
+    var bounds = null;
+    var map = null;
 	
 	this.renderTrack = function(gpxTrack, getColor) {
 	    var lines = [];
 	    var points = [];
 	    var color = null;
 	    getColor = getColor || function(p) { return "#FF0000"; };
-	    with (gpxTrack.bounds) { this.zoomToBounds(minLat, maxLat, minLon, maxLon); }
+	    with (gpxTrack.bounds) { setBounds(minLat, maxLat, minLon, maxLon); }
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
 	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
 	        color = getColor(p); // Get the color for this point.
 	        if ((i % 100) == 0) {
-	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: this.map});
+	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: map});
 	        	lines.push(line);
 	            points = [];
 	            points.push(g);
 	        }
 	    }
 	    if (points.length > 0) {
-	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: this.map}));
+	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: map}));
 	    }
 	};
 	
@@ -34,13 +36,8 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function(minLat, maxLat, minLon, maxLon) {
-		if (!!minLat) {
-			var ne = new google.maps.LatLng(maxLat, maxLon);
-		    var sw = new google.maps.LatLng(minLat,  minLon);
-		    this.bounds = new google.maps.LatLngBounds(sw, ne);
-		}
-	    this.map.fitBounds(this.bounds);
+	this.zoomToBounds = function() {
+	    map.fitBounds(bounds);
 	};
 
 	this.showImageOnMap = function(fileName)
@@ -56,7 +53,7 @@ function Map(div) {
 			clickable: false,
 			dragable: false
 		});
-		mark.setMap(this.map);
+		mark.setMap(map);
 		return mark;
 	};
 	
@@ -90,11 +87,16 @@ function Map(div) {
 
 	    return gmap;
 	}
+	
+	function setBounds(minLat, maxLat, minLon, maxLon) {
+		var ne = new google.maps.LatLng(maxLat, maxLon);
+	    var sw = new google.maps.LatLng(minLat,  minLon);
+	    bounds = new google.maps.LatLngBounds(sw, ne);
+	};
     
 	this.div = div;
 	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
-	this.map = bind(this.div);
-	this.bounds = null; // Set in zoomToBounds
+	map = bind(this.div);
 }
 
 
