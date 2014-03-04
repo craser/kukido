@@ -1,4 +1,20 @@
+// Takes the GMap and an array of DMG Maps, and renders the
+// markers and sets up event handling.
+function markMaps(gmap, maps, displayFuncs) {
+    for (var i = 0; i < maps.length; i++) {
+        var m = maps[i];
+        gmap.markLocation(m.location);
+        //var marker = new GMarker(new GLatLng(m.location.lat, m.location.lon));
+        //var onClick = buildOnClick(gmap, marker, m, i);
+        //gmap.addOverlay(marker);
+        //GEvent.addListener(marker, "click", onClick);
+        //displayFuncs[m.fileName] = onClick;
+    }
+}
 
+function showMap(fileName) {
+    displayFuncs[fileName]();
+}
 
 // Necessary evil, to get scoping to work correctly.
 function buildOnClick(gmap, marker, m, i) {
@@ -31,7 +47,7 @@ function buildOnClick(gmap, marker, m, i) {
                 
             }; // k
             var url = 'json/maps/' + m.fileName;
-            GDownloadUrl(url, k);
+            Ajax.get(url, k);
         }; // onClick
 }
 

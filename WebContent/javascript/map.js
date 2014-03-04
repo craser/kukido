@@ -36,8 +36,8 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function() {
-	    map.fitBounds(bounds);
+	this.zoomToBounds = function(b) {
+	    map.fitBounds(b || bounds);
 	};
 
 	this.showImageOnMap = function(fileName)
