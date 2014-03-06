@@ -36,8 +36,15 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function(b) {
-	    map.fitBounds(b || bounds);
+	this.zoomToBounds = function(minLat, minLon, maxLat, maxLon) {
+		if (minLat) {
+			var ne = new google.maps.LatLng(maxLat, maxLon);
+		    var sw = new google.maps.LatLng(minLat,  minLon);
+		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
+		}
+		else {
+			map.fitBounds(b || bounds);
+		}
 	};
 
 	this.showImageOnMap = function(fileName)

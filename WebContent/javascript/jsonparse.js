@@ -312,12 +312,14 @@ var json_parse = (function () {
             while (ch) {
                 array.push(value());
                 white();
+                if (ch == ',') {
+                	next(',');
+                	white();
+                }
                 if (ch === ']') {
                     next(']');
                     return array;
                 }
-                next(',');
-                white();
             }
         }
         error("Bad array");
