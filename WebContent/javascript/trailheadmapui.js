@@ -34,8 +34,8 @@ function TrailheadMapUI(mapDiv, sidebar) {
 		// mapLocations.maps
 	    window.addEventListener("resize", self.fitToScreen);
 		self.fitToScreen();
-		with (mapLocations.bounds) { self.map.zoomToBounds(ne.lat, ne.lon, sw.lat, sw.lon); }
 		markMaps(mapLocations.maps);
+		with (mapLocations.bounds) { self.map.zoomToBounds(n, s, e, w); }
 	}
 	
 	function markMaps(maps) {

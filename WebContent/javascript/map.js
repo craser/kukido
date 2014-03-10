@@ -36,10 +36,10 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function(minLat, minLon, maxLat, maxLon) {
-		if (minLat) {
-			var ne = new google.maps.LatLng(maxLat, maxLon);
-		    var sw = new google.maps.LatLng(minLat,  minLon);
+	this.zoomToBounds = function(n, s, e, w) {
+		if (n) {
+			var ne = new google.maps.LatLng(n, e);
+		    var sw = new google.maps.LatLng(s, w);
 		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 		}
 		else {

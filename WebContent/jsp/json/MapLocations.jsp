@@ -6,8 +6,10 @@
 <jsp:useBean id="maps" type="Collection" scope="request" />
 <jsp:useBean id="bounds" type="GpsBounds" scope="request" />
 {
-	bounds: { ne: { lat: <nested:write name="bounds" property="maxLatitude" />, lon: <nested:write name="bounds" property="maxLongitude" /> },
-			  sw: { lat: <nested:write name="bounds" property="minLatitude" />, lon: <nested:write name="bounds" property="minLongitude" /> }
+	bounds: { n: <nested:write name="bounds" property="maxLatitude" />, 
+			  s: <nested:write name="bounds" property="minLatitude" />, 
+			  e: <nested:write name="bounds" property="maxLongitude" />,
+			  w: <nested:write name="bounds" property="minLongitude" />
 			},
 	maps: [
 	<nested:iterate name="maps" id="map" type="Attachment">
