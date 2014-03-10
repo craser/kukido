@@ -1,5 +1,5 @@
 Colors = (function() {
-	colors = [
+	var colors = [
 	    "#9F5F9F", // Blue Violet
 	    "#FF7F00", // Coral
 	    "#9932CD", // * Dark Orchid
