@@ -11,7 +11,7 @@
 			  e: <nested:write name="bounds" property="maxLongitude" />,
 			  w: <nested:write name="bounds" property="minLongitude" />
 			},
-	maps: [
+	locations: [
 	<nested:iterate name="maps" id="map" type="Attachment">
 	  <nested:iterate name="map" property="geotags" id="geotag" type="Geotag">
 	    {   location: { lat: <nested:write name="geotag" property="latitude" />, lon: <nested:write name="geotag" property="longitude" /> },

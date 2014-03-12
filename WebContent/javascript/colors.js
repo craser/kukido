@@ -1,5 +1,6 @@
 Colors = (function() {
 	var colors = [
+	    "#FF0000", // DEFAULT: RED
 	    "#9F5F9F", // Blue Violet
 	    "#FF7F00", // Coral
 	    "#9932CD", // * Dark Orchid
@@ -25,9 +26,22 @@ Colors = (function() {
 	    "#D8BFD8", // Thistle
 	    "#CC3299", // Violet Red
 	];
+	
+	var i = 0;
+	
+	function getColor(n) { 
+		return colors[n % colors.length]; 
+	}
+	
+	function getNextColor() { 
+		i++; 
+		i = i % colors.length; 
+		return getColor(i); 
+	}
 
 	return {
-		getColor: function(i) { return colors[i % colors.length]; },
-		getDefaultColor: function() { return "#FF0000"; }
+		getColor: getColor,
+		getNextColor: getNextColor,
+		getDefaultColor: function() { return colors[0]; }
 	};
 })();

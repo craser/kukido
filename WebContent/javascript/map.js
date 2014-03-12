@@ -3,18 +3,17 @@ function Map(div) {
     var markers = new Object();
     var bounds = null;
     var map = null;
+    var tracks = {}; // filename --> Polyline[]
 	
-	this.renderTrack = function(gpxTrack, getColor) {
+	this.renderTrack = function(gpxTrack, color) {
+		color = color || Colors.getDefaultColor();
 	    var lines = [];
 	    var points = [];
-	    var color = null;
-	    getColor = getColor || function(p) { return "#FF0000"; };
 	    with (gpxTrack.bounds) { setBounds(minLat, maxLat, minLon, maxLon); }
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
 	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
-	        color = getColor(p); // Get the color for this point.
 	        if ((i % 100) == 0) {
 	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: map});
 	        	lines.push(line);
@@ -25,6 +24,16 @@ function Map(div) {
 	    if (points.length > 0) {
 	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: map}));
 	    }
+	    tracks[gpxTrack.fileName] = lines;
+	};
+	
+	this.removeTrack = function(gpxTrack) {
+		var lines = tracks[gpxTrack.fileName];
+		tracks[gpxTrack.fileName] = null;
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			line.setMap(null);
+		}
 	};
 	
 	this.resize = function(w, h) {
@@ -43,7 +52,7 @@ function Map(div) {
 		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 		}
 		else {
-			map.fitBounds(b || bounds);
+			map.fitBounds(bounds);
 		}
 	};
 

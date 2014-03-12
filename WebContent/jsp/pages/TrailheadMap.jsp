@@ -24,8 +24,8 @@
       // Assign the actual Google Map obj. to the global var.
       window.addEventListener("load", function() {
     	  var mapDiv = document.getElementById("map");
-    	  var sidebar = document.getElementById("sidebarcontainer");
-    	  var ui = new TrailheadMapUI(mapDiv, sidebar);
+    	  var sidebarDiv = document.getElementById("sidebarcontainer");
+    	  var ui = new TrailheadMapUI(mapDiv, sidebarDiv);
       });
     </script>
   </tiles:put>

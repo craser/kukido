@@ -290,6 +290,11 @@ var json_parse = (function () {
             next('l');
             next('l');
             return null;
+        case 'N':
+            next('N');
+            next('a');
+            next('N');
+            return NaN;
         }
         error("Unexpected '" + ch + "'");
     },
