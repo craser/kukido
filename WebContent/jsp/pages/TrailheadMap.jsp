@@ -18,6 +18,7 @@
     <script type="text/JavaScript" src="javascript/ajax.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
+    <script type="text/JavaScript" src="javascript/sidebar.js"> </script>
     <script type="text/JavaScript" src="javascript/trailheadmapui.js"> </script>
     <script type="text/JavaScript" src="javascript/trailheadmap.js"> </script>
     <script>

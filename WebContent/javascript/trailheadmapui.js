@@ -1,7 +1,7 @@
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 	var map = null;
-	//var sidebar = null;
+	var sidebar = null;
 	
 	this.fitToScreen = function() {
 	    var body = document.getElementsByTagName("body")[0];
@@ -23,17 +23,23 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	function showRide(loc, mark) {
         mark.setMap(null); // Hide the marker.
 		var url = 'json/maps/' + loc.fileName;
-		var k = function(json) {
+		var show = function(json) {
             var tracks = json_parse(json); // Should be an array of GPS Tracks.
             for (var t = 0; t < tracks.length; t++) {
                 var track = tracks[t];
                 var color = Colors.getNextColor();
+                var hide = function() { 
+                	map.removeTrack(track);
+                	sidebar.hideTrackInfo(track);
+                	markMap(loc);
+                };
                 map.renderTrack(track, color);
-                //sidebar.showTrackInfo(track, color);
+                sidebar.showTrackInfo(track, color, hide);
+                //setTimeout(hide, 5000); // for testing.
             }
             
 		};
-		Ajax.get(url, k);
+		Ajax.get(url, show);
 	}
 	
 	function markMaps(locations) {
@@ -51,7 +57,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 
 	(function() {
 		map = new Map(mapDiv);
-		//sidebar = new Sidebar(sidebarDiv);
+		sidebar = new Sidebar(sidebarDiv);
 	    var k = function (mapJson) {
 	        var mapLocations = json_parse(mapJson);
 	        init(mapLocations);
