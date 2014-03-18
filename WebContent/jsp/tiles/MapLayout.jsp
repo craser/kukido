@@ -30,11 +30,6 @@
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
       </ul>
     </div>
-    <div class="sidebar">
-      <!-- sidebar -->
-      <tiles:get name="sidebar" />
-      <!-- end of sidebar -->
-    </div>
     <div class="content">
       <!-- main content area -->
       <tiles:get name="content" ignore="false" />

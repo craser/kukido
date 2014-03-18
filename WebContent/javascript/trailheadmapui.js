@@ -1,7 +1,7 @@
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
-	var map = null;
-	var sidebar = null;
+	var map = new Map(mapDiv);
+	var sidebar = new Sidebar(sidebarDiv);
 	
 	this.fitToScreen = function() {
 	    var body = document.getElementsByTagName("body")[0];
@@ -11,6 +11,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
 	    var dw = windowWidth - map.getWidth();
 	    map.resizeBy(dw, dh);
+	    sidebar.setHeight(map.getHeight());
 	};
 	
 	function init(mapLocations) {
@@ -34,7 +35,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
                 	markMap(loc);
                 };
                 map.renderTrack(track, color);
-                sidebar.showTrackInfo(track, color, hide);
+                sidebar.showTrackInfo(track, { color: color, onclick: hide });
                 //setTimeout(hide, 5000); // for testing.
             }
             
@@ -56,8 +57,6 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	}
 
 	(function() {
-		map = new Map(mapDiv);
-		sidebar = new Sidebar(sidebarDiv);
 	    var k = function (mapJson) {
 	        var mapLocations = json_parse(mapJson);
 	        init(mapLocations);

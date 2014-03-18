@@ -25,7 +25,7 @@
       // Assign the actual Google Map obj. to the global var.
       window.addEventListener("load", function() {
     	  var mapDiv = document.getElementById("map");
-    	  var sidebarDiv = document.getElementById("sidebarcontainer");
+    	  var sidebarDiv = document.getElementById("sidebar");
     	  var ui = new TrailheadMapUI(mapDiv, sidebarDiv);
       });
     </script>
@@ -33,11 +33,7 @@
   <tiles:put name="content" type="string">
     <!-- TrailheadMap.jsp -->
     <div id="map"></div>
+    <div id="sidebar"></div>
     <!-- End of TrailheadMap.jsp -->
   </tiles:put>  
-
-  <tiles:put type="string" name="sidebar">
-    <div id="sidebarcontainer"></div>
-  </tiles:put>
-
 </tiles:insert>
