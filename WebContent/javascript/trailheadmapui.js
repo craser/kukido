@@ -8,10 +8,11 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	    var bodyHeight = body.offsetHeight;
 	    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
 	    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
-	    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
+	    var dh = windowHeight - (bodyHeight + 2); // Set this to the margin of the body.
 	    var dw = windowWidth - map.getWidth();
 	    map.resizeBy(dw, dh);
 	    sidebar.setHeight(map.getHeight());
+	    sidebar.setTop(map.getTop());
 	};
 	
 	function init(mapLocations) {

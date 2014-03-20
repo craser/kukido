@@ -6,6 +6,10 @@ function Sidebar(sidebarDiv) {
 		sidebarDiv.style.maxHeight = h + "px";
 	};
 	
+	this.setTop = function(t) {
+		sidebarDiv.style.top = t + "px";
+	};
+	
 	this.hideTrackInfo = function(track) {
 		console.log("hideTrackInfo(" + track.fileName + ")");
 		var infoDiv = trackInfos[track.fileName];

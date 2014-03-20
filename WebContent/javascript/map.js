@@ -86,12 +86,20 @@ function Map(div) {
 		return this.div.offsetWidth;
 	};
 	
+	this.getTop = function() {
+		var top = 0;
+		for (var n = div; n != null; n = n.offsetParent) {
+			top += n.offsetTop;
+		}
+		return top;
+	};
+	
 	function bind(div) {
 	    var options = {
 	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
 	    	mapTypeControlOptions: {
 	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
-	    		position: google.maps.ControlPosition.TOP_RIGHT,
+	    		position: google.maps.ControlPosition.TOP_LEFT,
 	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 	    	},
 	    	scroll: true,
