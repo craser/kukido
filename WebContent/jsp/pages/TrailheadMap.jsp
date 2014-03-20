@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/map.css" />
     <link rel="stylesheet" type="text/css" href="css/trailheadmap.css" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"> </script>
+    <script type="text/JavaScript" src="javascript/effects.js"> </script>
     <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
     <script type="text/JavaScript" src="javascript/ajax.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>

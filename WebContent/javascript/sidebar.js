@@ -14,7 +14,13 @@ function Sidebar(sidebarDiv) {
 		console.log("hideTrackInfo(" + track.fileName + ")");
 		var infoDiv = trackInfos[track.fileName];
 		trackInfos[track.fileName] = null;
-		sidebarDiv.removeChild(infoDiv);
+
+		var e = new Effects();
+		e.fade(infoDiv, 250, function() {
+			e.crush(infoDiv, 250, function() {
+				sidebarDiv.removeChild(infoDiv);
+			});
+		});
 	};
 
 	this.showTrackInfo = function(track, conf) {
