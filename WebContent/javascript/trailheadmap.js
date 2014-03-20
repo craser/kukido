@@ -1,14 +1,14 @@
- 
 // Takes the GMap and an array of DMG Maps, and renders the
 // markers and sets up event handling.
 function markMaps(gmap, maps, displayFuncs) {
     for (var i = 0; i < maps.length; i++) {
         var m = maps[i];
-        var marker = new GMarker(new GLatLng(m.location.lat, m.location.lon));
+        gmap.markLocation(m.location);
         var onClick = buildOnClick(gmap, marker, m, i);
-        gmap.addOverlay(marker);
-        GEvent.addListener(marker, "click", onClick);
-        displayFuncs[m.fileName] = onClick;
+        //var marker = new GMarker(new GLatLng(m.location.lat, m.location.lon));
+        //gmap.addOverlay(marker);
+        //GEvent.addListener(marker, "click", onClick);
+        //displayFuncs[m.fileName] = onClick;
     }
 }
 
@@ -37,7 +37,7 @@ function buildOnClick(gmap, marker, m, i) {
 	                            var infoTable = document.getElementById(gpxTrack.fileName);
 	                            var sidebar = infoTable.parentNode;
 	                            sidebar.removeChild(infoTable);
-	                            gmap.addOverlay(marker);
+	                            marker.setMap(gmap);
 	                            if (sidebar.childNodes.length <= 0) { closeSlide(); }
 	                        };
 	                displayTrackInfo(marker, gpxTrack, getColor, hideTrackInfo); // Opens the info window
@@ -47,12 +47,12 @@ function buildOnClick(gmap, marker, m, i) {
                 
             }; // k
             var url = 'json/maps/' + m.fileName;
-            GDownloadUrl(url, k);
+            Ajax.get(url, k);
         }; // onClick
 }
 
 function buildColorGetter(n) {
-	return function () { return getColor(n); }
+	return function () { return Colors.getColor(n); }
 }
 
 function displayTrackInfo(marker, gpxTrack, getColor, hideTrackInfo) {
@@ -103,6 +103,26 @@ function buildTr(thData, tdData)
     tr.appendChild(th);
     tr.appendChild(td);
     return tr;
+}
+
+// Moved from gpxmap.js for now.  To be removed/replaced by MapUI later.
+function fitToScreen() {
+    var body = document.getElementsByTagName("body")[0];
+    var bodyHeight = body.offsetHeight;
+    var windowHeight = (window.innerHeight)
+        ? window.innerHeight
+        : document.documentElement.clientHeight;
+    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
+
+    var mapDiv = document.getElementById("map");
+    var sidebar = document.getElementById("sidebarcontainer").parentNode;
+
+
+    // 150 = height of elevation graph
+    var divHeight = mapDiv.offsetHeight - 2; // offsetHeight includes the border, but the style.height doesn't.
+    var newHeight = (divHeight + dh) + "px";
+    mapDiv.style.height = newHeight;
+    sidebar.style.height = newHeight;
 }
 
 

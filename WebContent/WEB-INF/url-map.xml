@@ -3,6 +3,10 @@
 		<pattern>.*/json/maps/(.+.)$</pattern>
 		<template>/JsonGpsTrack.do?fileName=$1</template>
 	</mapping>
+	<mapping>
+		<pattern>.*/json/maplocations$</pattern>
+		<template>/JsonMapLocations.do</template>
+	</mapping>
 	<!-- Main -->
 	<mapping>
 		<pattern>.*/home/?</pattern>

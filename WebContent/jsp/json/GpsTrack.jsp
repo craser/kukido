@@ -16,7 +16,7 @@ GpsLocation
     private float elevation;
     private Date timestamp;
 --%>
-([
+[
 <nested:iterate id="track" name="tracks" type="GpsTrack">
 {  title: "<nested:write name="entry" property="title" />",
     fileName: "<nested:write name="map" property="fileName" />",
@@ -48,4 +48,4 @@ GpsLocation
     ]
 },
 </nested:iterate>
-])
+]

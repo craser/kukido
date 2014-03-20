@@ -13,9 +13,10 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	    var body = document.getElementsByTagName("body")[0];
 	    var bodyHeight = body.offsetHeight;
 	    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+	    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
 	    var dh = windowHeight - (bodyHeight + 0); // Set this to the margin of the body.
-	    this.map.resizeBy(0, dh);
-		//this.map.zoomToBounds(); This is a hacky little work-around.
+	    var dw = windowWidth - self.map.getWidth();
+	    self.map.resizeBy(dw, dh);
 	};
 	
 	function addElevationListeners(gpxTrack) {
@@ -36,7 +37,9 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
     	self.map.renderTrack(gpxTrack);
 		self.elevation = new Elevation(elevationDiv, gpxTrack);
 		addElevationListeners(gpxTrack);
-	    window.addEventListener("resize", function() { self.fitToScreen(); });
+	    window.addEventListener("resize", self.fitToScreen);
+		self.fitToScreen();
+		self.map.zoomToBounds();
 	}
 
 	(function() {
@@ -48,6 +51,6 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	        var gpxTracks = eval(mapJson);
 	        init(gpxTracks);
 	    };
-	    GDownloadUrl(url, k);
+	    Ajax.get(url, k);
 	})();
 }

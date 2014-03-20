@@ -13,7 +13,6 @@
     <link rel="search" type="application/opensearchdescription+xml" title="DMG" href="dmg-opensearch-descriptor.xml"/>
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/handheld.css" media="handheld"/>
-    <link rel="stylesheet" type="text/css" href="css/countdown.css"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
     <tiles:get name="analytics" />
     <!-- page-specific header information -->
@@ -30,11 +29,6 @@
         <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
       </ul>
-    </div>
-    <div class="sidebar">
-      <!-- sidebar -->
-      <tiles:get name="sidebar" />
-      <!-- end of sidebar -->
     </div>
     <div class="content">
       <!-- main content area -->

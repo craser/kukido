@@ -1,29 +1,39 @@
 function Map(div) {
-    var overlays = [];
-    var points = [];
     var descriptions = new Object();
     var markers = new Object();
+    var bounds = null;
+    var map = null;
+    var tracks = {}; // filename --> Polyline[]
 	
-	this.renderTrack = function(gpxTrack, getColor) {
-	    getColor = getColor || function(p) { return "#FF0000"; };
-	    var color = null;
-	    with (gpxTrack.bounds) { this.zoomToBounds(minLat, maxLat, minLon, maxLon); }
+	this.renderTrack = function(gpxTrack, color) {
+		color = color || Colors.getDefaultColor();
+	    var lines = [];
+	    var points = [];
+	    with (gpxTrack.bounds) { setBounds(minLat, maxLat, minLon, maxLon); }
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
-	        var g = new GLatLng(p.lat, p.lon);
+	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
-	        color = getColor(p); // Get the color for this point.
 	        if ((i % 100) == 0) {
-	            overlays.push(new GPolyline(points, color));
+	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: map});
+	        	lines.push(line);
 	            points = [];
 	            points.push(g);
 	        }
 	    }
-	    if (points.length > 0) overlays.push(new GPolyline(points, color));
-
-	    for (var i = 0; i < overlays.length; i++) {
-	        this.map.addOverlay(overlays[i]);
+	    if (points.length > 0) {
+	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: map}));
 	    }
+	    tracks[gpxTrack.fileName] = lines;
+	};
+	
+	this.removeTrack = function(gpxTrack) {
+		var lines = tracks[gpxTrack.fileName];
+		tracks[gpxTrack.fileName] = null;
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			line.setMap(null);
+		}
 	};
 	
 	this.resize = function(w, h) {
@@ -35,12 +45,15 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function(minLat, maxLat, minLon, maxLon) {
-		if (!!minLat) {
-		    this.bounds = buildBounds(minLat, maxLat, minLon, maxLon);
+	this.zoomToBounds = function(n, s, e, w) {
+		if (n) {
+			var ne = new google.maps.LatLng(n, e);
+		    var sw = new google.maps.LatLng(s, w);
+		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 		}
-	    var zoom = this.map.getBoundsZoomLevel(this.bounds);
-	    this.map.setCenter(this.bounds.getCenter(), zoom);
+		else {
+			map.fitBounds(bounds);
+		}
 	};
 
 	this.showImageOnMap = function(fileName)
@@ -51,17 +64,18 @@ function Map(div) {
 	};
 	
 	this.markLocation = function(p) {
-		var loc = new GLatLng(p.lat, p.lon);
-		var mark = new GMarker(loc, {
+		var loc = new google.maps.LatLng(p.lat, p.lon);
+		var mark = new google.maps.Marker({
+			position: loc,
 			clickable: false,
 			dragable: false
 		});
-		this.map.addOverlay(mark);
+		mark.setMap(map);
 		return mark;
 	};
 	
 	this.removeMark = function(mark) {
-		this.map.removeOverlay(mark);
+		mark.setMap(null);
 	};
 	
 	this.getHeight = function() {
@@ -72,45 +86,42 @@ function Map(div) {
 		return this.div.offsetWidth;
 	};
 	
+	this.getTop = function() {
+		var top = 0;
+		for (var n = div; n != null; n = n.offsetParent) {
+			top += n.offsetTop;
+		}
+		return top;
+	};
+	
 	function bind(div) {
-	    if (GBrowserIsCompatible()) {
-	        var gmap = new GMap2(div);
-	        gmap.addControl(new GLargeMapControl());
-	        gmap.addControl(new GMapTypeControl());
-	        gmap.addControl(new GScaleControl());
-	        gmap.removeMapType(G_HYBRID_MAP);
-	        gmap.addMapType(G_PHYSICAL_MAP);
-	    	gmap.setMapType(G_PHYSICAL_MAP); 
-	        gmap.enableScrollWheelZoom();
+	    var options = {
+	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
+	    	mapTypeControlOptions: {
+	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
+	    		position: google.maps.ControlPosition.TOP_LEFT,
+	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+	    	},
+	    	scroll: true,
+	    	panControl: false,
+	    	scaleControl: true,
+	    	streetViewControl: false, // FIXME: Configure this.
+	    	center: new google.maps.LatLng(0, 0, false) // FIXME: Pass in the actual center of the route.	    		
+	    };
+	    var gmap = new google.maps.Map(div, options);
 
-	        GEvent.addListener(gmap, "click", function(marker, point) {
-	            if (!marker) { gmap.closeInfoWindow(); }
-	        });
-
-	        return gmap;
-	    }
-	}
-
-	function buildClickHandler(fileName) {
-	    return function() { showImageOnMap(fileName); };
-	}
-
-	function buildBounds(minLat, maxLat, minLon, maxLon) {
-	    var ne = new GLatLng(maxLat, maxLon);
-	    var sw = new GLatLng(minLat, minLon);
-	    return new GLatLngBounds(sw, ne);
+	    return gmap;
 	}
 	
-	function buildWayPoint(point, name, handler) {
-	    var marker = new GMarker(point);
-	    GEvent.addListener(marker, "click", handler);
-	    return marker;
-	}
+	function setBounds(minLat, maxLat, minLon, maxLon) {
+		var ne = new google.maps.LatLng(maxLat, maxLon);
+	    var sw = new google.maps.LatLng(minLat,  minLon);
+	    bounds = new google.maps.LatLngBounds(sw, ne);
+	};
     
 	this.div = div;
 	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
-	this.map = bind(this.div);
-	this.bounds = null; // Set in zoomToBounds
+	map = bind(this.div);
 }
 
 
