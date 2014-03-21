@@ -22,18 +22,17 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 		with (mapLocations.bounds) { map.zoomToBounds(n, s, e, w); }
 	}
 	
-	function showRide(loc, mark) {
+	function showRide(loc, mark, color) {
         mark.setMap(null); // Hide the marker.
 		var url = 'json/maps/' + loc.fileName;
 		var show = function(json) {
             var tracks = json_parse(json); // Should be an array of GPS Tracks.
             for (var t = 0; t < tracks.length; t++) {
                 var track = tracks[t];
-                var color = Colors.getNextColor();
                 var hide = function() { 
                 	map.removeTrack(track);
                 	sidebar.hideTrackInfo(track);
-                	markMap(loc);
+                	markMap(loc, color);
                 };
                 map.renderTrack(track, color);
                 sidebar.showTrackInfo(track, { color: color, onclick: hide });
@@ -45,13 +44,14 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	
 	function markMaps(locations) {
 	    for (var i = 0; i < locations.length; i++) {
-	    	markMap(locations[i]);
+	        var color = Colors.getNextColor();
+	    	markMap(locations[i], color);
 	    }
 	}
 	
-	function markMap(loc) {
+	function markMap(loc, color) {
         var mark = map.markLocation(loc.location);
-        var show = function() { showRide(loc, mark); };
+        var show = function() { showRide(loc, mark, color); };
         mark.setClickable(true);
         mark.addListener("click", show);
 	}
