@@ -37,7 +37,6 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
                 };
                 map.renderTrack(track, color);
                 sidebar.showTrackInfo(track, { color: color, onclick: hide });
-                //setTimeout(hide, 5000); // for testing.
             }
             
 		};

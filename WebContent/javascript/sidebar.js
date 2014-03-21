@@ -1,9 +1,10 @@
 function Sidebar(sidebarDiv) {
 	
 	var trackInfos = {};
+	var height;
 	
 	this.setHeight = function(h) {
-		sidebarDiv.style.maxHeight = h + "px";
+		height = h; // Used later in updateScrolling.
 	};
 	
 	this.setTop = function(t) {
@@ -19,11 +20,26 @@ function Sidebar(sidebarDiv) {
 		e.fade(infoDiv, 250, function() {
 			e.crush(infoDiv, 250, function() {
 				sidebarDiv.removeChild(infoDiv);
+			    updateScrolling();
 			});
 		});
 	};
 
 	this.showTrackInfo = function(track, conf) {
+		var trackInfo = buildTrackInfo(track, conf);
+	    trackInfos[track.fileName] = trackInfo;
+	    sidebarDiv.appendChild(trackInfo);
+	    updateScrolling();
+	};
+	
+	function updateScrolling() {
+		var tall = sidebarDiv.offsetHeight >= height;
+		console.log("updateScrolling() tall: " + tall);
+		sidebarDiv.style.maxHeight = tall ? (height + "px") : "";
+		sidebarDiv.style.overflowY = tall ? "scroll" : "hidden";
+	}
+	
+	function buildTrackInfo(track, conf) {
 		color = conf.color || Colors.getDefaultColor();
 		console.log("showTrackInfo(" + track.fileName + ", \"" + color + "\")");
 	    var trackInfo = document.createElement("div");
@@ -52,9 +68,7 @@ function Sidebar(sidebarDiv) {
 	    trackTable.appendChild(finalTd);
 	    
 	    trackInfo.appendChild(trackTable);
-	    trackInfos[track.fileName] = trackInfo;
-	    
-	    sidebarDiv.appendChild(trackInfo);
+	    return trackInfo;
 	};
 
 	function buildTr(thData, tdData)
