@@ -106,6 +106,13 @@ public class GpsTrack extends ArrayList<GpsLocation>
         
         return total;
     }
+    
+    public float getClimbingVerticalFeet()
+    {
+    	float meters = getClimbingVertical();
+    	return meters * 3.28084f;
+    }
+    
     /**
      * @return a GpsLocation with only the latitude and longitude set.
      */

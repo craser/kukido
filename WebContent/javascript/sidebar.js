@@ -58,8 +58,8 @@ function Sidebar(sidebarDiv) {
 	    var trackTable = document.createElement("table");
 	    trackTable.appendChild(buildTr("Date:", track.date));
 	    trackTable.appendChild(buildTr("Duration:", track.duration));
-	    trackTable.appendChild(buildTr("Distance (km):", track.kilometers));
-	    trackTable.appendChild(buildTr("Climbing (m):", track.climbing));
+	    trackTable.appendChild(buildTr("Distance (mi):", track.miles));
+	    trackTable.appendChild(buildTr("Climbing (ft):", track.climbingFeet));
 	    
 	    var finalTd = document.createElement("td");
 	    finalTd.setAttribute("colspan", "2");

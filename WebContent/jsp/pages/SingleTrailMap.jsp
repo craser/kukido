@@ -46,17 +46,9 @@
                 <td class="numeric"><nested:write name="track" property="miles" format="0.00" /></td>
               </tr>
               <tr>
-                <td>Distance (km):</td>
-                <td class="numeric"><nested:write name="track" property="kilometers" format="0.00" /></td>
-              </tr>
-              <tr>
                 <td>Climbing (Vert. ft):</td>
                 <%-- Since GPX (and therefore my mapping code) uses meter for elevation, convert to feet. --%>
-                <td class="numeric"><%= new java.text.DecimalFormat("0").format(track.getClimbingVertical() * 3.2808399f) %> </td>
-              </tr>
-              <tr>
-                <td>Climbing (Vert. m):</td>
-                <td class="numeric"><nested:write name="track" property="climbingVertical" format="0" /></td>
+                <td class="numeric"><nested:write name="track" property="climbingVerticalFeet" format="0" /> </td>
               </tr>
               <tr>
                 <td colspan="2">
