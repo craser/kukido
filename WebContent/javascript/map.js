@@ -9,7 +9,7 @@ function Map(div) {
 		color = color || Colors.getDefaultColor();
 	    var lines = [];
 	    var points = [];
-	    with (gpxTrack.bounds) { setBounds(minLat, maxLat, minLon, maxLon); }
+	    setBounds(gpxTrack.bounds);
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
 	        var g = new google.maps.LatLng(p.lat, p.lon);
@@ -45,10 +45,10 @@ function Map(div) {
 		this.resize(this.getWidth() + dw, this.getHeight() + dh);
 	};
 	
-	this.zoomToBounds = function(n, s, e, w) {
-		if (n) {
-			var ne = new google.maps.LatLng(n, e);
-		    var sw = new google.maps.LatLng(s, w);
+	this.zoomToBounds = function(b) {
+		if (b) {
+			var ne = new google.maps.LatLng(b.n, b.e);
+		    var sw = new google.maps.LatLng(b.s, b.w);
 		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 		}
 		else {
@@ -113,9 +113,9 @@ function Map(div) {
 	    return gmap;
 	}
 	
-	function setBounds(minLat, maxLat, minLon, maxLon) {
-		var ne = new google.maps.LatLng(maxLat, maxLon);
-	    var sw = new google.maps.LatLng(minLat,  minLon);
+	function setBounds(b) {
+		var ne = new google.maps.LatLng(b.n, b.e);
+	    var sw = new google.maps.LatLng(b.s,  b.w);
 	    bounds = new google.maps.LatLngBounds(sw, ne);
 	};
     

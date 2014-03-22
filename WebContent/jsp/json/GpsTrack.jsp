@@ -31,11 +31,11 @@ GpsLocation
         lat: <nested:write name="track" property="center.latitude" />,
         lon: <nested:write name="track" property="center.longitude" />
         },
-    bounds: {
-        maxLat: <nested:write name="track" property="bounds.maxLatitude" />,
-        minLat: <nested:write name="track" property="bounds.minLatitude" />,
-        maxLon: <nested:write name="track" property="bounds.maxLongitude" />,
-        minLon: <nested:write name="track" property="bounds.minLongitude" />
+    bounds: { <%-- Note that this is specific to North America! --%>
+        n: <nested:write name="track" property="bounds.maxLatitude" />,
+        s: <nested:write name="track" property="bounds.minLatitude" />,
+        e: <nested:write name="track" property="bounds.maxLongitude" />,
+        w: <nested:write name="track" property="bounds.minLongitude" />
         },
     points: [
     <nested:iterate name="track" property="thinnedTrack"  id="point" type="GpsLocation">

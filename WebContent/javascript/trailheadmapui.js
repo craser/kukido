@@ -19,7 +19,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	    window.addEventListener("resize", self.fitToScreen);
 		self.fitToScreen();
 		markMaps(mapLocations.locations);
-		with (mapLocations.bounds) { map.zoomToBounds(n, s, e, w); }
+		map.zoomToBounds(mapLocations.bounds);
 	}
 	
 	function showRide(loc, mark, color) {
@@ -29,13 +29,19 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
             var tracks = json_parse(json); // Should be an array of GPS Tracks.
             for (var t = 0; t < tracks.length; t++) {
                 var track = tracks[t];
-                var hide = function() { 
-                	map.removeTrack(track);
-                	sidebar.hideTrackInfo(track);
-                	markMap(loc, color);
+                var conf = {
+                		color: color,
+                		onclick: function hide() { 
+                        	map.removeTrack(track);
+                        	sidebar.hideTrackInfo(track);
+                        	markMap(loc, color);
+                        },
+                        zoom: function() {
+                        	map.zoomToBounds(track.bounds);
+                        }
                 };
                 map.renderTrack(track, color);
-                sidebar.showTrackInfo(track, { color: color, onclick: hide });
+                sidebar.showTrackInfo(track, conf);
             }
             
 		};

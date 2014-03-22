@@ -61,11 +61,23 @@ function Sidebar(sidebarDiv) {
 	    trackTable.appendChild(buildTr("Distance (mi):", track.miles));
 	    trackTable.appendChild(buildTr("Climbing (ft):", track.climbingFeet));
 	    
-	    var finalTd = document.createElement("td");
-	    finalTd.setAttribute("colspan", "2");
-	    finalTd.setAttribute("align", "right");
-	    finalTd.innerHTML = "<a href=\"maps/" + track.fileName + "\">more &raquo;</a>";
-	    trackTable.appendChild(finalTd);
+	    var zoomTd = document.createElement("td");
+	    var zoomLink = document.createElement("a");
+	    zoomLink.setAttribute("href", "javascript:");
+	    zoomLink.innerHTML = "&laquo; zoom";
+	    zoomLink.addEventListener("click", conf.zoom);
+	    zoomTd.appendChild(zoomLink);
+	    
+	    var entryTd = document.createElement("td");
+	    entryTd.setAttribute("colspan", "2");
+	    entryTd.setAttribute("align", "right");
+	    entryTd.innerHTML = "<a href=\"maps/" + track.fileName + "\">more &raquo;</a>";
+
+	    var lastRow = document.createElement("tr");
+	    lastRow.appendChild(zoomTd);
+	    lastRow.appendChild(entryTd);
+	    
+	    trackTable.appendChild(lastRow);
 	    
 	    trackInfo.appendChild(trackTable);
 	    return trackInfo;
