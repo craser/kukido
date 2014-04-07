@@ -23,14 +23,13 @@ Colors = (function() {
 	    "#FF1CAE", // Spicy Pink
 	    "#236B8E", // Steel Blue
 	    "#38B0DE", // Summer Sky
-	    "#D8BFD8", // Thistle
 	    "#CC3299", // Violet Red
 	];
 	
 	var i = 0;
 	
 	function getColor(n) { 
-		return colors[n % colors.length]; 
+	    return colors[(n || 0) % colors.length]; 
 	}
 	
 	function getNextColor() { 
