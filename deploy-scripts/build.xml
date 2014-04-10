@@ -98,6 +98,14 @@
 		</junit>
 	</target>
 	
+	<target name="test-javascript">
+		<exec executable="bin/phantomjs" failonerror="true">
+			<arg value="run-qunit.js" />
+			<arg value="${javascript.src.dir}" />
+			<arg value="${javascript.tst.dir}" />
+		</exec>
+	</target>
+	
 	<target name="jar-coverage" depends="jar-kukido">
 		<cobertura-instrument todir="${local.test.dir}">
 			<classpath refid="project.class.path" />
