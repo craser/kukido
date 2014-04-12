@@ -45,7 +45,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
             }
             
 		};
-		Ajax.get(url, show);
+		Ajax().get(url, show);
 	}
 	
 	function markMaps(locations) {
@@ -67,6 +67,6 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	        var mapLocations = json_parse(mapJson);
 	        init(mapLocations);
 	    };
-	    Ajax.get("json/maplocations", k);
+	    Ajax().get("json/maplocations", k);
 	})();
 }

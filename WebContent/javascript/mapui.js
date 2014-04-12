@@ -51,6 +51,6 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	        var gpxTracks = eval(mapJson);
 	        init(gpxTracks);
 	    };
-	    Ajax.get(url, k);
+	    Ajax().get(url, k);
 	})();
 }
