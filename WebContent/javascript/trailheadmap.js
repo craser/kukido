@@ -47,7 +47,7 @@ function buildOnClick(gmap, marker, m, i) {
                 
             }; // k
             var url = 'json/maps/' + m.fileName;
-            Ajax.get(url, k);
+            Ajax().get(url, k);
         }; // onClick
 }
 
