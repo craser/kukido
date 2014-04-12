@@ -18,6 +18,7 @@
     </script>
     <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
     <script type="text/JavaScript" src="javascript/ajax.js"> </script>
+    <script type="text/JavaScript" src="javascript/mapfactory.js"> </script>
     <script type="text/JavaScript" src="javascript/mapui.js"> </script>
     <script type="text/JavaScript" src="javascript/elevation.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
