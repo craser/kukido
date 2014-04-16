@@ -1,5 +1,4 @@
-function Map(div, mapFactory) {
-	mapFactory = mapFactory || new MapFactory(); // Testability.
+function Map(div) {
     var descriptions = new Object();
     var markers = new Object();
     var bounds = null;
@@ -13,17 +12,17 @@ function Map(div, mapFactory) {
 	    setBounds(gpxTrack.bounds);
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
-	        var g = mapFactory.getLatLng(p.lat, p.lon);
+	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
 	        if ((i % 100) == 0) {
-	        	var line = mapFactory.getPolyLine(points, color, map);
+	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: map});
 	        	lines.push(line);
 	            points = [];
 	            points.push(g);
 	        }
 	    }
 	    if (points.length > 0) {
-	    	lines.push(mapFactory.getPolyLine(points, color, map));
+	    	lines.push(new google.maps.Polyline({path: points, strokeColor: color, map: map}));
 	    }
 	    tracks[gpxTrack.fileName] = lines;
 	};
@@ -48,8 +47,9 @@ function Map(div, mapFactory) {
 	
 	this.zoomToBounds = function(b) {
 		if (b) {
-			var bounds = mapFactory.getBounds(b.n, b.e, b.s, b.w);
-		    map.fitBounds(bounds);
+			var ne = new google.maps.LatLng(b.n, b.e);
+		    var sw = new google.maps.LatLng(b.s, b.w);
+		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 		}
 		else {
 			map.fitBounds(bounds);
@@ -64,8 +64,13 @@ function Map(div, mapFactory) {
 	};
 	
 	this.markLocation = function(p) {
-		var loc = mapFactory.getLatLng(p.lat, p.lon);
-		var mark = mapFactory.getMarker(loc, map);
+		var loc = new google.maps.LatLng(p.lat, p.lon);
+		var mark = new google.maps.Marker({
+			position: loc,
+			clickable: false,
+			dragable: false
+		});
+		mark.setMap(map);
 		return mark;
 	};
 	
@@ -90,12 +95,28 @@ function Map(div, mapFactory) {
 	};
 	
 	function bind(div) {
-	    var gmap = mapFactory.getMap(div);
+	    var options = {
+	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
+	    	mapTypeControlOptions: {
+	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
+	    		position: google.maps.ControlPosition.TOP_LEFT,
+	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+	    	},
+	    	scroll: true,
+	    	panControl: false,
+	    	scaleControl: true,
+	    	streetViewControl: false, // FIXME: Configure this.
+	    	center: new google.maps.LatLng(0, 0, false) // FIXME: Pass in the actual center of the route.	    		
+	    };
+	    var gmap = new google.maps.Map(div, options);
+
 	    return gmap;
 	}
 	
 	function setBounds(b) {
-		bounds = mapFactory.getBounds(b.n, b.e, b.s, b.w);
+		var ne = new google.maps.LatLng(b.n, b.e);
+	    var sw = new google.maps.LatLng(b.s,  b.w);
+	    bounds = new google.maps.LatLngBounds(sw, ne);
 	};
     
 	this.div = div;
