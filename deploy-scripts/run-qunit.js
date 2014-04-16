@@ -76,9 +76,9 @@ function qUnitBoilerplate() {
     QUnit.stop();       // Stop everything and wait for tests to load.  QUnit.start() will be called once we inject the tests.
 
     QUnit.moduleStart(function(dets) {
-        line = "== Module: " + dets.name + " =";
-        while ((line += "=").length < 80);
-        console.log(line);
+        console.log("================================================================================");
+        console.log(" Module: " + dets.name);
+        console.log("================================================================================");
     });
 
     QUnit.testDone(function(d) {
@@ -94,6 +94,7 @@ function qUnitBoilerplate() {
         console.log("    total : " + d.total);
         console.log("    failed: " + d.failed);
         console.log("================================================================================");
+        console.log("");
     });
 
     QUnit.log(function(d) {
