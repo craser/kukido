@@ -14,7 +14,7 @@ function Map(div) {
 	        var p = gpxTrack.points[i]; // GPS point
 	        var g = new google.maps.LatLng(p.lat, p.lon);
 	        points.push(g);
-	        if ((i % 100) == 0) {
+	        if ((i > 0) && ((i % 100) == 0)) {
 	        	var line = new google.maps.Polyline({path: points, strokeColor: color, map: map});
 	        	lines.push(line);
 	            points = [];
