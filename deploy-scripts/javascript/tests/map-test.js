@@ -45,15 +45,6 @@ test("renderTrack", function() {
     var div = "MAPDIV";
     var track = buildTrack(300);
     var t = 0;                             // Index into track.points.
-    var boundsCalled = false;
-
-    google.maps.LatLngBounds = function(sw, ne) {
-        boundsCalled = true;
-        ok(sw.lat == track.bounds.s);
-        ok(sw.lng == track.bounds.w);
-        ok(ne.lat == track.bounds.n);
-        ok(ne.lng == track.bounds.e);
-    };
 
     google.maps.Polyline = function(options) {
         ok(options.path.length <= 101, "Path must be shorter than 101 points.  Found: " + options.path.length);
@@ -71,9 +62,6 @@ test("renderTrack", function() {
 
     map.renderTrack(track, "#0f0"); // See checks above in mock Polyline.
     ok(t == (track.points.length - 1)); // Make sure we checked every point.
-    ok(boundsCalled, "Bounds must be set.");
-
-
 });
 
 test("removeTrack", function() {

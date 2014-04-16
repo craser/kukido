@@ -1,7 +1,6 @@
 function Map(div) {
     var descriptions = new Object();
     var markers = new Object();
-    var bounds = null;
     var map = null;
     var tracks = {}; // filename --> Polyline[]
 	
@@ -9,7 +8,6 @@ function Map(div) {
 		color = color || Colors.getDefaultColor();
 	    var lines = [];
 	    var points = [];
-	    setBounds(gpxTrack.bounds);
 	    for (var i = 0; i < gpxTrack.points.length; i++) {
 	        var p = gpxTrack.points[i]; // GPS point
 	        var g = new google.maps.LatLng(p.lat, p.lon);
@@ -46,14 +44,9 @@ function Map(div) {
 	};
 	
 	this.zoomToBounds = function(b) {
-		if (b) {
-			var ne = new google.maps.LatLng(b.n, b.e);
-		    var sw = new google.maps.LatLng(b.s, b.w);
-		    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
-		}
-		else {
-			map.fitBounds(bounds);
-		}
+		var ne = new google.maps.LatLng(b.n, b.e);
+	    var sw = new google.maps.LatLng(b.s, b.w);
+	    map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 	};
 
 	this.showImageOnMap = function(fileName)
@@ -112,12 +105,6 @@ function Map(div) {
 
 	    return gmap;
 	}
-	
-	function setBounds(b) {
-		var ne = new google.maps.LatLng(b.n, b.e);
-	    var sw = new google.maps.LatLng(b.s,  b.w);
-	    bounds = new google.maps.LatLngBounds(sw, ne);
-	};
     
 	this.div = div;
 	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.

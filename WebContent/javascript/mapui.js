@@ -39,7 +39,7 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 		addElevationListeners(gpxTrack);
 	    window.addEventListener("resize", self.fitToScreen);
 		self.fitToScreen();
-		self.map.zoomToBounds();
+		self.map.zoomToBounds(gpxTrack.bounds);
 	}
 
 	(function() {
