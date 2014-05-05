@@ -116,7 +116,7 @@ public class ThumbnailDao extends Dao
 	}
     }
 
-    public Thumbnail findByFileNameMaxDimension(String fileName, int maxDimension) // File_Name, Max_Dimension is a KEY
+    public Thumbnail findByFileNameMaxWidth(String fileName, int maxWidth) // File_Name, Max_Dimension is a KEY
 	throws DataAccessException
     {
 	Connection conn = null;
@@ -128,7 +128,7 @@ public class ThumbnailDao extends Dao
 	    findByName = new NamedParamStatement(conn, FIND_THUMBNAIL_BY_NAME_MAX_DIMENSION_SQL);
 	    // "select * from THUMBNAILS where File_Name = :File_Name";
 	    findByName.setString("File_Name", fileName);
-	    findByName.setInt("Max_Dimension", maxDimension);
+	    findByName.setInt("Max_Dimension", maxWidth);
 	    results = findByName.executeQuery();
 
 	    if (!results.next()) throw new DataAccessException("Unable to find thumbnail with name " + fileName);

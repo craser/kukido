@@ -7,15 +7,17 @@
  * General Guidelines
  */
 body {
-  background: url(../img/clouds-bg.jpg);
+  background: url(../img/gold-rush-desktop.jpg);
+  background-size: auto 1280px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: auto 900px;
   font-family: HelveticaNeue-condensed, sans-serif;
   color: #222;
   margin: 0px;
   width: 800px;
   margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1em;
-  margin-top: 1em;
+  margin-right: 100px;
 }
 
 img {
@@ -96,6 +98,10 @@ p {
   margin: 0;
 }
 
+.header form {
+	display: inherit;
+}
+
 
 
 /**********************************************************************
@@ -161,14 +167,14 @@ p {
 .content {
   padding-top: 0;
   border-right: 0;
-  margin-right: 200px;
-  width: 600px;
+  margin-right: 170px;
+  width: 630px;
 }
 
 .sidebar {
   font-size: 0.8em;
   float: right;
-  width: 180px;
+  width: 150px;
   padding: 3px;
   border-left: 1px dotted #777;
 }
@@ -275,6 +281,9 @@ div.preventrylink a {
   clear: left;
   text-align: justify;
   margin-bottom: 2em;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 7px;
 }
 
 .title {
@@ -323,19 +332,13 @@ div.preventrylink a {
 
 .entrycontent img {
   border: 1px solid #555;
-  background-color: #fff;
-  padding: 5px;
 }
 
 .postcard {
   border: 1px solid #555;
-  background-color: #fff;
-  padding: 5px;
 }
 
 img.thumbnail {
-  padding: 1px;
-  background-color: #fff;
   border: 1px solid #555;
 }
 
@@ -410,7 +413,8 @@ a.paginglink {
   border: 0;
   margin-bottom: 1em;
   font: bold 2em sans-serif;
-  color: #555;
+  color: #000;
+  opacity: 0.8;
   letter-spacing: -1px;
 }
 

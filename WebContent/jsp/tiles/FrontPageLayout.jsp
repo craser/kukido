@@ -14,6 +14,11 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
+<%--<script src="javascript/header.js"> </script>
+    <script>
+    window.addEventListener("load", function() { new Header(document.getElementById("headerdiv")); });
+    </script>
+--%>    
     <tiles:get name="analytics" />
     <!-- page-specific header information -->
     <tiles:get name="head" />
@@ -21,13 +26,19 @@
   </head>
   <body>
     <h1 id="titlebanner"><html:link page="/">dreadedmonkeygod . net</html:link></h1>
-    <div class="header">
+    <div id="headerdiv" class="header">
       <ul class="sitenav">
         <li><html:link href="trailmaps">trail maps</html:link></li>
-        <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
-        <li><html:link href="about">about the author</html:link></li>
         <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
+        <jsp:include page="/jsp/nav/UserNav.jsp" /><%-- includes admin elements --%>
+    	<li>
+    		<html:form action="SearchLogEntries" method="GET">
+            	<html:text property="searchTerm" size="10" value="Search" onfocus="this.value=''" />
+            	<input type="hidden" name="pageSize" value="30" />
+            	<html:submit value="GO" />
+    		</html:form>
+    	</li>
       </ul>
     </div>
     <div class="sidebar">
@@ -39,15 +50,6 @@
       <!-- main content area -->
       <tiles:get name="content" ignore="false" />
       <!-- end main content area -->
-    </div>
-    <div class="footer">
-      <ul class="sitenav">
-        <li><html:link href="trailmaps">trail maps</html:link></li>
-        <li><html:link href="mailto:chris@dreadedmonkeygod.net">contact</html:link></li>
-        <li><html:link href="about">about the author</html:link></li>
-        <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
-        <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
-      </ul>
     </div>
   </body>
 </html>

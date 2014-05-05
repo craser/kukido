@@ -58,7 +58,7 @@
 	<!-- This semi-disables access to original image files.  Files uploaded from my phone contain GPS info, which points to my house. (Resizing strips the GPS.) -->
 	<mapping>
 		<pattern>.*/attachments/([^/]*jpg)</pattern>
-		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=588</template>
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=1920</template>
 		<casesensitive>false</casesensitive>
 	</mapping>
 	<mapping>
@@ -67,13 +67,19 @@
 	</mapping>
 	<mapping>
 		<pattern>.*/attachments/thumbs/(.*)</pattern>
-		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=75</template>
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=75</template>
 	</mapping>
 	<mapping>
 		<pattern>.*/attachments/postcards/(.*)</pattern>
-		<!-- Note that setting the maxDimension here will NOT affect the size of 
+		<!-- Note that setting the maxWidth here will NOT affect the size of 
 			map thumnails. For that, see MapImage JSP tag impl. -->
-		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxDimension=588</template> <!-- 600 total, with 5px padding, and 1px border from CSS -->
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=598</template> <!-- 600 total, with 1px border from CSS -->
+	</mapping>
+	<mapping>
+		<pattern>.*/attachments/desktops/(.*)</pattern>
+		<!-- Note that setting the maxWidth here will NOT affect the size of 
+			map thumnails. For that, see MapImage JSP tag impl. -->
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=1920</template> <!-- 600 total, with 5px padding, and 1px border from CSS -->
 	</mapping>
 	<!-- Galleries -->
 	<mapping>
