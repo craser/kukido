@@ -229,6 +229,7 @@ div.preventrylink a {
 
 .comments h2 a {
   border: 0;
+  color: #000;
 }
 
 .comments h2 a:hover {
