@@ -1,17 +1,28 @@
 /**********************************************************************
  * Questionable
  */
+ 
+ /* Mobile devices */
+@media only screen and (max-device-width : 1024px) {
+	body {
+  	  background: url(../img/clouds-bg.jpg);
+	}
+}
 
+/* Desktops and laptops */
+@media only screen and (min-width : 1025px) {
+	body {
+	  background: url(../img/gold-rush-desktop.jpg);
+	  background-size: auto 1280px;
+	  background-attachment: fixed;
+	  background-repeat: no-repeat;
+	}
+}
 
 /**********************************************************************
  * General Guidelines
  */
 body {
-  background: url(../img/gold-rush-desktop.jpg);
-  background-size: auto 1280px;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: auto 900px;
   font-family: HelveticaNeue-condensed, sans-serif;
   color: #222;
   margin: 0px;
