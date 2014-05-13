@@ -20,13 +20,14 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	};
 	
 	function addElevationListeners(gpxTrack) {
+		var mark = null;
 		var add = function(p) { 
-			var mark = self.map.markLocation(gpxTrack.points[p.row]);
-			var remove = function(p) {
-				self.map.removeMark(mark);
-			};
-			self.elevation.addListener('onmouseout', remove);
+			mark = self.map.markLocation(gpxTrack.points[p.row]);
 		};
+		var remove = function(p) {
+			self.map.removeMark(mark);
+		};
+		self.elevation.addListener('onmouseout', remove);
 		self.elevation.addListener('onmouseover', add);
 	}
 	
