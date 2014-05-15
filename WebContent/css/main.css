@@ -182,12 +182,12 @@ p {
   width: 630px;
 }
 
+/* Still used when I'm logged in. */
 .sidebar {
   font-size: 0.8em;
   float: right;
   width: 150px;
   padding: 3px;
-  border-left: 1px dotted #777;
 }
 
 .traversallinks {
