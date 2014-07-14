@@ -153,6 +153,13 @@
           <forward name="success" path="/jsp/json/MapLocations.jsp" />
         </action>
         
+    <action
+    	path="/JsonTagNames"
+    	type="net.kukido.blog.action.TagNames"
+    	>
+    	<forward name="success" path="/jsp/json/TagNames.jsp" />
+    </action>
+        
 
 	<!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
 	<action
