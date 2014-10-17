@@ -171,6 +171,15 @@
 	    >
 	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
 	</action>
+        
+
+	<!-- RSS Feed so I can cross-post only what I want cross-posted. -->
+	<action
+	    path="/ViewSyndicatedLogs"
+	    type="net.kukido.blog.action.ViewSyndicatedLogs"
+	    >
+	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+	</action>
 
         <action 
             path="/Gallery"

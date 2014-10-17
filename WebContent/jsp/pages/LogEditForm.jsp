@@ -70,6 +70,10 @@
               <td class="inputlabel">Allow Comments:</td>
               <td><nested:checkbox property="entry.allowComments" /></td>
             </tr>
+            <tr>
+              <td class="inputlabel">Syndicate:</td>
+              <td><nested:checkbox property="entry.syndicate" /></td>
+            </tr>
           </table>
           
           <nested:textarea property="entry.intro" rows="20" cols="60"/>

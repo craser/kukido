@@ -63,6 +63,10 @@
               <td><nested:checkbox property="entry.allowComments" /></td>
             </tr>
             <tr>
+              <td class="inputlabel">Syndicate:</td>
+              <td><nested:checkbox property="entry.syndicate" /></td>
+            </tr>
+            <tr>
               <td class="inputlabel" valign="top">Send Trackbacks:</td>
               <td>
                 <table>

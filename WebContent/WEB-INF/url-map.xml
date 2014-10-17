@@ -42,6 +42,10 @@
 		<template>/Monkeyfeed.do</template>
 	</mapping>
 	<mapping>
+		<pattern>.*/syndicated.xml$</pattern>
+		<template>/ViewSyndicatedLogs.do?numEntries=20</template>
+	</mapping>
+	<mapping>
 		<pattern>.*/feeds/([^/]+).xml</pattern>
 		<template>/Monkeyfeed.do?tags=$1</template>
 	</mapping>

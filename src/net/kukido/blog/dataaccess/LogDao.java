@@ -17,7 +17,7 @@ public class LogDao extends Dao implements Iterator
 
     private static final String CREATE_SQL = "insert into LOG_ENTRIES "
             + "(Date_Posted, Last_Updated, User_ID, User_Name, Title"
-            + ",Image_File_Name ,Image_File_Type ,Intro, Body, Via_Text, Via_Url, Via_Title, Allow_Comments)"
+            + ",Image_File_Name ,Image_File_Type ,Intro, Body, Via_Text, Via_Url, Via_Title, Allow_Comments, Syndicate)"
             + " values " + "(:Date_Posted" // Date_Posted
             + ",:Last_Updated" // Last_Updated
             + ",:User_ID" // User_ID
@@ -31,6 +31,7 @@ public class LogDao extends Dao implements Iterator
             + ",:Via_Url" // Via_Url
             + ",:Via_Title" // Via_Title
             + ",:Allow_Comments" // Allow_Comments
+            + ",:Syndicate" // Syndicate
             + ")";
 
     private static final String UPDATE_SQL = "update LOG_ENTRIES set"
@@ -47,7 +48,8 @@ public class LogDao extends Dao implements Iterator
             + ",Via_Text = :Via_Text" // 12 Via_Text
             + ",Via_Url = :Via_Url" // 13 Via_Url
             + ",Allow_Comments = :Allow_Comments" // 14 Allow_Updates
-            + " where Entry_ID = :Entry_ID"; // 15 Entry_ID
+            + ",Syndicate = :Syndicate" // 15 Syndicate
+            + " where Entry_ID = :Entry_ID"; // 16 Entry_ID
 
     private static final String DELETE_SQL = "delete from LOG_ENTRIES where Entry_ID = :Entry_ID"; // 1
                                                                                                    // Entry_ID
@@ -55,6 +57,8 @@ public class LogDao extends Dao implements Iterator
     private static final String FIND_DATES_POSTED_SQL = "select distinct"
             + " year(Date_Posted) Year" + ",month(Date_Posted) Month"
             + ",dayofmonth(Date_Posted) Date" + " from LOG_ENTRIES" + " order by Date_Posted desc";
+    
+    private static final String FIND_SYNDICATED_SQL = "select * from LOG_ENTRIES where Syndicate = 'true' order by Entry_ID desc limit :limit";
 
     private static final String FIND_ENTRY_AFTER_ID_SQL = "select min(Entry_ID) from LOG_ENTRIES where Entry_ID > :Entry_ID";
 
@@ -88,6 +92,7 @@ public class LogDao extends Dao implements Iterator
             create.setString("Via_Text", logEntry.getViaText());
             create.setString("Via_Url", logEntry.getViaUrl());
             create.setString("Allow_Comments", Boolean.toString(logEntry.getAllowComments()));
+            create.setString("Syndicate", Boolean.toString(logEntry.getSyndicate()));
             create.executeUpdate();
 
             logEntry.setEntryId(getLastCreatedId(conn));
@@ -177,6 +182,7 @@ public class LogDao extends Dao implements Iterator
             update.setString("Via_Text", logEntry.getViaText());
             update.setString("Via_Url", logEntry.getViaUrl());
             update.setString("Allow_Comments", Boolean.toString(logEntry.getAllowComments()));
+            update.setString("Syndicate", Boolean.toString(logEntry.getSyndicate()));
 
             update.executeUpdate();
 
@@ -262,6 +268,42 @@ public class LogDao extends Dao implements Iterator
         }
         catch (Exception e) {
             throw new DataAccessException("No entry found with Entry_ID " + entryId, e);
+        }
+        finally {
+            try {
+                rs.close();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                find.close();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                conn.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
+    }
+
+    public Collection findSyndicated(int numEntries) throws DataAccessException
+    {
+        Connection conn = null;
+        NamedParamStatement find = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            find = new NamedParamStatement(conn, FIND_SYNDICATED_SQL);
+            find.setInt("limit", numEntries);
+
+            rs = find.executeQuery();
+            
+            return populateEntries(rs);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Unable to find syndicated entries.", e);
         }
         finally {
             try {
@@ -505,6 +547,7 @@ public class LogDao extends Dao implements Iterator
         header.setViaText(results.getString("Via_Text"));
         header.setViaUrl(results.getString("Via_Url"));
         header.setAllowComments(results.getBoolean("Allow_Comments"));
+        header.setSyndicate(results.getBoolean("Syndicate"));
     }
 
     private void populateEntryDetails(Collection entries) throws SQLException, DataAccessException
