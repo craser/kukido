@@ -296,6 +296,7 @@ var json_parse = (function () {
             next('N');
             return NaN;
         case 'I':
+        	next('I');
         	next('n');
         	next('f');
         	next('i');
