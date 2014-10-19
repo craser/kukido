@@ -295,6 +295,15 @@ var json_parse = (function () {
             next('a');
             next('N');
             return NaN;
+        case 'I':
+        	next('n');
+        	next('f');
+        	next('i');
+        	next('n');
+        	next('i');
+        	next('t');
+        	next('y');
+        	return Infinity;
         }
         error("Unexpected '" + ch + "'");
     },
