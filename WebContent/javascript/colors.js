@@ -17,7 +17,6 @@ Colors = (function() {
 	    "#FF2400", // Orange Red
 	    "#DB70DB", // * Orchid
 	    "#8C1717", // * Scarlet
-	    "#8E6B23", // Sienna
 	    "#3299CC", // Sky Blue
 	    "#007FFF", // Slate Blue
 	    "#FF1CAE", // Spicy Pink
