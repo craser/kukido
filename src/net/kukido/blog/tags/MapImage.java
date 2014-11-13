@@ -1,23 +1,16 @@
 package net.kukido.blog.tags;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
 import net.kukido.blog.dataaccess.LocationMaskDao;
 import net.kukido.blog.datamodel.Attachment;
-import net.kukido.blog.datamodel.Location;
 import net.kukido.blog.datamodel.LocationMask;
-import net.kukido.blog.datamodel.LogEntry;
 import net.kukido.blog.log.Logging;
 import net.kukido.maps.GpsLocation;
 import net.kukido.maps.GpsTrack;
@@ -76,6 +69,7 @@ public class MapImage extends ImgTag
             String path = getPathValue();
             //"//maps.googleapis.com/maps/api/staticmap?size={0}&sensor={1}&maptype={2}&format={3}&key={4}&path=color:0xFF0000BF|weight:2|{5}";
             String src = MessageFormat.format(URL_FORMAT, getDimensions(), Boolean.toString(sensor), mapType, format, API_KEY, path);
+            src = src.replaceAll("&", "&amp;"); // Encode the ampersands, hack hack hack.
             log.debug("URL for map thumbail for " + mapAttachment + ": " + src);
             setSrc(src); // super.
         }
