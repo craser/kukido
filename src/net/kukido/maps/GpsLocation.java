@@ -19,7 +19,7 @@ public class GpsLocation implements Comparable
     private float elevation;
     private float grade; 
     private float bpm; // Heart Rate in beats per minute
-    private Date timestamp;
+    private Date timestamp = new Date(0);
     /** 
      * Earth's radius in km. 
      */
