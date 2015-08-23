@@ -11,6 +11,12 @@
 
   <tiles:put type="string" name="head">
     <link rel="stylesheet" type="text/css" href="css/logedit.css">
+    <script type="text/JavaScript" src="javascript/ajax.js"> </script>
+    <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
+    <script type="text/JavaScript" src="javascript/tags-typeahead.js"> </script>
+    <script type="text/JavaScript">
+    window.addEventHandler("load", TagsTypeAhead.init("tagsInput"));
+    </script>
   </tiles:put>
 
   <tiles:put type="string" name="content">
@@ -50,11 +56,15 @@
             </tr>
             <tr>
               <td class="inputlabel">Tags (space-separated):</td>
-              <td><nested:text property="tags" /></td>
+              <td><nested:text property="tags" styleId="tagsInput" /></td>
             </tr>
             <tr>
               <td class="inputlabel">Allow Comments:</td>
               <td><nested:checkbox property="entry.allowComments" /></td>
+            </tr>
+            <tr>
+              <td class="inputlabel">Syndicate:</td>
+              <td><nested:checkbox property="entry.syndicate" /></td>
             </tr>
             <tr>
               <td class="inputlabel" valign="top">Send Trackbacks:</td>

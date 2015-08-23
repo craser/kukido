@@ -9,7 +9,7 @@
       <fieldset id="countdown">
       <input type="text" id="mc" name="mc" value="loading..." size="12" onfocus="this.blur()" />
       </fieldset>
-      <script>
+      <script type="text/JavaScript">
         var SECOND = 1000;
         var MINUTE = 60 * SECOND;
         var HOUR = 60 * MINUTE;

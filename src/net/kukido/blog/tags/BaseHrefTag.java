@@ -20,6 +20,7 @@ public class BaseHrefTag implements Tag
 {
     private PageContext pageContext;
     private Tag parent;
+    private boolean isXml = false; //contentType != null && contentType.toLowerCase().indexOf("xml") > -1;
     
     /** Creates a new instance of BaseHrefTag */
     public BaseHrefTag() {}
@@ -52,7 +53,6 @@ public class BaseHrefTag implements Tag
             baseUrl.append("/");
             
             //String contentType = pageContext.getResponse().getContentType(); // total hack.
-            boolean isXml = true; //contentType != null && contentType.toLowerCase().indexOf("xml") > -1;
             out.write("<base href=\"" 
                 + baseUrl 
                 + "\""
@@ -84,5 +84,9 @@ public class BaseHrefTag implements Tag
     
     public void setParent(Tag tag) {
         this.parent = parent;
+    }
+    
+    public void setIsXml(boolean isXml) {
+    	this.isXml = isXml;
     }
 }

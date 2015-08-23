@@ -153,6 +153,13 @@
           <forward name="success" path="/jsp/json/MapLocations.jsp" />
         </action>
         
+    <action
+    	path="/JsonTagNames"
+    	type="net.kukido.blog.action.TagNames"
+    	>
+    	<forward name="success" path="/jsp/json/TagNames.jsp" />
+    </action>
+        
 
 	<!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
 	<action
@@ -161,6 +168,15 @@
 	    name="entryListingForm"
 	    validate="false"
 	    scope="request"
+	    >
+	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+	</action>
+        
+
+	<!-- RSS Feed so I can cross-post only what I want cross-posted. -->
+	<action
+	    path="/ViewSyndicatedLogs"
+	    type="net.kukido.blog.action.ViewSyndicatedLogs"
 	    >
 	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
 	</action>

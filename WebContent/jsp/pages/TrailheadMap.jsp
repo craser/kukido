@@ -21,7 +21,7 @@
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
     <script type="text/JavaScript" src="javascript/sidebar.js"> </script>
     <script type="text/JavaScript" src="javascript/trailheadmapui.js"> </script>
-    <script>
+    <script type="text/JavaScript">
       // Assign the actual Google Map obj. to the global var.
       window.addEventListener("load", function() {
     	  var mapDiv = document.getElementById("map");

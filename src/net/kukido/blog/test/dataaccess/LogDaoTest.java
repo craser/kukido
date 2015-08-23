@@ -41,6 +41,7 @@ public class LogDaoTest
         
         // Make sure that the original 
         assertTrue(created.getAllowComments());
+        assertTrue(created.getSyndicate());
         assertTrue("body".equals(created.getBody()));
         assertTrue(withinFiveMinutes(created.getDatePosted(), now));
         assertFalse(created.getEntryId() == -1); // Confirm that an ID was assigned.
@@ -61,6 +62,7 @@ public class LogDaoTest
 	private LogEntry buildLogEntry() {
 		LogEntry entry = new LogEntry();
         entry.setAllowComments(true);
+        entry.setSyndicate(true);
         entry.setBody("body");
         entry.setDatePosted(now);
         entry.setEntryId(-1); // Confirm later that this got properly set.
@@ -142,6 +144,7 @@ public class LogDaoTest
         // Double-check that the existing values aren't the same as the new
         // values we'll assign later.
         assertTrue(created.getAllowComments());
+        assertTrue(created.getSyndicate());
         assertFalse("update-body".equals(created.getBody()));
         assertFalse("update-image-file-name".equals(created.getImageFileName()));
         assertFalse(Attachment.TYPE_IMAGE.equals(created.getImageFileType()));
@@ -156,6 +159,7 @@ public class LogDaoTest
         
         
         created.setAllowComments(false);
+        created.setSyndicate(false);
         created.setBody("update-body");
         created.setImageFileName("update-image-file-name");
         created.setImageFileType(Attachment.TYPE_IMAGE);
@@ -172,6 +176,7 @@ public class LogDaoTest
         
         LogEntry updated = logDao.findByEntryId(created.getEntryId());
         assertFalse(updated.getAllowComments());
+        assertFalse(updated.getSyndicate());
         assertTrue("update-body".equals(updated.getBody()));
         assertTrue(withinFiveMinutes(updated.getDatePosted(), now));
         assertFalse(updated.getEntryId() == -1); // Confirm that an ID was assigned.
