@@ -20,6 +20,7 @@ public class LogEntryHeader implements Serializable
     private int userId;
     private String userName;
     private boolean allowComments;
+    private boolean syndicate;
     private String title;
     private String imageFileName;
     private String imageFileType;
@@ -108,6 +109,16 @@ public class LogEntryHeader implements Serializable
     public boolean getAllowComments()
     {
         return allowComments;
+    }
+    
+    public void setSyndicate(boolean syndicate)
+    {
+    	this.syndicate = syndicate;
+    }
+    
+    public boolean getSyndicate()
+    {
+    	return syndicate;
     }
 
     public void setTitle(String title)

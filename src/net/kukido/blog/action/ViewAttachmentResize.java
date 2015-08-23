@@ -33,13 +33,13 @@ public class ViewAttachmentResize extends Action
         OutputStream resOut = null;
         try {
             String fileName = req.getParameter("fileName");
-            int maxDimension = Integer.parseInt(req.getParameter("maxDimension"));
+            int maxWidth = Integer.parseInt(req.getParameter("maxWidth"));
 
             Thumbnail thumbnail = null;
             try {
                 // System.out.println("[ViewAttachmentResize] Seeking attachment: \""
                 // + fileName + "\"");
-                thumbnail = new ThumbnailDao().findByFileNameMaxDimension(fileName, maxDimension);
+                thumbnail = new ThumbnailDao().findByFileNameMaxWidth(fileName, maxWidth);
             }
             catch (DataAccessException e) {
                 // System.out.println("[ViewAttachmentResize] creating resized version of \""
@@ -50,7 +50,7 @@ public class ViewAttachmentResize extends Action
                 String format = fileName.substring(fileName.indexOf(".") + 1);
                 ImageTools tools = new ImageTools();
                 BufferedImage thumb = tools.createImage(attachment.getBytes());
-                thumb = tools.scaleToMaxDim(thumb, maxDimension);
+                thumb = tools.scaleToWidth(thumb, maxWidth);
                 // This part we do if we can, but don't sweat it if we can't.
                 try {
                     int orientation = tools.getOrientation(attachment.getBytes());
@@ -67,7 +67,7 @@ public class ViewAttachmentResize extends Action
                 thumbnail = new Thumbnail();
                 thumbnail.setAttachmentId(attachment.getAttachmentId());
                 thumbnail.setFileName(attachment.getFileName());
-                thumbnail.setMaxDimension(maxDimension);
+                thumbnail.setMaxDimension(maxWidth);
                 thumbnail.setBytes(imageOut.toByteArray());
 
                 new ThumbnailDao().create(thumbnail);

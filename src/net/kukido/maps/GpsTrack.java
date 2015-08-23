@@ -34,8 +34,8 @@ public class GpsTrack extends ArrayList<GpsLocation>
     public long getDuration()
     {
         if (size() > 0) {
-            long start = ((GpsLocation)get(0)).getTimestamp().getTime();
-            long finish = ((GpsLocation)get(size() -1)).getTimestamp().getTime();
+            long start = getStartTime().getTime();
+            long finish = getFinishTime().getTime();
             long d = Math.abs(finish - start);
             
             return d;
