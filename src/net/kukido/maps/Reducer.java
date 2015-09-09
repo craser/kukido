@@ -1,5 +1,6 @@
 package net.kukido.maps;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,18 +13,19 @@ public class Reducer
 {
     /**
      * 
-     * @param maxPointes
+     * @param maxPoints
      * @param ignored
      * @return
      */
-    public GpsTrack reduce(GpsTrack track, int maxPointes, double minDistance) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
+    public GpsTrack reduce(GpsTrack track, int maxPoints, double minDistance) // This seems to confuse the Struts tags.  Changing away from getXxx(int) un-confuses Struts.
     {   
         List<Segment> segments = new LinkedList<Segment>();
-        segments.add(new Segment(track, 0, track.size() - 1));
+        segments.add(new Segment(track, 0, track.size() - 1)); // All Segments share the same GpsTrack.
         
-        while (segments.size() < (maxPointes - 1)) {
-            int i = findMostInteresting(segments);
-            Segment s = segments.remove(i);
+        while (segments.size() < (maxPoints - 1)) { // Leave room for last point, which is the end of the last segment.
+        	Segment s = Collections.max(segments); // Find the most interesting segement.
+        	int i = segments.indexOf(s); // Split the segment in two and replace it.
+        	segments.remove(s);        	
             if (s.getInterest() >= minDistance) {
                 segments.addAll(i, s.split());
             }
@@ -42,22 +44,7 @@ public class Reducer
         }
         track.add(segments.get(segments.size() - 1).getEnd());
         
-        return track;
-        
-    }
-    
-    private int findMostInteresting(List<Segment> segments) {
-        double maxInterest = 0d;
-        int maxIndex = 0;
-        for (int i = 0; i < segments.size(); i++) {
-            double interest = segments.get(i).getInterest();
-            if (interest > maxInterest) {
-                maxInterest = interest;
-                maxIndex = i;
-            }
-        }
-        
-        return maxIndex;
+        return track;        
     }
 
 }

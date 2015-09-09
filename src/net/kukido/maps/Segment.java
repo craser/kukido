@@ -3,7 +3,7 @@ package net.kukido.maps;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Segment {
+public class Segment implements Comparable<Segment> {
     private final List<GpsLocation> track;
     private final int start;
     private final int end;
@@ -67,4 +67,19 @@ public class Segment {
     public String toString() {
         return "Seg[" + start + "-" + end + ": " + interest + "]";
     }
+
+    /**
+     * Compares two segments based on how "interesting" they are.
+     */
+	public int compareTo(Segment segment) {
+		if (this.interest > segment.getInterest()) {
+			return 1;
+		}
+		else if (this.interest < segment.getInterest()) {
+			return -1;
+		}
+		else {
+			return 0;
+		}
+	}
 }
