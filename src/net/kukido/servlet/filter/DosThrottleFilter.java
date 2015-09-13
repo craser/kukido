@@ -7,6 +7,8 @@ package net.kukido.servlet.filter;
 
 import javax.servlet.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,7 +26,7 @@ public class DosThrottleFilter implements Filter
     private String method; // GET, POST, ALL
     
     public DosThrottleFilter() {
-        profileMap = new HashMap<RequestProfile, RequestProfile>();
+        profileMap = new ConcurrentHashMap<RequestProfile, RequestProfile>();
     }
     
     public void destroy()
