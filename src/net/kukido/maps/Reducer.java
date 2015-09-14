@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Implementation of Ramer–Douglas–Peucker algorithm.
+ * Implementation of Ramer-Douglas-Peucker algorithm.
  * @author craser
  *
  */
