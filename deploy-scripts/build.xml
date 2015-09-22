@@ -17,7 +17,7 @@
 	<path id="cobertura.class.path">
 	</path>
 	
-	<target name="deploy-prod" depends="build-war">
+	<target name="deploy-prod" depends="tag-build, build-war">
 		<input addproperty="prod.pass" message="Enter password for ${prod.user}@${prod.host}:" /> 
 		<echo message="Deploying WAR file to production server." />
 		<echo message="    host: ${prod.host}" />
@@ -118,33 +118,13 @@
 		</delete>
 		<copy file="${local.test.dir}/${kukido.jar.file}" tofile="${local.build.dir}/${kukido.jar.file}" />
 	</target>
-
-	<target name="test-tag-build" depends="init-tag-name">
-		<echo message="Tagging build: test-${svn.tag.name}" />
-		<svn>
-			<wcversion
-				path="${svn.work.dir}"
-			/>
-			<copy srcPath="${svn.work.dir}" 
-				destUrl="${svn.tags.url}/test-${svn.tag.name}"
-				message="Testing the automated tagging system."
-			/>
-		</svn>
-		<echo message="Repository URL: ${repository.url}" />
-	</target>
 	
 	<target name="tag-build" depends="init-tag-name">
 		<echo message="Tagging build: ${svn.tag.name}" />
-		<svn>
-			<wcversion
-				path="${svn.work.dir}"
-			/>
-			<copy srcPath="${svn.work.dir}" 
-				destUrl="${svn.tags.url}/${svn.tag.name}"
-				message="Automated tagging upon deployment to production."
-			/>
-		</svn>
-		<echo message="Repository URL: ${repository.url}" />
+		<exec executable="git">
+			<arg value="branch" />
+			<arg value="${svn.tag.name}" />
+		</exec>
 	</target>
 	
 	<target name="init-tag-name">
@@ -152,7 +132,7 @@
 			<format property="timestamp" pattern="yyyy.MM.dd-HH.mm.ss" />
 		</tstamp>
 		<property name="svn.tag.name" value="Production-Build-${timestamp}" />
-		<echo message="Tag name: ${svn.tag.name}" />
+		<echo message="Branch name: ${svn.tag.name}" />
 	</target>
 	
 	<target name="build-war" depends="build-war-template">
