@@ -1,4 +1,5 @@
-module("Map", {
+new OneBanana({
+    name: "Map",
     setup: function() {
         google = {};
         google.maps = {};
@@ -24,184 +25,172 @@ module("Map", {
             getDefaultColor: function() { return "#f00"; }
         };
     }
+}).test(
 
-});
+    function test_newMap(test) {
+        var mapDiv = null;
+        var mapOptions = null;
+        google.maps.Map = function(div, options) {
+            mapDiv = div;
+            mapOptions = options;
+        };
 
-test("new Map()", function() {
-    var mapDiv = null;
-    var mapOptions = null;
-    google.maps.Map = function(div, options) {
-        mapDiv = div;
-        mapOptions = options;
-    };
-        
-    var div = "MAMBO";
-    var map = new Map(div);
-    ok((mapDiv === div), "Pass div to google Map.");
-    ok(mapOptions != null, "Map options must not be null.");
-});
+        var div = "MAMBO";
+        var map = new Map(div);
+        test.ok((mapDiv === div), "Pass div to google Map.");
+        test.ok(mapOptions != null, "Map options must not be null.");
+    },
+    function test_renderTrack(test) {
+        var div = "MAPDIV";
+        var track = buildTrack(300);
+        var t = 0;                             // Index into track.points.
 
-test("renderTrack", function() {
-    var div = "MAPDIV";
-    var track = buildTrack(300);
-    var t = 0;                             // Index into track.points.
-
-    google.maps.Polyline = function(options) {
-        ok(options.path.length <= 101, "Path must be shorter than 101 points.  Found: " + options.path.length);
-        for (var i = 0; i < options.path.length; i++, t++) {
-            var mp = options.path[i];
-            var ap = track.points[t];
-            if (mp.lat != ap.lat || mp.lng != ap.lon) {
-                ok(false, "Points in track and map must agree.");
+        google.maps.Polyline = function(options) {
+            test.ok(options.path.length <= 101, "Path must be shorter than 101 points.  Found: " + options.path.length);
+            for (var i = 0; i < options.path.length; i++, t++) {
+                var mp = options.path[i];
+                var ap = track.points[t];
+                if (mp.lat != ap.lat || mp.lng != ap.lon) {
+                    test.ok(false, "Points in track and map must agree.");
+                }
             }
-        }
-        t--; // Last and first points overlap, so t must backtrack to last processed point.
-    };
-
-    var map = new Map(div);
-
-    map.renderTrack(track, "#0f0"); // See checks above in mock Polyline.
-    ok(t == (track.points.length - 1)); // Make sure we checked every point.
-});
-
-test("removeTrack", function() {
-    var created = 0;
-    google.maps.Polyline = function(conf) {
-        created++;
-        this.conf = conf;
-        this.setMap = function(map) { ok(map === null, "Set map to null."); };
-    };
-
-    var track = buildTrack(300);
-    var map = new Map("DIV");
-    map.renderTrack(track, "#0f0");
-
-    expect(created);
-    map.removeTrack(track);
-});
-
-	
-test("resize", function() {
-    var div = {};
-    div.style = {};
-
-    var w = 249568;
-    var h = 203495;
-
-    var map = new Map(div);
-    map.resize(w, h);
-    ok(div.style.width = w + "px");
-    ok(div.style.height = h + "px");
-});
-
-test("getHeight", function() {
-    var h = 34523562;
-    var div = {};
-    div.style = {};
-    div.offsetHeight = h;
-    var map = new Map(div);
-    var mh = map.getHeight();
-    ok(mh == h, "Height must be retrieved from div.offsetHeight");
-});
-    
-test("getWidth", function() {
-    var w = 34523562;
-    var div = {};
-    div.style = {};
-    div.offsetWidth = w;
-    var map = new Map(div);
-    var mw = map.getWidth();
-    ok(mw == w, "Width must be retrieved from div.offsetWidth");
-});
-
-
-test("resizeBy", function() {
-    var w = 249568;
-    var h = 203495;
-
-    var dw = -98;
-    var dh = 2345;
-
-    var div = {};
-    div.style = {};
-    div.offsetWidth = w;
-    div.offsetHeight = h;
-
-    var map = new Map(div);
-    map.resize(w, h);
-    ok(div.offsetWidth == w, "Div width is correct.");
-    ok(div.offsetHeight == h, "Div height is correct.");
-
-    var nw = w + dw;
-    var nh = h + dh;
-
-    map.resizeBy(dw, dh);
-    ok(div.style.width == nw + "px");
-    ok(div.style.height == nh + "px");
-});
-
-test("removeMark", function() {
-    var map = new Map("DIV");
-    expect(1);
-    map.removeMark({ setMap: function(map) { ok(map === null, "Must set map to null."); } });
-});
-
-test("markLocation", function() {
-    var gmap = null;
-    google.maps.Map = function() {
-        gmap = this;
-        return MockMap.apply(this, arguments);
-    };
-        
-    google.maps.Marker = function(conf) {
-        ok(conf.position.lat == point.lat);
-        ok(conf.position.lng == point.lon);
-        this.setMap = function(m) {
-            ok(m === gmap);
+            t--; // Last and first points overlap, so t must backtrack to last processed point.
         };
-    };
 
-    var map = new Map("DIV");
-    ok(gmap != null, "Set gmap.");
-    var point = { lat: randomLatLon(), lon: randomLatLon() };
-    expect(4);
-    map.markLocation(point);
-});
-	
-test("getTop", function() {
-    var div = {};
-    div.offsetTop = 1;
+        var map = new Map(div);
 
-    div.offsetParent = {};
-    div.offsetParent.offsetTop = 2;
-
-    div.offsetParent.offsetParent = {};
-    div.offsetParent.offsetParent.offsetTop = 3;
-    
-    div.offsetParent.offsetParent.offsetParent = {};
-    div.offsetParent.offsetParent.offsetParent.offsetTop = 4;
-
-    var map = new Map(div);
-    var top = map.getTop();
-    ok((top === 10), "expected 10, got: " + top);
-});
-
-test("zoomToBounds", function() {
-    var bounds = { n: 1, e: 2, s: 3, w: 4 };
-    google.maps.Map = function() {
-        MockMap.apply(this, arguments);
-        this.fitBounds = function(b) {
-            ok(b.ne.lat == bounds.n);
-            ok(b.ne.lng == bounds.e);
-            ok(b.sw.lat == bounds.s);
-            ok(b.sw.lng == bounds.w);
+        map.renderTrack(track, "#0f0"); // See checks above in mock Polyline.
+        test.ok(t == (track.points.length - 1)); // Make sure we checked every point.
+    },
+    function test_removeTrack(test) {
+        var created = 0;
+        google.maps.Polyline = function(conf) {
+            created++;
+            this.conf = conf;
+            this.setMap = function(map) { test.ok(map === null, "Set map to null."); };
         };
-    };
 
-    var map = new Map("DIV");
-    expect(4);
-    map.zoomToBounds(bounds);            
-});
+        var track = buildTrack(300);
+        var map = new Map("DIV");
+        map.renderTrack(track, "#0f0");
+
+        test.expect(created);
+        map.removeTrack(track);
+    },
+    function test_resize(test) {
+        var div = {};
+        div.style = {};
+
+        var w = 249568;
+        var h = 203495;
+
+        var map = new Map(div);
+        map.resize(w, h);
+        test.ok(div.style.width = w + "px");
+        test.ok(div.style.height = h + "px");
+    },
+    function test_getHeight(test) {
+        var h = 34523562;
+        var div = {};
+        div.style = {};
+        div.offsetHeight = h;
+        var map = new Map(div);
+        var mh = map.getHeight();
+        test.ok(mh == h, "Height must be retrieved from div.offsetHeight");
+    },
+    function test_getWidth(test) {
+        var w = 34523562;
+        var div = {};
+        div.style = {};
+        div.offsetWidth = w;
+        var map = new Map(div);
+        var mw = map.getWidth();
+        test.ok(mw == w, "Width must be retrieved from div.offsetWidth");
+    },
+    function test_resizeBy(test) {
+        var w = 249568;
+        var h = 203495;
+
+        var dw = -98;
+        var dh = 2345;
+
+        var div = {};
+        div.style = {};
+        div.offsetWidth = w;
+        div.offsetHeight = h;
+
+        var map = new Map(div);
+        map.resize(w, h);
+        test.ok(div.offsetWidth == w, "Div width is correct.");
+        test.ok(div.offsetHeight == h, "Div height is correct.");
+
+        var nw = w + dw;
+        var nh = h + dh;
+
+        map.resizeBy(dw, dh);
+        test.ok(div.style.width == nw + "px");
+        test.ok(div.style.height == nh + "px");
+    },
+    function test_removeMark(test) {
+        var map = new Map("DIV");
+        test.expect(1);
+        map.removeMark({ setMap: function(map) { test.ok(map === null, "Must set map to null."); } });
+    },
+    function test_markLocation(test) {
+        var gmap = null;
+        google.maps.Map = function() {
+            gmap = this;
+            return MockMap.apply(this, arguments);
+        };
+
+        google.maps.Marker = function(conf) {
+            test.ok(conf.position.lat == point.lat);
+            test.ok(conf.position.lng == point.lon);
+            this.setMap = function(m) {
+                test.ok(m === gmap);
+            };
+        };
+
+        var map = new Map("DIV");
+        test.ok(gmap != null, "Set gmap.");
+        var point = { lat: randomLatLon(), lon: randomLatLon() };
+        test.expect(4);
+        map.markLocation(point);
+    },
+    function test_getTop(test) {
+        var div = {};
+        div.offsetTop = 1;
+
+        div.offsetParent = {};
+        div.offsetParent.offsetTop = 2;
+
+        div.offsetParent.offsetParent = {};
+        div.offsetParent.offsetParent.offsetTop = 3;
+
+        div.offsetParent.offsetParent.offsetParent = {};
+        div.offsetParent.offsetParent.offsetParent.offsetTop = 4;
+
+        var map = new Map(div);
+        var top = map.getTop();
+        test.ok((top === 10), "expected 10, got: " + top);
+    },
+    function test_zoomToBounds(test) {
+        var bounds = { n: 1, e: 2, s: 3, w: 4 };
+        google.maps.Map = function() {
+            MockMap.apply(this, arguments);
+            this.fitBounds = function(b) {
+                test.ok(b.ne.lat == bounds.n);
+                test.ok(b.ne.lng == bounds.e);
+                test.ok(b.sw.lat == bounds.s);
+                test.ok(b.sw.lng == bounds.w);
+            };
+        };
+
+        var map = new Map("DIV");
+        test.expect(4);
+        map.zoomToBounds(bounds);
+    }
+);
 
 
 // 	this.showImageOnMap = function(fileName)

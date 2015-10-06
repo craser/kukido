@@ -1,12 +1,10 @@
 
-(function() {
-    module("jsonparse");
-
-    test("parse infinity", function() {
+new OneBanana({name: "jsonparse"}).test(
+    function test_parseInfinity(test) {
     	var obj = json_parse("{ x: Infinity }");
-    	ok(obj.x == Infinity);
-    });
-})();
+    	test.ok(obj.x == Infinity);
+    }
+);
                                    
 
      

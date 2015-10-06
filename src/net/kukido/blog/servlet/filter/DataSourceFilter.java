@@ -30,8 +30,8 @@ public class DataSourceFilter implements Filter
         DmgConfig conf = new DmgConfig();
         jdbcDriver = conf.getProperty("driver");
         connectURL = conf.getProperty("connecturl");
-        //System.out.println("################################################################################");
-        //System.out.println("connectURL: " + connectURL);
+        System.out.println("################################################################################");
+        System.out.println("connectURL: " + connectURL);
     }
     
     // New stuff

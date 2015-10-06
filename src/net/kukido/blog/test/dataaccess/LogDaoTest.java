@@ -202,8 +202,8 @@ public class LogDaoTest
     {
         LogDao logDao = new LogDao();
         LogEntry entry = buildLogEntry();
-        entry.setTitle("La Petite Trotte à Léon?");
-        entry.setBody("“an enlarged tour around Mont Blanc.”");
+        entry.setTitle("La Petite Trotte √† L√©on?");
+        entry.setBody("‚Äúan enlarged tour around Mont Blanc.‚Äù");
         
         LogEntry created = logDao.create(entry);
         entryId = created.getEntryId();
