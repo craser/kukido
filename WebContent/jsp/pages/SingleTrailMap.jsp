@@ -25,10 +25,8 @@
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"></script>
     <script type="text/JavaScript">
-      window.addEventListener("load", function() { 
-    	  var mapDiv = document.getElementById("map");
-    	  var elevationDiv = document.getElementById("elevationgraph");
-    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', mapDiv, elevationDiv);
+      $(window).load(function() {
+    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', $("#map"), $("#elevationgraph"));
       });
     </script>
   </tiles:put>
