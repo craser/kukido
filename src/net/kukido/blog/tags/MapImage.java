@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 
 import javax.servlet.jsp.JspException;
 
+import net.kukido.blog.config.DmgConfig;
 import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
 import net.kukido.blog.dataaccess.LocationMaskDao;
@@ -34,7 +35,7 @@ public class MapImage extends ImgTag
     // Required parameters:
     //     path
     static private final String URL_FORMAT = "//maps.googleapis.com/maps/api/staticmap?size={0}&sensor={1}&maptype={2}&format={3}&key={4}&path=color:0xFF0000BF|weight:3|{5}";
-    static private final String API_KEY = "ABQIAAAAOggD5Fz3iK4oyqrD-5a3rxTtbl1hwI1wrVZ-gcFeSdvKcjZNDhTfeymXLgG1x94ojMlumMHhPx5OnA";
+    static private final String API_KEY = new DmgConfig().getProperty("google.api.key");
     static private final DecimalFormat DEGREE_FORMAT = new DecimalFormat("#.####");
     
     static public String PAGE = "page";
