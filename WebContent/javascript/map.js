@@ -35,8 +35,8 @@ function Map(div) {
 	};
 	
 	this.resize = function(w, h) {
-		if (!!w) this.div.style.width = w + "px";
-		if (!!h) this.div.style.height = h + "px";
+		if (!!w) $(div).width(w + "px");
+		if (!!h) $(div).height(h + "px");
 	};
 	
 	this.resizeBy = function(dw, dh) {
@@ -72,16 +72,16 @@ function Map(div) {
 	};
 	
 	this.getHeight = function() {
-		return this.div.offsetHeight;
+		return $(div).height();
 	};
 	
 	this.getWidth = function() {
-		return this.div.offsetWidth;
+		return $(div).width();
 	};
 	
 	this.getTop = function() {
 		var top = 0;
-		for (var n = div; n != null; n = n.offsetParent) {
+		for (var n = div[0]; n != null; n = n.offsetParent) {
 			top += n.offsetTop;
 		}
 		return top;
@@ -105,10 +105,9 @@ function Map(div) {
 
 	    return gmap;
 	}
-    
-	this.div = div;
+
 	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
-	map = bind(this.div);
+	map = bind(div);
 }
 
 
