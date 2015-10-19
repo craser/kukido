@@ -35,7 +35,7 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 		self.resizeMapDiv();
 		self.map = new Map(mapDiv[0]);
     	self.map.renderTrack(gpxTrack);
-		self.elevation = new Elevation(elevationDiv[0], gpxTrack);
+		self.elevation = new Elevation(elevationDiv, gpxTrack);
 		addElevationListeners(gpxTrack);
 		$(window).resize(self.fitToScreen);
 		self.fitToScreen();

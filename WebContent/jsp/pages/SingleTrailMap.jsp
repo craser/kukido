@@ -17,8 +17,6 @@
       google.load('visualization', '1.0', {'packages': ['corechart']});
     </script>
     <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
-    <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
-    <script type="text/JavaScript" src="javascript/ajax.js"> </script>
     <script type="text/JavaScript" src="javascript/mapui.js"> </script>
     <script type="text/JavaScript" src="javascript/elevation.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
