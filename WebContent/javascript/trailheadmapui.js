@@ -1,6 +1,6 @@
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
-	var map = new Map(mapDiv[0]);
+	var map = new Map(mapDiv);
 	var sidebar = new Sidebar(sidebarDiv);
 	
 	this.fitToScreen = function() {

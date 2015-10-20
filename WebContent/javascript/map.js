@@ -1,6 +1,6 @@
 function Map(div) {
-    var descriptions = new Object();
-    var markers = new Object();
+    var descriptions = {};
+    var markers = {};
     var map = null;
     var tracks = {}; // filename --> Polyline[]
 	
@@ -80,11 +80,7 @@ function Map(div) {
 	};
 	
 	this.getTop = function() {
-		var top = 0;
-		for (var n = div[0]; n != null; n = n.offsetParent) {
-			top += n.offsetTop;
-		}
-		return top;
+		return $(div).offset().top;
 	};
 	
 	function bind(div) {
@@ -101,7 +97,7 @@ function Map(div) {
 	    	streetViewControl: false, // FIXME: Configure this.
 	    	center: new google.maps.LatLng(0, 0, false) // FIXME: Pass in the actual center of the route.	    		
 	    };
-	    var gmap = new google.maps.Map(div, options);
+	    var gmap = new google.maps.Map($(div)[0], options);
 
 	    return gmap;
 	}
