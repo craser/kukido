@@ -1,4 +1,4 @@
-function Sidebar(sidebarDiv) {
+function Sidebar(div) {
 	
 	var trackInfos = {};
 	var height;
@@ -8,7 +8,7 @@ function Sidebar(sidebarDiv) {
 	};
 	
 	this.setTop = function(t) {
-		sidebarDiv.style.top = t + "px";
+		$(div).css("top", t + "px");
 	};
 	
 	this.hideTrackInfo = function(track) {
@@ -16,27 +16,23 @@ function Sidebar(sidebarDiv) {
 		var infoDiv = trackInfos[track.fileName];
 		trackInfos[track.fileName] = null;
 
-		var e = new Effects();
-		e.fade(infoDiv, 250, function() {
-			e.crush(infoDiv, 250, function() {
-				sidebarDiv.removeChild(infoDiv);
-			    updateScrolling();
-			});
+		$(infoDiv).fadeOut(250, function() {
+			$(infoDiv).remove();
 		});
 	};
 
 	this.showTrackInfo = function(track, conf) {
 		var trackInfo = buildTrackInfo(track, conf);
 	    trackInfos[track.fileName] = trackInfo;
-	    sidebarDiv.appendChild(trackInfo);
+	    $(div).append(trackInfo);
 	    updateScrolling();
 	};
 	
 	function updateScrolling() {
-		var tall = sidebarDiv.offsetHeight >= height;
+		var tall = $(div).height() >= height;
 		console.log("updateScrolling() tall: " + tall);
-		sidebarDiv.style.maxHeight = tall ? (height + "px") : "";
-		sidebarDiv.style.overflowY = tall ? "scroll" : "hidden";
+		$(div).css("maxHeight", (tall ? (height + "px") : ""));
+		$(div).css("overflowY", (tall ? "scroll" : "hidden"));
 	}
 	
 	function buildTrackInfo(track, conf) {

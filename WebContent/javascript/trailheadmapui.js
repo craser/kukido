@@ -1,6 +1,6 @@
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
-	var map = new Map(mapDiv);
+	var map = new Map(mapDiv[0]);
 	var sidebar = new Sidebar(sidebarDiv);
 	
 	this.fitToScreen = function() {
@@ -25,8 +25,7 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	function showRide(loc, mark, color) {
         mark.setMap(null); // Hide the marker.
 		var url = 'json/maps/' + loc.fileName;
-		var show = function(json) {
-            var tracks = json_parse(json); // Should be an array of GPS Tracks.
+		var show = function(tracks) {
             for (var t = 0; t < tracks.length; t++) {
                 var track = tracks[t];
                 var conf = {
@@ -45,7 +44,9 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
             }
             
 		};
-		Ajax().get(url, show);
+		$.getJSON(url, show)
+			.fail(function() { console.log.apply(console, arguments); })
+			.always(function() { console.log("Ajax call to " + url + " complete.")});
 	}
 	
 	function markMaps(locations) {
@@ -63,10 +64,8 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	}
 
 	(function() {
-	    var k = function (mapJson) {
-	        var mapLocations = json_parse(mapJson);
-	        init(mapLocations);
-	    };
-	    Ajax().get("json/maplocations", k);
+	    $.getJSON("json/maplocations", init)
+			.fail(function() { console.log.apply(console, arguments); })
+			.always(function() { console.log("Ajax call to json/maplocations complete.")});
 	})();
 }

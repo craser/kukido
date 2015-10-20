@@ -13,20 +13,17 @@
   <tiles:put name="head" type="string">
     <link rel="stylesheet" type="text/css" href="css/map.css" />
     <link rel="stylesheet" type="text/css" href="css/trailheadmap.css" />
+    <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"> </script>
     <script type="text/JavaScript" src="javascript/effects.js"> </script>
-    <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
-    <script type="text/JavaScript" src="javascript/ajax.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
     <script type="text/JavaScript" src="javascript/sidebar.js"> </script>
     <script type="text/JavaScript" src="javascript/trailheadmapui.js"> </script>
     <script type="text/JavaScript">
       // Assign the actual Google Map obj. to the global var.
-      window.addEventListener("load", function() {
-    	  var mapDiv = document.getElementById("map");
-    	  var sidebarDiv = document.getElementById("sidebar");
-    	  var ui = new TrailheadMapUI(mapDiv, sidebarDiv);
+      $(window).load(function() {
+          new TrailheadMapUI($("#map"), $("#sidebar"));
       });
     </script>
   </tiles:put>
