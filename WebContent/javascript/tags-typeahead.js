@@ -1,5 +1,5 @@
 TagsTypeAhead = (function() {
-	var tags = []; // Array of { lev: 0, tag: name };
+	var tags = [{ d: 0, name: "BOGUS" }]; // Array of { lev: 0, tag: name };
 	var node = null;
 	var div = null;
 	
@@ -68,13 +68,8 @@ TagsTypeAhead = (function() {
 	}
 	
 	function getOptionsPosition() {
-		var t = node.offsetHeight;
-		var l = 0;
-		for (var n = node; n != null; n = n.offsetParent) {
-			t += n.offsetTop;
-			l += n.offsetLeft;
-		}
-		return {t: t, l: l};
+		var o = node.offset();
+		return {t: o.top, l: o.left};
 	}
 	
 	function getOptions() {
@@ -111,12 +106,11 @@ TagsTypeAhead = (function() {
 	}
 	
 	function setTags(tags) {
-		node.value = tags.join(" ") + " ";
+		node.val(tags.join(" ") + " " );
 	}
 	
 	function getTags() {
-		var val = node.value;
-		val = val.replace(/ +/g, " ");
+		val = node.val().replace(/ +/g, " ");
 		var ts = val.split(" ");
 		return ts;
 	}
@@ -129,17 +123,16 @@ TagsTypeAhead = (function() {
 	}
 	
 	function init(inputId) {
+		node = $(inputId);
 	    var url = "JsonTagNames.do";
-	    var k = function (tagsJson) {
-	        tags = json_parse(tagsJson);
-	        tags = tags.map(function(tag) {
+	    var k = function (ts) {
+	        tags = ts.map(function(tag) {
 	        	return {d: 0, name: tag};
 	        });
-			node = document.getElementById(inputId);
-			node.addEventListener("keyup", charHandler);
-			node.addEventListener("keydown", tabHandler);
+	        node.keyup(charHandler);
+	        node.keydown(tabHandler);
 	    };
-	    Ajax().get(url, k);
+	    $.getJSON("JsonTagNames.do", k);
 	}
 	
 	// Calculates Levenshtein distance.

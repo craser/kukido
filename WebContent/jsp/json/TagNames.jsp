@@ -6,7 +6,8 @@
 <%@ page import="net.kukido.blog.datamodel.*" %>
 <jsp:useBean id="tags" type="java.util.Collection" scope="request"/>
 [
-	<nested:iterate name="tags" id="tag" type="net.kukido.blog.datamodel.Tag">
-		"<nested:write name="tag" property="name" />",
+    <nested:size name="tags" id="numTags" />
+	<nested:iterate name="tags" id="tag" type="net.kukido.blog.datamodel.Tag" indexId="tagIndex">
+		"<nested:write name="tag" property="name" />"<nested:notEqual name="tagIndex" value="<%= String.valueOf(numTags.intValue() - 1) %>">,</nested:notEqual>
 	</nested:iterate>
 ]

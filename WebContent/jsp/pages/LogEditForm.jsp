@@ -12,16 +12,15 @@
 
   <tiles:put type="string" name="head">
     <link rel="stylesheet" type="text/css" href="css/logedit.css">
-    <script type="text/JavaScript" src="javascript/ajax.js"> </script>
-    <script type="text/JavaScript" src="javascript/jsonparse.js"> </script>
+    <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <script type="text/JavaScript" src="javascript/tags-typeahead.js"> </script>
     <script type="text/JavaScript">
-    window.addEventHandler("load", TagsTypeAhead.init("tagsInput"));
+      $(window).load(function() { TagsTypeAhead.init($("#tagsInput")); });
     </script>
   </tiles:put>
 
   <tiles:put type="string" name="content">
-    <nested:form action="LogEdit.do" focus="title">
+    <nested:form action="LogEdit.do">
       
       <html:errors/>
       
