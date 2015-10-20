@@ -4,10 +4,9 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var sidebar = new Sidebar(sidebarDiv);
 	
 	this.fitToScreen = function() {
-	    var body = document.getElementsByTagName("body")[0];
-	    var bodyHeight = body.offsetHeight;
-	    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
-	    var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+		var bodyHeight = $("body").height();
+		var windowHeight = $(window).innerHeight();
+		var windowWidth = $(window).innerWidth();
 	    var dh = windowHeight - (bodyHeight + 2); // Set this to the margin of the body.
 	    var dw = windowWidth - map.getWidth();
 	    map.resizeBy(dw, dh);
@@ -16,10 +15,10 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	};
 	
 	function init(mapLocations) {
-	    window.addEventListener("resize", self.fitToScreen);
-		self.fitToScreen();
+		$(window).resize(self.fitToScreen);
 		markMaps(mapLocations.locations);
 		map.zoomToBounds(mapLocations.bounds);
+		self.fitToScreen();
 	}
 	
 	function showRide(loc, mark, color) {
