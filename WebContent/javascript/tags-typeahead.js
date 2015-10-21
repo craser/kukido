@@ -69,7 +69,8 @@ TagsTypeAhead = (function() {
 	
 	function getOptionsPosition() {
 		var o = node.offset();
-		return {t: o.top, l: o.left};
+		var h = node.outerHeight();
+		return {t: (o.top + h), l: o.left};
 	}
 	
 	function getOptions() {
