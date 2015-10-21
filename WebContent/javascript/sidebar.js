@@ -16,9 +16,14 @@ function Sidebar(div) {
 		var infoDiv = trackInfos[track.fileName];
 		trackInfos[track.fileName] = null;
 
-		$(infoDiv).fadeOut(250, function() {
+		var p = {
+        	height: [ "toggle", "linear"],
+            opacity: [ "toggle", "linear" ]
+        };
+		var k = function() {
 			$(infoDiv).remove();
-		});
+		};
+		$(infoDiv).animate(p, 400, k);
 	};
 
 	this.showTrackInfo = function(track, conf) {
