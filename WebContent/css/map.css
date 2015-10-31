@@ -32,9 +32,11 @@ td.numeric {
 }
 
 #map {
+    position: absolute;
+    top: 80px;
+    bottom: 200px; /* height of #footer */
+    width: 100%;
     border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    height: 600px;
 }
 
 #map a {
@@ -42,6 +44,12 @@ td.numeric {
 }
 
 #routeinfo {
+    position: absolute;
+    height: 200px;
+    width: 100%;
+    bottom: 0px;
+    z-index: 2;
+    border-top: 1px solid #000;
 	background-color: #fff;
 	padding: 10px;
 }

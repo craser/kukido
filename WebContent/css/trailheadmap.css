@@ -24,6 +24,11 @@
 	border: 0px;
 }
 
+#map {
+    position: absolute;
+    top:
+}
+
 #sidebar {
   position: absolute;
   top: 100px;
