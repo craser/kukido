@@ -25,20 +25,28 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, elevationDiv) {
 
 function RouteInfo(mapUi, routeInfoDiv, elevationDiv, gpxTrack) {
 	var self = this;
+	var drawer = $("#routeinfo");
+	var contents = $("#routeinfodetail");
+	var handle = $("#routeinfohandle");
 
 	this.elevation = new Elevation(mapUi, elevationDiv, gpxTrack);
 
-	function init() {
-		var drawer = $("#routeinfo");
-		var contents = $("#routeinfodetail");
-		var handle = $("#routeinfohandle");
+	this.show = function() {
+		drawer.animate({ bottom: 0 });
+	};
 
-		var open = false;
-		handle.click(function() {
-			var h = open ? -contents.outerHeight() : 0;
-			drawer.animate({ bottom: h });
-			open = !open;
-		});
+	this.hide = function() {
+		drawer.animate({ bottom: -contents.outerHeight() });
+	};
+
+	function init() {
+		handle.click((function() {
+			var open = (parseInt(drawer.css("bottom")) == 0);
+			return function() {
+				open ? self.hide() : self.show();
+				open = !open;
+			};
+		}()));
 	}
 
 	init();

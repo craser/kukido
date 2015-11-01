@@ -33,7 +33,7 @@
     <div id="map"></div>
     <div id="routeinfo">
       <div id="routeinfohandle">
-        CLICK ME
+        Details
       </div>
       <div id="routeinfodetail">
         <div id="elevationgraph"></div>
