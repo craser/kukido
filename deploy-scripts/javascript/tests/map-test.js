@@ -36,7 +36,7 @@ new OneBanana({
         };
 
         var div = "MAMBO";
-        var map = new Map(div);
+        var map = new Map([div]);
         test.ok((mapDiv === div), "Pass div to google Map.");
         test.ok(mapOptions != null, "Map options must not be null.");
     },
@@ -77,60 +77,6 @@ new OneBanana({
         test.expect(created);
         map.removeTrack(track);
     },
-    function test_resize(test) {
-        var div = {};
-        div.style = {};
-
-        var w = 249568;
-        var h = 203495;
-
-        var map = new Map(div);
-        map.resize(w, h);
-        test.ok(div.style.width = w + "px");
-        test.ok(div.style.height = h + "px");
-    },
-    function test_getHeight(test) {
-        var h = 34523562;
-        var div = {};
-        div.style = {};
-        div.offsetHeight = h;
-        var map = new Map(div);
-        var mh = map.getHeight();
-        test.ok(mh == h, "Height must be retrieved from div.offsetHeight");
-    },
-    function test_getWidth(test) {
-        var w = 34523562;
-        var div = {};
-        div.style = {};
-        div.offsetWidth = w;
-        var map = new Map(div);
-        var mw = map.getWidth();
-        test.ok(mw == w, "Width must be retrieved from div.offsetWidth");
-    },
-    function test_resizeBy(test) {
-        var w = 249568;
-        var h = 203495;
-
-        var dw = -98;
-        var dh = 2345;
-
-        var div = {};
-        div.style = {};
-        div.offsetWidth = w;
-        div.offsetHeight = h;
-
-        var map = new Map(div);
-        map.resize(w, h);
-        test.ok(div.offsetWidth == w, "Div width is correct.");
-        test.ok(div.offsetHeight == h, "Div height is correct.");
-
-        var nw = w + dw;
-        var nh = h + dh;
-
-        map.resizeBy(dw, dh);
-        test.ok(div.style.width == nw + "px");
-        test.ok(div.style.height == nh + "px");
-    },
     function test_removeMark(test) {
         var map = new Map("DIV");
         test.expect(1);
@@ -156,23 +102,6 @@ new OneBanana({
         var point = { lat: randomLatLon(), lon: randomLatLon() };
         test.expect(4);
         map.markLocation(point);
-    },
-    function test_getTop(test) {
-        var div = {};
-        div.offsetTop = 1;
-
-        div.offsetParent = {};
-        div.offsetParent.offsetTop = 2;
-
-        div.offsetParent.offsetParent = {};
-        div.offsetParent.offsetParent.offsetTop = 3;
-
-        div.offsetParent.offsetParent.offsetParent = {};
-        div.offsetParent.offsetParent.offsetParent.offsetTop = 4;
-
-        var map = new Map(div);
-        var top = map.getTop();
-        test.ok((top === 10), "expected 10, got: " + top);
     },
     function test_zoomToBounds(test) {
         var bounds = { n: 1, e: 2, s: 3, w: 4 };

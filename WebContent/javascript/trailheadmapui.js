@@ -2,23 +2,15 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 	var map = new Map(mapDiv);
 	var sidebar = new Sidebar(sidebarDiv);
-	
-	this.fitToScreen = function() {
-		var bodyHeight = $("body").height();
-		var windowHeight = $(window).innerHeight();
-		var windowWidth = $(window).innerWidth();
-	    var dh = windowHeight - (bodyHeight + 2); // Set this to the margin of the body.
-	    var dw = windowWidth - map.getWidth();
-	    map.resizeBy(dw, dh);
-	    sidebar.setHeight(map.getHeight());
-	    sidebar.setTop(map.getTop());
-	};
+
+
+//	    sidebar.setHeight(map.getHeight());
+//	    sidebar.setTop(map.getTop());
+
 	
 	function init(mapLocations) {
-		$(window).resize(self.fitToScreen);
 		markMaps(mapLocations.locations);
 		map.zoomToBounds(mapLocations.bounds);
-		self.fitToScreen();
 	}
 	
 	function showRide(loc, mark, color) {

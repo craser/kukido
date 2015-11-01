@@ -26,11 +26,14 @@
 
 #map {
     position: absolute;
+    top: 80px;
+    bottom: 0px;
+    width: 100%;
 }
 
 #sidebar {
   position: absolute;
-  top: 100px;
+  top: 80px;
   right: 0px;
   width: 250px;
   height: auto;

@@ -100,7 +100,7 @@
 	
 	<target name="test-javascript">
 		<exec executable="bin/phantomjs" failonerror="true">
-			<arg value="run-js-testsdep.js" />
+			<arg value="run-js-tests.js" />
 			<arg value="${javascript.src.dir}" />
 			<arg value="${javascript.tst.dir}" />
 		</exec>
