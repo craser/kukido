@@ -32,7 +32,7 @@
     <!-- GpxGmap.jsp -->
     <div id="map"></div>
     <div id="routeinfo">
-      <div id="routinfohandle">
+      <div id="routeinfohandle">
         CLICK ME
       </div>
       <div id="routeinfodetail">

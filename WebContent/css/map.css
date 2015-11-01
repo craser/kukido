@@ -46,7 +46,6 @@ td.numeric {
 }
 
 #routeinfo {
-    display: none;
     position: absolute;
     height: 200px;
     width: 100%;

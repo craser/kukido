@@ -28,6 +28,18 @@ function RouteInfo(mapUi, routeInfoDiv, elevationDiv, gpxTrack) {
 
 	this.elevation = new Elevation(mapUi, elevationDiv, gpxTrack);
 
-	// FIXME: SET UP DRAWER PULL MECHANISM FOR ROUTE INFO
+	function init() {
+		var drawer = $("#routeinfo");
+		var contents = $("#routeinfodetail");
+		var handle = $("#routeinfohandle");
 
+		var open = false;
+		handle.click(function() {
+			var h = open ? -contents.outerHeight() : 0;
+			drawer.animate({ bottom: h });
+			open = !open;
+		});
+	}
+
+	init();
 }
