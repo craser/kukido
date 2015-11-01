@@ -1,6 +1,7 @@
-function Elevation(div, gpxTrack) {
+function Elevation(mapUi, div, gpxTrack) {
 	var self = this;
 	var chart = null; // Set in renderElevation
+	var mark = null;  // Holds currently-marked location on Map.
 
 	function render() {
 		// Create and populate the data table.
@@ -29,10 +30,20 @@ function Elevation(div, gpxTrack) {
 		
 		return c;
 	};
-	
-	this.addListener = function(eventName, f) {
-		google.visualization.events.addListener(chart, eventName, f);
-	};
-	
-	chart = render();
+
+	function addMark(p) {
+		mark = mapUi.markLocation(gpxTrack.points[p.row]);
+	}
+
+	function removeMark(p) {
+		mapUi.removeLocation(mark);
+	}
+
+	function init(gpxTrack) {
+		chart = render();
+		google.visualization.events.addListener(chart, 'onmouseout', addMark);
+		google.visualization.events.addListener(chart, 'onmouseover', removeMark);
+	}
+
+	init(gpxTrack);
 }

@@ -1,6 +1,7 @@
 body {
       width: auto;
       margin: 0px;
+      overflow: hidden;
 }
 
 #titlebanner {
@@ -18,6 +19,7 @@ body {
 .footer {
   margin: 3px 0px 3px 0px;
 }
+
 .content {
   margin: 0px;
   padding: 0px;
@@ -34,7 +36,7 @@ td.numeric {
 #map {
     position: absolute;
     top: 80px;
-    bottom: 200px; /* height of #footer */
+    bottom: 0px; /* height of #footer */
     width: 100%;
     border-top: 1px solid black;
 }
@@ -44,6 +46,7 @@ td.numeric {
 }
 
 #routeinfo {
+    display: none;
     position: absolute;
     height: 200px;
     width: 100%;
@@ -52,6 +55,12 @@ td.numeric {
     border-top: 1px solid #000;
 	background-color: #fff;
 	padding: 10px;
+}
+
+#routeinfohandle {
+}
+
+#routeinfodetail {
 }
 
 #elevationgraph {

@@ -24,18 +24,18 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"></script>
     <script type="text/JavaScript">
       $(window).load(function() {
-    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', $("#map"), $("#elevationgraph"));
+    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', $("#map"), $("#routeinfo"), $("#elevationgraph"));
       });
     </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- GpxGmap.jsp -->
     <div id="map"></div>
-    <div id="routeinfocontainer">
+    <div id="routeinfo">
       <div id="routinfohandle">
         CLICK ME
       </div>
-      <div id="routeinfo">
+      <div id="routeinfodetail">
         <div id="elevationgraph"></div>
         <table border="0">
           <tr>

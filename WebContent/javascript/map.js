@@ -34,15 +34,6 @@ function Map(div) {
 		}
 	};
 	
-	this.resize = function(w, h) {
-		if (!!w) $(div).width(w + "px");
-		if (!!h) $(div).height(h + "px");
-	};
-	
-	this.resizeBy = function(dw, dh) {
-		this.resize(this.getWidth() + dw, this.getHeight() + dh);
-	};
-	
 	this.zoomToBounds = function(b) {
 		var ne = new google.maps.LatLng(b.n, b.e);
 	    var sw = new google.maps.LatLng(b.s, b.w);
@@ -102,7 +93,7 @@ function Map(div) {
 	    return gmap;
 	}
 
-	this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
+	//this.resizeBy(0, 0); // This sets up style properties needed by Google Maps API.
 	map = bind(div);
 }
 

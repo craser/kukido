@@ -1,24 +1,19 @@
-function MapUI(gpxFileName, mapDiv, elevationDiv) {
+function MapUI(gpxFileName, mapDiv, routeInfoDiv, elevationDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 
-	function addElevationListeners(gpxTrack) {
-		var mark = null;
-		var add = function(p) { 
-			mark = self.map.markLocation(gpxTrack.points[p.row]);
-		};
-		var remove = function(p) {
-			self.map.removeMark(mark);
-		};
-		self.elevation.addListener('onmouseout', remove);
-		self.elevation.addListener('onmouseover', add);
-	}
+	this.markLocation = function(p) {
+		self.map.markLocation(p);
+	};
+
+	this.removeMark = function(mark) {
+		self.map.removeMark(mark);
+	};
 	
 	function init(gpxTracks) {
 		var gpxTrack = gpxTracks[0]; // brain dead hack.
 		self.map = new Map(mapDiv[0]);
     	self.map.renderTrack(gpxTrack);
-		self.elevation = new Elevation(elevationDiv, gpxTrack);
-		addElevationListeners(gpxTrack);
+    	self.routeInfo = new RouteInfo(self, routeInfoDiv, elevationDiv, gpxTrack);
 		self.map.zoomToBounds(gpxTrack.bounds);
 	}
 
@@ -26,4 +21,13 @@ function MapUI(gpxFileName, mapDiv, elevationDiv) {
 	    var url = "json/maps/" + gpxFileName;
 	    $.getJSON(url, init);
 	})();
+}
+
+function RouteInfo(mapUi, routeInfoDiv, elevationDiv, gpxTrack) {
+	var self = this;
+
+	this.elevation = new Elevation(mapUi, elevationDiv, gpxTrack);
+
+	// FIXME: SET UP DRAWER PULL MECHANISM FOR ROUTE INFO
+
 }
