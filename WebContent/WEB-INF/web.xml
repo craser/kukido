@@ -3,6 +3,11 @@
 <web-app>
   <!-- This is needed in order for net.kukido.blog.tags.BaseHrefTag to work correctly.  MUST MATCH WEB CONTEXT -->
   <display-name>home</display-name>
+
+  <filter>
+    <filter-name>LocaleFilter</filter-name>
+    <filter-class>net.kukido.blog.servlet.filter.LocaleFilter</filter-class>
+  </filter>
   
   <filter>
       <filter-name>LoggingFilter</filter-name>
@@ -206,7 +211,7 @@
   <!-- ############################################################ -->
   <!-- # Filter Mappings                                          # -->
   <!-- ############################################################ -->
-  
+
   <!-- Initializing Logging -->
   <filter-mapping>
   	<filter-name>LoggingFilter</filter-name>
@@ -217,6 +222,12 @@
   <filter-mapping>
       <filter-name>ExceptionHandler</filter-name>
       <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Setting default locale for Session. -->
+  <filter-mapping>
+    <filter-name>LocaleFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
   
   <!-- Provide ONE connection per request.  -->

@@ -7,7 +7,7 @@
 <tiles:useAttribute id="entry" name="entry" classname="net.kukido.blog.datamodel.LogEntryHeader" />
 
 <!-- EntryHeader Tile -->
-<h2 class="title" style="border: 0; margin-top: 1em;"><dmg:entrylink entry="entry"><span style="color: #fff; opacity: 0.6;"><bean:write name="entry" property="datePosted" format="MM/dd/yy" /></span> <bean:write name="entry" property="title" /></dmg:entrylink></h2>
+<h2 class="title" style="border: 0; margin-top: 1em;"><dmg:entrylink entry="entry"><span style="color: #fff; opacity: 0.6;"><bean:write name="entry" property="datePosted" format="MM/dd/yy" locale="dmg.locale" /></span> <bean:write name="entry" property="title" /></dmg:entrylink></h2>
 <span class="entrymetainfo" style="padding: 2px;">
   | comments: <bean:write name="entry" property="numComments" /> |
   <logic:notEmpty name="entry" property="tags">

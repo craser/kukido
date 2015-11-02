@@ -23,7 +23,7 @@
       </div>
     </logic:notEmpty>
   
-    <bean:write name="entry" property="datePosted" format="EEE, MM/dd/yy"/>
+    <bean:write name="entry" property="datePosted" format="EEE, MM/dd/yy" locale="dmg.locale"/>
 
     <logic:present name="entry" property="viaText">
        &#8226; via <html:link title="<%= entry.getViaTitle() %>" href="<%= entry.getViaUrl() %>"><bean:write name="entry" property="viaText"/></html:link>
