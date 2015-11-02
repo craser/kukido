@@ -10,6 +10,7 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, elevationDiv) {
 	};
 	
 	function init(gpxTracks) {
+		$("body").css("height", $(window).innerHeight());
 		var gpxTrack = gpxTracks[0]; // brain dead hack.
 		self.map = new Map(mapDiv[0]);
     	self.map.renderTrack(gpxTrack);
