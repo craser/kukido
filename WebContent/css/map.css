@@ -1,5 +1,10 @@
  /* Mobile devices */
 @media only screen and (max-device-width : 1024px) {
+    @viewport {
+        width: 600px;
+        user-zoom: fixed;
+    }
+
 	#titlebanner {
 	    width: 600px;
 	}
@@ -8,6 +13,13 @@
 	    width: 600px;
 	    height: 2000px;
 	    overflow: hidden;
+	}
+}
+
+/* Desktops and laptops */
+@media only screen and (min-device-width : 1025px) {
+	body {
+	  width: 100%;
 	}
 }
 
@@ -78,6 +90,7 @@ td.numeric {
     border-top-right-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    margin-left: 1px;
     border-bottom: none;
     font-variant: small-caps;
     opacity: 0.85;

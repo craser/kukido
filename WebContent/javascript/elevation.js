@@ -36,13 +36,13 @@ function Elevation(mapUi, div, gpxTrack) {
 	}
 
 	function removeMark(p) {
-		mapUi.removeLocation(mark);
+		mapUi.removeMark(mark);
 	}
 
 	function init(gpxTrack) {
 		chart = render();
-		google.visualization.events.addListener(chart, 'onmouseout', addMark);
-		google.visualization.events.addListener(chart, 'onmouseover', removeMark);
+		google.visualization.events.addListener(chart, 'onmouseout', removeMark);
+		google.visualization.events.addListener(chart, 'onmouseover', addMark);
 	}
 
 	init(gpxTrack);

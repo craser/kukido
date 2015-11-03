@@ -2,7 +2,7 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, elevationDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 
 	this.markLocation = function(p) {
-		self.map.markLocation(p);
+		return self.map.markLocation(p);
 	};
 
 	this.removeMark = function(mark) {
