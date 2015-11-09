@@ -58,9 +58,15 @@
           </tr>
           <tr>
             <td colspan="2">
-              <a href="attachments/${map.fileName}"><dmg:attachmentIcon attachmentType="<%= "map" %>" />Download GPX file</a>
+              <dmg:downloadLink format="gpx" fileName="${map.fileName}"><dmg:attachmentIcon attachmentType="map" /> GPX</dmg:downloadLink>
             </td>
           </tr>
+          <tr>
+            <td colspan="2">
+              <dmg:downloadLink format="tcx" fileName="${map.fileName}"><dmg:attachmentIcon attachmentType="map" /> TCX</dmg:downloadLink>
+            </td>
+          </tr>
+
         </table>
         <div style="clear: both"></div>
       </div>

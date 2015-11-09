@@ -140,6 +140,15 @@
 		<pattern>.*/comments.xml</pattern>
 		<template>/RecentCommentsFeed.do?numComments=10</template>
 	</mapping>
+	<!-- Downloading Map Files -->
+	<mapping>
+		<pattern>.*/downloads/gpx/(.*)$</pattern>
+		<template>/DownloadGpx.do?f=$1</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/downloads/tcx/(.*)$</pattern>
+		<template>/DownloadTcx.do?f=$1</template>
+	</mapping>
 	<!-- GPX to Google Mapping -->
 	<mapping>
 		<pattern>.*/maps/(.+.)$</pattern>
