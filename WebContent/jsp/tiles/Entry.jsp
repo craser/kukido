@@ -44,7 +44,7 @@
         <logic:present name="entry" property="imageFileName">
           <logic:equal name="entry" property="imageFileType" value="image">
             <p style="text-align: center">
-              <img class="titleimage" alt="<%= entry.getTitle() %>" src="attachments/postcards/<%= entry.getImageFileName() %>">
+	      <a data-lightbox="<%= entry.getEntryId() %>" href="attachments/posters/<%= entry.getImageFileName() %>"><img class="titleimage" alt="<%= entry.getTitle() %>" src="attachments/postcards/<%= entry.getImageFileName() %>"></a>
             </p>
           </logic:equal>
           <logic:equal name="entry" property="imageFileType" value="map">
