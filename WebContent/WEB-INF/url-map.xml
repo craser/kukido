@@ -77,7 +77,13 @@
 		<pattern>.*/attachments/postcards/(.*)</pattern>
 		<!-- Note that setting the maxWidth here will NOT affect the size of 
 			map thumnails. For that, see MapImage JSP tag impl. -->
-		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=598</template> <!-- 600 total, with 1px border from CSS -->
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=630</template> <!-- 600 total, with 1px border from CSS -->
+	</mapping>
+	<mapping>
+		<pattern>.*/attachments/posters/(.*)</pattern>
+		<!-- Note that setting the maxWidth here will NOT affect the size of
+			map thumnails. For that, see MapImage JSP tag impl. -->
+		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=1000</template> <!-- 600 total, with 1px border from CSS -->
 	</mapping>
 	<mapping>
 		<pattern>.*/attachments/desktops/(.*)</pattern>

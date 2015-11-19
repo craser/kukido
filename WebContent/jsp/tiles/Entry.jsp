@@ -44,13 +44,13 @@
         <logic:present name="entry" property="imageFileName">
           <logic:equal name="entry" property="imageFileType" value="image">
             <p style="text-align: center">
-              <img alt="<%= entry.getTitle() %>" src="attachments/postcards/<%= entry.getImageFileName() %>">
+              <img class="titleimage" alt="<%= entry.getTitle() %>" src="attachments/postcards/<%= entry.getImageFileName() %>">
             </p>
           </logic:equal>
           <logic:equal name="entry" property="imageFileType" value="map">
             <p style="text-align: center">
               <a class="maplink" href="maps/<%= entry.getImageFileName() %>" title="<%= entry.getTitle() %>">
-                <dmg:mapImage map="<%= entry.getImageFileName() %>" />
+                <dmg:mapImage styleClass="titleimage" map="<%= entry.getImageFileName() %>" />
               </a>
             </p>
           </logic:equal>

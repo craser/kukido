@@ -23,7 +23,7 @@ public class Image extends ImgTag
     static public String APPLICATION = "application";
     
     private int scope;
-    private String size; // thumbnail, postcard, raw
+    private String size; // thumbnail, postcard, postcard, desktop, raw
     private String fileName;
     private String attachment;
     private boolean absolute = false;

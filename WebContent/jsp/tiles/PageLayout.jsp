@@ -11,9 +11,11 @@
     <title>DreadedMonkeyGod.net: <tiles:getAsString name="title" /></title>
     <dmg:BaseHrefTag />
     <link rel="search" type="application/opensearchdescription+xml" title="DMG" href="dmg-opensearch-descriptor.xml"/>
+    <link rel="stylesheet" type="text/css" href="css/lightbox.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
     <tiles:get name="analytics" />
+    <script src="javascript/jquery-1.11.3.js"></script>
     <!-- page-specific header information -->
     <tiles:get name="head" />
     <!-- end of page-specific header information -->
@@ -48,6 +50,7 @@
         <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
       </ul>
     </div>
+    <script src="javascript/lightbox.js"></script>
   </body>
 </html>
 <% out.flush(); // Dust off and nuke 'em from orbit.  It's the only way to be sure. %>

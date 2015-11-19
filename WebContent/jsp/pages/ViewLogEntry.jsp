@@ -61,7 +61,7 @@
             <ul class="gallerymenu">
               <nested:iterate name="entry" property="attachments" id="image" type="net.kukido.blog.datamodel.Attachment">
                 <logic:equal name="image" property="fileType" value="image">
-                  <li><a href="galleries/<%= image.getAttachmentId() %>" title="<%= image.getTitle() %>">
+                  <li><a href="attachments/posters/<%= image.getFileName() %>" data-lightbox="<%= entry.getEntryId() %>" title="<%= image.getTitle() %>">
                     <img class="thumbnail" src="attachments/thumbs/<%= image.getFileName() %>">
                     </a>
                   </li>

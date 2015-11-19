@@ -23,7 +23,7 @@
       <span class="entrymetainfo">Taken <bean:write name="galleryImage" property="dateTaken" format="MM/dd/yy hh:mm:ssa zz" /></span>
       <div>
         <div style="text-align: center">
-          <a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>"><img class="postcard" src="attachments/postcards/<%= galleryImage.getFileName() %>" /></a>
+          <a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>"><img class="postcard" src="attachments/posters/<%= galleryImage.getFileName() %>" /></a>
           <%-- <div style="font: 0.8em sans-serif"><a class="unmarked" href="attachments/<%= galleryImage.getFileName() %>">(click to zoom)</a></div> --%>
         </div>
         
