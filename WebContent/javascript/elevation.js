@@ -17,7 +17,7 @@ function Elevation(mapUi, div, gpxTrack) {
 					var x = Math.round(p.x * 100) / 100;
 					var y = Math.round(p.y);
 					var t = p.t;
-					var tip = "<b>distance:</b> " + x + "m<br/><b>time:</b> " + t + "<br/><b>elevation:</b> " + y + "ft";
+					var tip = "<span style=\"font-size: 1.2em\"> " + t + "</span><br/><b>distance:</b> " + x + "mi<br/><b>elevation:</b> " + y + "ft";
 					addMark(p);
 					return tip;
 				}
@@ -36,8 +36,8 @@ function Elevation(mapUi, div, gpxTrack) {
 			axisY: {
 				valueFormatString: "0.##m",
 				titleFontFamily: "HelveticaNeue-condensed,sans-serif",
-				gridColor: "#f0f0f0",
-				interval: 100,
+				gridColor: "#eee",
+				interval: 200,
 				interlacedColor: "#fafafa",
 				labelFontColor: "#000",
 				lineColor: "#000",
@@ -48,7 +48,7 @@ function Elevation(mapUi, div, gpxTrack) {
 			},
 			data: [{
 				type: "splineArea",
-				color: "#006600",
+				color: "#92c282",
 				markerColor: "#f00",
 				dataPoints: mapDataPoints(gpxTrack)
 			}]
@@ -112,7 +112,6 @@ function Elevation(mapUi, div, gpxTrack) {
 
 	function formatMs(ms) {
 		var t = ms;
-		var f = "";
 		var SECOND = 1000;
 		var MINUTE = 60 * SECOND;
 		var HOUR = 60 * MINUTE;
@@ -139,8 +138,6 @@ function Elevation(mapUi, div, gpxTrack) {
 			+ (days ? pad(hours) + ":" : (hours ? hours + ":" : ""))
 			+ (minutes ? pad(minutes) + ":" : "")
 			+ pad(seconds);
-
-		console.log("formatMs(" + ms + "): " + s);
 
 		return s;
 	}
