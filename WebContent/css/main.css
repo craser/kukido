@@ -360,6 +360,10 @@ div.preventrylink a {
   border-bottom: 1px solid #aaa;
 }
 
+a.titleimage {
+  border: 0px;
+}
+
 .postcard {
   border: 1px solid #555;
 }
