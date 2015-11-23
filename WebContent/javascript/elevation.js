@@ -38,6 +38,7 @@ function Elevation(mapUi, div, gpxTrack) {
 				titleFontFamily: "HelveticaNeue-condensed,sans-serif",
 				gridColor: "#eee",
 				interval: 200,
+				includeZero: false,
 				interlacedColor: "#fafafa",
 				labelFontColor: "#000",
 				lineColor: "#000",
