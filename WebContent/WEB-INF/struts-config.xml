@@ -180,15 +180,6 @@
 	    >
 	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
 	</action>
-
-        <action 
-            path="/Gallery"
-            type="net.kukido.blog.action.Gallery"
-            validate="false"
-            scope="request"
-            >
-          <forward name="success" path="/jsp/pages/Gallery.jsp"/>
-        </action>
         
         <action
             path="/GalleryThumbnails"

@@ -34,7 +34,7 @@ function Elevation(mapUi, div, gpxTrack) {
 				valueFormatString: "0.##mi"
 			},
 			axisY: {
-				valueFormatString: "0.##m",
+				valueFormatString: "0.##ft",
 				titleFontFamily: "HelveticaNeue-condensed,sans-serif",
 				gridColor: "#eee",
 				interval: 200,
@@ -69,40 +69,16 @@ function Elevation(mapUi, div, gpxTrack) {
 		chart = render();
 	}
 
-	function getMilesTo(a, b) {
-		// Converts from degrees to radians.
-		function radians(degrees) {
-			return degrees * Math.PI / 180;
-		};
-
-		var EARTH_RADIUS_KM = 6371;
-		var lat1 = a.lat;
-		var lon1 = b.lon;
-		var lat2 = b.lat;
-		var lon2 = b.lon;
-
-		var R = EARTH_RADIUS_KM * 1000;
-		var dLat = radians(lat1 - lat2);
-		var dLon = radians(lon1 - lon2);
-		var n = Math.sin(dLat/2) * Math.sin(dLat/2)
-			+ Math.cos(radians(lat1)) * Math.cos(radians(lat2))
-			* Math.sin(dLon/2) * Math.sin(dLon/2);
-		var c = 2 * Math.atan2(Math.sqrt(n), Math.sqrt(1-n));
-		var d = R * c;
-
-		return d * 3.28084 / 5280;
+	function toMiles(meters) {
+		return meters * 3.28084 / 5280;
 	}
 
 	function mapDataPoints(track) {
 		var start = null; // ms
-		var prev = null;  // point
-		var dist = 0; // total
 		return track.points.map(function(p, i) {
 			start = start || new Date(p.time).getTime();
-			dist += prev ? getMilesTo(prev, p) : 0;
-			prev = p;
 			return {
-				x: dist,
+				x: toMiles(p.dst),
 				y: p.elv * 3.28084,
 				t: formatMs(new Date(p.time).getTime() - start),
 				row: i

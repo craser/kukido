@@ -11,9 +11,9 @@
     <title>DreadedMonkeyGod.net</title>
     <dmg:BaseHrefTag />
     <link rel="search" type="application/opensearchdescription+xml" title="DMG" href="dmg-opensearch-descriptor.xml"/>
-    <link rel="stylesheet" type="text/css" href="css/lightbox.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
+    <link rel="stylesheet" type="text/css" href="css/lightbox.css"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
 <%--<script src="javascript/header.js"> </script>
     <script type="text/JavaScript">

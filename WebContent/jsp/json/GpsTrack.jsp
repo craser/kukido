@@ -44,6 +44,7 @@ GpsLocation
         {   "lat": <nested:write name="point" property="latitude" />,
             "lon": <nested:write name="point" property="longitude" />,
             "elv": <nested:write name="point" property="elevation" />,
+            "dst": <nested:write name="point" property="distance" />,
             <%-- "grade": <nested:write name="point" property="grade" />, --%>
             "time": "<nested:write name="point" property="timestamp" />"
         }<nested:notEqual name="pointIndex" value="<%= String.valueOf(numPoints.intValue() - 1) %>">,</nested:notEqual>

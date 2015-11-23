@@ -91,11 +91,6 @@
 			map thumnails. For that, see MapImage JSP tag impl. -->
 		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=1920</template> <!-- 600 total, with 5px padding, and 1px border from CSS -->
 	</mapping>
-	<!-- Galleries -->
-	<mapping>
-		<pattern>.*/galleries/(.*)</pattern>
-		<template>/Gallery.do?attachmentId=$1</template>
-	</mapping>
 	<!-- Mopho Entries -->
 	<mapping>
 		<pattern>.*/mopho/(\d+)$</pattern>

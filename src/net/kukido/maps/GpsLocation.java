@@ -17,7 +17,8 @@ public class GpsLocation implements Comparable
     private float latitude;
     private float longitude;
     private float elevation;
-    private float grade; 
+    private float grade;
+    private double distance; // Distance from start of track.
     private float bpm; // Heart Rate in beats per minute
     private Date timestamp = new Date(0);
     /** 
@@ -56,6 +57,22 @@ public class GpsLocation implements Comparable
     
     public void setGrade(float grade) {
         this.grade = grade;
+    }
+
+    /**
+     * Getter for property distance.
+     * @return The distance along the track to this point.
+     */
+    public double getDistance() {
+        return distance;
+    }
+
+    /**
+     * Setter for property distance.
+     * @param distance The distance along the track to this point.
+     */
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
     
     /**

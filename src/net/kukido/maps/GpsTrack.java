@@ -56,6 +56,14 @@ public class GpsTrack extends ArrayList<GpsLocation>
         if (size() < 1) { throw new IllegalStateException("Unable to determine finish of route: no data."); }
         return ((GpsLocation)get(size() - 1)).getTimestamp();
     }
+
+    public GpsLocation getStart() {
+        return (GpsLocation)get(0);
+    }
+
+    public GpsLocation getEnd() {
+        return (GpsLocation)get(size() - 1);
+    }
     
     public String getFormattedDuration()
     {

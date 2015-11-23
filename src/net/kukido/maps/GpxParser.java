@@ -122,6 +122,7 @@ import java.text.*;
         
         if ("trkpt".equals(currentState)) {
             trackPoint.setGrade(calculateGrade(track, trackPoint));
+            trackPoint.setDistance(calculateDistance(track, trackPoint));
             track.add(trackPoint);
             trackPoint = null; // Fail Fast
         }
@@ -172,6 +173,22 @@ import java.text.*;
         //System.out.println("Parsed Date: " + gpxDateFormat.format(timestamp));
         
         return timestamp;        
+    }
+
+    /**
+     * Calculates the distance (in meters) along the track to the given point.
+     * @param track
+     * @param trackPoint
+     */
+    private double calculateDistance(GpsTrack track, GpsLocation trackPoint)
+    {
+        if (track.size() > 0) {
+            GpsLocation end = track.getEnd();
+            return end.getDistance() + end.getMetersTo(trackPoint);
+        }
+        else {
+            return 0d;
+        }
     }
     
     /**

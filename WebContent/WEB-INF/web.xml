@@ -286,11 +286,6 @@
   </filter-mapping>
   
   <filter-mapping>
-    <filter-name>CacheHtml1h</filter-name>
-    <url-pattern>/galleries/*</url-pattern>
-  </filter-mapping>
-  
-  <filter-mapping>
     <filter-name>CacheHtml12h</filter-name>
     <url-pattern>/search/*</url-pattern>
   </filter-mapping>
