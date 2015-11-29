@@ -3,6 +3,7 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summary
 
 	this.units = {
 		imperial: {
+			name: "imperial",
 			distance: {
 				label: "mi",
 				interval: 0.5,
@@ -19,6 +20,7 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summary
 			}
 		},
 		metric: {
+			name: "metric",
 			distance: {
 				label: "km",
 				interval: 0.5,
@@ -38,25 +40,27 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summary
 	};
 
 	this.markLocation = function(p) {
-		return self.map.markLocation(p);
+		return //self.map.markLocation(p);
 	};
 
 	this.removeMark = function(mark) {
-		self.map.removeMark(mark);
+		//self.map.removeMark(mark);
 	};
 
 	this.setUnits = function(unitSpec) {
 		var units = (typeof unitSpec) == "string" ? self.units[unitSpec] : unitSpec;
 		self.routeInfo.setUnits(units);
+		self.unitSelection.setUnits(units);
 	};
 	
 	function init(gpxTracks) {
 		$("body").css("height", $(window).innerHeight());
 		var gpxTrack = gpxTracks[0]; // brain dead hack.
-		self.map = new Map(mapDiv[0]);
-    	self.map.renderTrack(gpxTrack);
+		//self.map = new Map(mapDiv[0]);
+    	//self.map.renderTrack(gpxTrack);
     	self.routeInfo = new RouteInfo(self, routeInfoDiv, elevationDiv, summaryDiv, gpxTrack);
-		self.map.zoomToBounds(gpxTrack.bounds);
+		//self.map.zoomToBounds(gpxTrack.bounds);
+		self.unitSelection = new UnitSelection(self, unitDiv);
 		self.setUnits(self.units.imperial); // FIXME: Will cause repeated rendering. Bad.
 	}
 
@@ -67,6 +71,27 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summary
 }
 
 function UnitSelection(mapUi, unitDiv) {
+	var buttons = {};
+
+	this.setUnits = function(units) {
+		unitDiv.children("button").removeClass("selected");
+		buttons[units.name].addClass("selected");
+	};
+
+	for (spec in mapUi.units) {
+		var units = mapUi.units[spec];
+		var button = $("<button></button>");
+		button.html(units.name);
+		button.attr("title", "Display " + units.name + " units");
+		button.click((function(units) {
+			return function() {
+				mapUi.setUnits(units);
+			};
+		}(units)));
+		unitDiv.append(button);
+		buttons[units.name] = button;
+	}
+	$(unitDiv).append(buttons);
 }
 
 function RouteInfo(mapUi, routeInfoDiv, elevationDiv, summaryDiv, gpxTrack) {
@@ -79,11 +104,11 @@ function RouteInfo(mapUi, routeInfoDiv, elevationDiv, summaryDiv, gpxTrack) {
 	this.summary = new Summary(mapUi, summaryDiv, gpxTrack);
 
 	this.show = function() {
-		drawer.animate({ bottom: 0 });
+		drawer.animate({ bottom: 0 }, 200);
 	};
 
 	this.hide = function() {
-		drawer.animate({ bottom: -contents.outerHeight() });
+		drawer.animate({ bottom: -contents.outerHeight() }, 200);
 	};
 
 	this.setUnits = function(units) {
@@ -113,8 +138,8 @@ function Summary(mapUi, summaryDiv, gpxTrack) {
 		$(summaryDiv).html(""); // Clear out the container.
 		var table = $("<table></table>");
 		table.append(makeRow("Total Time", gpxTrack.duration));
-		table.append(makeRow("Distance (" + units.distance.label + ")", round(units.distance.convert(gpxTrack.kilometers * 1000), 2)));
-		table.append(makeRow("Climbing (" + units.elevation.label + ")", round(units.elevation.convert(gpxTrack.climbing))));
+		table.append(makeRow("Distance", round(units.distance.convert(gpxTrack.kilometers * 1000), 2) + units.distance.label));
+		table.append(makeRow("Climbing", round(units.elevation.convert(gpxTrack.climbing)) + units.elevation.label));
 		$(summaryDiv).append(table);
 	};
 

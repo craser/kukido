@@ -99,6 +99,7 @@ td.numeric {
 #routeinfodetail {
     background-color: #fff;
     border-top: 1px solid #000;
+    padding: 10px;
 }
 
 #elevationgraph {
@@ -151,4 +152,32 @@ div.trackInfo h4 {
     margin: 0;
     padding: 2px;
     color: #fff; /* Should contrast with JavaScript-generated bg color. */
+}
+
+div#unitselection {
+    width: 80%;
+    float: right;
+}
+
+div#unitselection button {
+    display: inline;
+    border: 1px solid #555;
+    border-right: none;
+    border-radius: 0px;
+    background-color: #ddd;
+    padding: 5px;
+    margin: 0px;
+}
+
+div#unitselection button:last-child {
+    border-right: 1px solid #555;
+}
+
+div#unitselection button.selected {
+    background-color: #fff;
+}
+
+.canvasjs-chart-credit {
+    border: none;
+    color: #aaa;
 }

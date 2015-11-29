@@ -50,6 +50,10 @@
 			<arg value="-Xrunjdwp:transport=dt_socket,address=9080,server=y,suspend=n" />
 		</exec>
 	</target>
+
+	<target name="local-resin-deploy-restart" depends="deploy-test, local-resin-start">
+		<echo message="Deploying to test and restarting local resin instance." />
+	</target>
 	
 	
 	<target name="local-resin-stop">

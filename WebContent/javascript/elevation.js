@@ -1,10 +1,9 @@
 function Elevation(mapUi, div, gpxTrack) {
 	var self = this;
-	var elevation = null;
 	var mark = null;  // Holds currently-marked location on Map.
 
 	this.setUnits = function(units) {
-		renderGraph(elevation, units);
+		renderGraph(div, units);
 	};
 
 	function renderGraph(div, units) {
@@ -53,12 +52,14 @@ function Elevation(mapUi, div, gpxTrack) {
 				tickThickness: 1,
 				gridThickness: 1
 			},
-			data: [{
-				type: "splineArea",
-				color: "#92c282",
-				markerColor: "#f00",
-				dataPoints: mapDataPoints(gpxTrack, units)
-			}]
+			data: [
+				{
+					type: "splineArea",
+					color: "#92c282",
+					markerColor: "#f00",
+					dataPoints: mapDataPoints(gpxTrack, units)
+				}
+			]
 		});
 		$(div).mouseout(removeMark);
 	}
@@ -73,7 +74,7 @@ function Elevation(mapUi, div, gpxTrack) {
 	}
 
 	function mapDataPoints(track, units) {
-		return track.points.map(function(p, i) {
+		return track.points.map(function(p) {
 			return {
 				x: units.distance.convert(p.dst),
 				y: units.elevation.convert(p.elv),
@@ -113,28 +114,6 @@ function Elevation(mapUi, div, gpxTrack) {
 	}
 
 	(function() {
-		elevation = $("<div></div>");
-		elevation.height($(div).height() - 40);
-		var buttons = $("<div></div>");
-		buttons.height(40);
-
-		for (spec in mapUi.units) {
-			var button = $("<button></button>");
-			button.html(spec);
-			button.css("border-radius", 5);
-			button.css("border-width", 1);
-			button.click((function(button, units) {
-				return function() {
-					mapUi.setUnits(units);
-					buttons.children("button").css("background-color", "#aaa");
-					button.css("background-color", "#fff");
-				};
-			}(button, mapUi.units[spec])));
-			buttons.append(button);
-		}
-		$(div).append(buttons);
-		$(div).append(elevation);
-
-		renderGraph(elevation, mapUi.units.imperial)
+		renderGraph(div, mapUi.units.imperial)
 	}())
 }

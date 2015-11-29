@@ -140,7 +140,7 @@ import java.text.*;
                 throw new SAXException("Unable to parse timestamp: \"" + val + "\"");
             }
         }
-        else if ("hr".equals(currentState)) {
+        else if ("gpxtpx:hr".equals(currentState)) { // FIXME: Having the namespace hard-coded seems hacky.
             float hr = Float.parseFloat(val);
             if (trackPoint != null) trackPoint.setHeartRate(hr);
         }
