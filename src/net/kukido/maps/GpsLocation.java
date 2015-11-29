@@ -21,6 +21,7 @@ public class GpsLocation implements Comparable
     private double distance; // Distance from start of track.
     private float bpm; // Heart Rate in beats per minute
     private Date timestamp = new Date(0);
+    private long routeTime = 0; // Number of seconds from start of route.
     /** 
      * Earth's radius in km. 
      */
@@ -73,6 +74,22 @@ public class GpsLocation implements Comparable
      */
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    /**
+     * Getter for property routeTime
+     * @return The number of seconds from the start of the route.
+     */
+    public long getRouteTime() {
+        return routeTime;
+    }
+
+    /**
+     * Setter for property routeTime
+     * @param routeTime The number of seconds from the start of the route.
+     */
+    public void setRouteTime(long routeTime) {
+        this.routeTime = routeTime;
     }
     
     /**

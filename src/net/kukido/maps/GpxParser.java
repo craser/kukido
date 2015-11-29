@@ -123,6 +123,7 @@ import java.text.*;
         if ("trkpt".equals(currentState)) {
             trackPoint.setGrade(calculateGrade(track, trackPoint));
             trackPoint.setDistance(calculateDistance(track, trackPoint));
+            trackPoint.setRouteTime(calculateRouteTime(track, trackPoint));
             track.add(trackPoint);
             trackPoint = null; // Fail Fast
         }
@@ -138,7 +139,11 @@ import java.text.*;
             catch (ParseException e) {
                 throw new SAXException("Unable to parse timestamp: \"" + val + "\"");
             }
-        }  
+        }
+        else if ("hr".equals(currentState)) {
+            float hr = Float.parseFloat(val);
+            if (trackPoint != null) trackPoint.setHeartRate(hr);
+        }
         else if ("name".equals(currentState)) {
             try {
                 if ("trk".equals(state.peek()) && (track != null)) {
@@ -188,6 +193,23 @@ import java.text.*;
         }
         else {
             return 0d;
+        }
+    }
+
+    /**
+     * Calculates the number of seconds from the start of the route to the given point.
+     * @param track
+     * @param trackPoint
+     */
+    private long calculateRouteTime(GpsTrack track, GpsLocation trackPoint) {
+        if (track.size() > 0) {
+            long start = track.getStartTime().getTime();
+            long pointTime = trackPoint.getTimestamp().getTime();
+            long seconds = Math.round((pointTime - start) / 1000);
+            return seconds;
+        }
+        else {
+            return 0l;
         }
     }
     

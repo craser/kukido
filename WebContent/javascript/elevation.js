@@ -1,9 +1,13 @@
 function Elevation(mapUi, div, gpxTrack) {
 	var self = this;
-	var chart = null; // Set in renderElevation
+	var elevation = null;
 	var mark = null;  // Holds currently-marked location on Map.
 
-	function render() {
+	this.setUnits = function(units) {
+		renderGraph(elevation, units);
+	};
+
+	function renderGraph(div, units) {
 		$(div).CanvasJSChart({
 			toolTip: {
 				borderColor: "#000",
@@ -13,11 +17,13 @@ function Elevation(mapUi, div, gpxTrack) {
 				cornerRadius: 0,
 				animationEnabled: false,
 				contentFormatter: function(e) {
-					var p = e.entries[0].dataPoint;
-					var x = Math.round(p.x * 100) / 100;
-					var y = Math.round(p.y);
-					var t = p.t;
-					var tip = "<span style=\"font-size: 1.2em\"> " + t + "</span><br/><b>distance:</b> " + x + "mi<br/><b>elevation:</b> " + y + "ft";
+					var p = e.entries[0].dataPoint.p;
+					var t = formatTime(p.time);
+					var d = Math.round(units.distance.convert(p.dst) * 100) / 100;
+					var e = Math.round(units.elevation.convert(p.elv));
+					var tip = "<span style=\"font-size: 1.2em\"> " + t + "</span>"
+						+ "<br/><b>distance:</b> " + d + units.distance.label
+						+ "<br/><b>elevation:</b> " + e + units.elevation.label;
 					addMark(p);
 					return tip;
 				}
@@ -25,19 +31,19 @@ function Elevation(mapUi, div, gpxTrack) {
 			axisX: {
 				titleFontFamily: "HelveticaNeue-condensed,sans-serif",
 				gridColor: "#fff",
-				interval: 0.5,
+				interval: units.distance.interval,
 				labelFontColor: "#000",
 				lineColor: "#000",
 				tickColor: "#000",
 				lineThickness: 1,
 				tickThickness: 1,
-				valueFormatString: "0.##mi"
+				valueFormatString: "0.##" + units.distance.label
 			},
 			axisY: {
-				valueFormatString: "0.##ft",
+				valueFormatString: "0.##" + units.elevation.label,
 				titleFontFamily: "HelveticaNeue-condensed,sans-serif",
 				gridColor: "#eee",
-				interval: 200,
+				interval: units.elevation.interval,
 				includeZero: false,
 				interlacedColor: "#fafafa",
 				labelFontColor: "#000",
@@ -51,7 +57,7 @@ function Elevation(mapUi, div, gpxTrack) {
 				type: "splineArea",
 				color: "#92c282",
 				markerColor: "#f00",
-				dataPoints: mapDataPoints(gpxTrack)
+				dataPoints: mapDataPoints(gpxTrack, units)
 			}]
 		});
 		$(div).mouseout(removeMark);
@@ -59,38 +65,26 @@ function Elevation(mapUi, div, gpxTrack) {
 
 	function addMark(p) {
 		removeMark();
-		mark = mapUi.markLocation(gpxTrack.points[p.row]);
+		mark = mapUi.markLocation(p);
 	}
 
 	function removeMark(p) {
 		if (mark) mapUi.removeMark(mark);
 	}
 
-	function init(gpxTrack) {
-		chart = render();
-	}
-
-	function toMiles(meters) {
-		return meters * 3.28084 / 5280;
-	}
-
-	function mapDataPoints(track) {
-		var start = null; // ms
+	function mapDataPoints(track, units) {
 		return track.points.map(function(p, i) {
-			start = start || new Date(p.time).getTime();
 			return {
-				x: toMiles(p.dst),
-				y: p.elv * 3.28084,
-				t: formatMs(new Date(p.time).getTime() - start),
-				row: i
+				x: units.distance.convert(p.dst),
+				y: units.elevation.convert(p.elv),
+				p: p
 			};
 		});
 	}
 
-	function formatMs(ms) {
-		var t = ms;
-		var SECOND = 1000;
-		var MINUTE = 60 * SECOND;
+	function formatTime(sec) {
+		var t = sec;
+		var MINUTE = 60;
 		var HOUR = 60 * MINUTE;
 		var DAY = 24 * HOUR;
 
@@ -100,8 +94,7 @@ function Elevation(mapUi, div, gpxTrack) {
 		t = t % HOUR;
 		var minutes = Math.floor(t / MINUTE);
 		t = t % MINUTE;
-		var seconds = Math.floor(t / SECOND);
-		t = t % SECOND;
+		var seconds = t;
 
 		function pad(n) {
 			n = "" + n;
@@ -119,6 +112,29 @@ function Elevation(mapUi, div, gpxTrack) {
 		return s;
 	}
 
+	(function() {
+		elevation = $("<div></div>");
+		elevation.height($(div).height() - 40);
+		var buttons = $("<div></div>");
+		buttons.height(40);
 
-	init(gpxTrack);
+		for (spec in mapUi.units) {
+			var button = $("<button></button>");
+			button.html(spec);
+			button.css("border-radius", 5);
+			button.css("border-width", 1);
+			button.click((function(button, units) {
+				return function() {
+					mapUi.setUnits(units);
+					buttons.children("button").css("background-color", "#aaa");
+					button.css("background-color", "#fff");
+				};
+			}(button, mapUi.units[spec])));
+			buttons.append(button);
+		}
+		$(div).append(buttons);
+		$(div).append(elevation);
+
+		renderGraph(elevation, mapUi.units.imperial)
+	}())
 }

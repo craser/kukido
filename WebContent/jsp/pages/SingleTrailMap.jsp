@@ -14,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/map.css" />
     <script type="text/JavaScript" src="https://www.google.com/jsapi"> </script>
     <script type="text/JavaScript">
-      google.load('visualization', '1.0', {'packages': ['corechart']});
+    // FIXME: DO NOT COMMIT!
+      //google.load('visualization', '1.0', {'packages': ['corechart']});
     </script>
     <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <script type="text/JavaScript" src="javascript/jquery.canvasjs.min.js"> </script>
@@ -26,7 +27,12 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"></script>
     <script type="text/JavaScript">
       $(window).load(function() {
-    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />', $("#map"), $("#routeinfo"), $("#elevationgraph"));
+    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />',
+    	    $("#map"),
+    	    $("#routeinfo"),
+    	    $("#unitselection"),
+    	    $("#elevationgraph"),
+    	    $("#routesummary"));
       });
     </script>
   </tiles:put>
@@ -38,21 +44,10 @@
         Details
       </div>
       <div id="routeinfodetail">
+        <div id="unitselection"></div>
         <div id="elevationgraph"></div>
+        <div id="routesummary"></div>
         <table border="0">
-          <tr>
-            <td>Total Time:</td>
-            <td class="numeric"><nested:write name="track" property="formattedDuration" /></td>
-          </tr>
-          <tr>
-            <td>Distance (miles):</td>
-            <td class="numeric"><nested:write name="track" property="miles" format="0.00" /></td>
-          </tr>
-          <tr>
-            <td>Climbing (Vert. ft):</td>
-            <%-- Since GPX (and therefore my mapping code) uses meter for elevation, convert to feet. --%>
-            <td class="numeric"><nested:write name="track" property="climbingVerticalFeet" format="0" /> </td>
-          </tr>
           <tr>
             <td colspan="2">
               <dmg:entrylink entryId="<%= entry.getEntryId() %>">Trip Report</dmg:entrylink>
