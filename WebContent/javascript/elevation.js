@@ -44,7 +44,7 @@ function Elevation(mapUi, div, gpxTrack) {
 				gridColor: "#eee",
 				interval: units.elevation.interval,
 				includeZero: false,
-				interlacedColor: "#fafafa",
+				interlacedColor: "#d0d0d0",
 				labelFontColor: "#000",
 				lineColor: "#000",
 				tickColor: "#000",
