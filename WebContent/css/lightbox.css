@@ -61,7 +61,7 @@ body:after {
 }
 
 .lb-container {
-  padding: 4px;
+  padding: 3px;
 }
 
 .lb-loader {
@@ -72,7 +72,7 @@ body:after {
   width: 100%;
   text-align: center;
   line-height: 0;
-  border: 0px;
+  border: none;
 }
 
 .lb-cancel {
@@ -81,6 +81,7 @@ body:after {
   height: 32px;
   margin: 0 auto;
   background: url(../img/loading.gif) no-repeat;
+  border: none;
 }
 
 .lb-nav {
@@ -99,12 +100,14 @@ body:after {
 .lb-nav a {
   outline: none;
   background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
+  border: none;
 }
 
 .lb-prev, .lb-next {
   height: 100%;
   cursor: pointer;
   display: block;
+  border: none;
 }
 
 .lb-nav a.lb-prev {
