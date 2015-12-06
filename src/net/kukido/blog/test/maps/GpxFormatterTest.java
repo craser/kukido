@@ -1,5 +1,7 @@
 package net.kukido.blog.test.maps;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -15,6 +17,8 @@ import static org.junit.Assert.* ;
 
 public class GpxFormatterTest 
 {
+    private static final String TEST_GPX_INPUT = "/Users/craser/Development/workspace_intellij14/kukido/sample-files/garmin-doc.gpx";
+    private static final String TEST_STRAVA_INPUT = "/Users/craser/Development/workspace_intellij14/kukido/sample-files/strava-output.gpx";
 
 	@Test
     public void main()
@@ -41,7 +45,64 @@ public class GpxFormatterTest
 			fail("Exception: " + e);
 		}
     }
-    
+
+    @Test
+    public void test_parse_formatter_output()
+    {
+        try {
+            FileInputStream in = new FileInputStream(new File(TEST_GPX_INPUT));
+            List<GpsTrack> tracks = new GpxParser().parse(in);
+            assertEquals(tracks.size(), 1);
+            GpsTrack track = tracks.get(0);
+            assertEquals(1758, track.size());
+        }
+        catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    @Test
+    public void test_strava_compare()
+    {
+        try {
+            GpxParser parser = new GpxParser();
+            FileInputStream gpxIn = new FileInputStream(new File(TEST_GPX_INPUT));
+            List<GpsTrack> gpxTracks = parser.parse(gpxIn);
+            GpsTrack gpxTrack = gpxTracks.get(0);
+
+            FileInputStream stravaIn = new FileInputStream(new File(TEST_STRAVA_INPUT));
+            List<GpsTrack> stravaTracks = parser.parse(stravaIn);
+            GpsTrack stravaTrack = stravaTracks.get(0);
+
+            assertEquals(stravaTrack.size() + " != " + gpxTrack.size(), stravaTrack.size(), gpxTrack.size());
+
+            for (int i = 0; i < stravaTrack.size(); i++) {
+                GpsLocation g = gpxTrack.get(i);
+                GpsLocation s = stravaTrack.get(i);
+                assertTrue(g + " != " + s, g.equals(s));
+            }
+        }
+        catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
+    @Test
+    public void test_thinned_track()
+    {
+        try {
+            GpxParser parser = new GpxParser();
+            FileInputStream gpxIn = new FileInputStream(new File(TEST_GPX_INPUT));
+            List<GpsTrack> gpxTracks = parser.parse(gpxIn);
+            GpsTrack gpxTrack = gpxTracks.get(0);
+
+            GpsTrack thinned = gpxTrack.getThinnedTrack();
+        }
+        catch (Exception e) {
+            fail(e.toString());
+        }
+    }
+
     static private List<GpsTrack> buildTestGpsTracks(int n)
     {
         GpsTrack track = new GpsTrack();
@@ -58,6 +119,7 @@ public class GpxFormatterTest
         tracks.add(track);
         return tracks;
     }
-	
+
+
 
 }

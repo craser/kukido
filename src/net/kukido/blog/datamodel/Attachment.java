@@ -13,6 +13,7 @@ public class Attachment implements Serializable
     private int attachmentId;
     private int entryId;
     private boolean isGalleryImage;
+    private String activityId;
     private String fileName;
     private String mimeType;
     private String fileType;
@@ -45,6 +46,7 @@ public class Attachment implements Serializable
     	Attachment copy = new Attachment();
     	copy.entryId = this.entryId;
     	copy.isGalleryImage = this.isGalleryImage;
+        copy.activityId = this.activityId;
     	copy.fileName = this.fileName;
     	copy.mimeType = this.mimeType;
     	copy.fileType = this.fileType;
@@ -90,6 +92,14 @@ public class Attachment implements Serializable
     public boolean getIsGalleryImage()
     {
 	return isGalleryImage;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
+
+    public String getActivityId() {
+        return activityId;
     }
     
     public boolean getIsMap()

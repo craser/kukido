@@ -4,7 +4,7 @@
     
     <!-- == Form Bean Definitions ========================================== -->
     <form-beans>
-    
+
         <form-bean 
             name="loginForm" 
             type="net.kukido.blog.forms.LoginForm"
@@ -79,6 +79,11 @@
             name="unattachedAttachmentsForm"
             type="net.kukido.blog.forms.UnattachedAttachmentsForm"
             />
+
+        <form-bean
+            name="gpsImportForm"
+            type="net.kukido.blog.forms.GpsImportForm"
+            />
                  
     </form-beans>
 
@@ -138,48 +143,48 @@
             >
           <forward name="success" path="/jsp/json/Attachments.jsp" />
         </action>
-             
-	<action
-	    path="/JsonGpsTrack"
-            type="net.kukido.blog.action.GpxGmap"
-	    >
-          <forward name="success" path="/jsp/json/GpsTrack.jsp" />
-        </action>
-             
-	<action
-	    path="/JsonMapLocations"
-            type="net.kukido.blog.action.MapLocations"
-	    >
-          <forward name="success" path="/jsp/json/MapLocations.jsp" />
-        </action>
-        
-    <action
-    	path="/JsonTagNames"
-    	type="net.kukido.blog.action.TagNames"
-    	>
-    	<forward name="success" path="/jsp/json/TagNames.jsp" />
-    </action>
-        
 
-	<!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
-	<action
-	    path="/Monkeyfeed"
-	    type="net.kukido.blog.action.LogEntryListing"
-	    name="entryListingForm"
-	    validate="false"
-	    scope="request"
-	    >
-	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
-	</action>
-        
+        <action
+            path="/JsonGpsTrack"
+                type="net.kukido.blog.action.GpxGmap"
+            >
+              <forward name="success" path="/jsp/json/GpsTrack.jsp" />
+            </action>
 
-	<!-- RSS Feed so I can cross-post only what I want cross-posted. -->
-	<action
-	    path="/ViewSyndicatedLogs"
-	    type="net.kukido.blog.action.ViewSyndicatedLogs"
-	    >
-	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
-	</action>
+        <action
+            path="/JsonMapLocations"
+                type="net.kukido.blog.action.MapLocations"
+            >
+              <forward name="success" path="/jsp/json/MapLocations.jsp" />
+            </action>
+
+        <action
+            path="/JsonTagNames"
+            type="net.kukido.blog.action.TagNames"
+            >
+            <forward name="success" path="/jsp/json/TagNames.jsp" />
+        </action>
+
+
+        <!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
+        <action
+            path="/Monkeyfeed"
+            type="net.kukido.blog.action.LogEntryListing"
+            name="entryListingForm"
+            validate="false"
+            scope="request"
+            >
+          <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+        </action>
+
+
+        <!-- RSS Feed so I can cross-post only what I want cross-posted. -->
+        <action
+            path="/ViewSyndicatedLogs"
+            type="net.kukido.blog.action.ViewSyndicatedLogs"
+            >
+          <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+        </action>
         
         <action
             path="/GalleryThumbnails"
@@ -191,7 +196,7 @@
         <action
             path="/ViewLogEntry"
             type="net.kukido.blog.action.ViewLogEntry"
-	    scope="request"
+	        scope="request"
             >
           <forward name="success" path="/jsp/pages/ViewLogEntry.jsp"/>
         </action>            
@@ -218,12 +223,12 @@
           <forward name="success" path="/jsp/pages/LogEditForm.jsp" />
         </action>
 
-	<action
-	    path="/LogDelete"
-	    type="net.kukido.blog.action.LogDelete"
-	    >
-	  <forward name="success" path="/" redirect="true"/>
-	</action>
+        <action
+            path="/LogDelete"
+            type="net.kukido.blog.action.LogDelete"
+            >
+          <forward name="success" path="/" redirect="true"/>
+        </action>
         
         <action 
             path="/CalculateGeotags"
@@ -262,32 +267,32 @@
           <forward name="success" path="/archive/" redirect="true" />
         </action>
 
-	<action
-	    path="/AttachmentUploadForm"
-	    name="attachmentForm"
-	    scope="request"
-	    validate="false"
-	    forward="/jsp/pages/AttachmentUploadForm.jsp"
-	    />
+        <action
+            path="/AttachmentUploadForm"
+            name="attachmentForm"
+            scope="request"
+            validate="false"
+            forward="/jsp/pages/AttachmentUploadForm.jsp"
+            />
 
-	<action
-	    path="/UploadAttachment"
-	    type="net.kukido.blog.action.UploadAttachment"
-	    name="attachmentForm"
-	    validate="true"
-	    scope="request"
-	    input="/jsp/pages/AttachmentUploadForm.jsp"
-	    >
-	  <forward name="success" path="/" redirect="true" />
-	</action>
+        <action
+            path="/UploadAttachment"
+            type="net.kukido.blog.action.UploadAttachment"
+            name="attachmentForm"
+            validate="true"
+            scope="request"
+            input="/jsp/pages/AttachmentUploadForm.jsp"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
 
-	<action
-	    path="/DeleteAttachment"
-	    type="net.kukido.blog.action.DeleteAttachment"
-	    >
-	  <forward name="success" path="/" redirect="true" />
-	</action>
-        
+        <action
+            path="/DeleteAttachment"
+            type="net.kukido.blog.action.DeleteAttachment"
+            >
+          <forward name="success" path="/" redirect="true" />
+        </action>
+
         <action
             path="/GalleryEntryUpload"
             type="net.kukido.blog.action.GalleryEntryUpload"
@@ -298,44 +303,68 @@
             >
           <forward name="success" path="/" redirect="true"/>
         </action>
-             
-	<action
-	    path="/ViewMap"
+
+        <action
+            path="/ViewMap"
             type="net.kukido.blog.action.GpxGmap"
-	    >
+            >
           <forward name="success" path="/jsp/pages/SingleTrailMap.jsp" />
         </action>
-             
-	<action
-	    path="/TrailheadMap"
-            type="net.kukido.blog.action.TrailheadMap"
-	    >
-          <forward name="success" path="/jsp/pages/TrailheadMap.jsp" />
+
+        <action
+            path="/TrailheadMap"
+                type="net.kukido.blog.action.TrailheadMap"
+            >
+            <forward name="success" path="/jsp/pages/TrailheadMap.jsp" />
         </action>
-                        
-	<action
-	    path="/ViewAttachment"
-	    type="net.kukido.blog.action.ViewAttachment"
-	    >
-	</action>
-                        
-	<action
-	    path="/StyleAttachment"
-	    type="net.kukido.blog.action.StyleAttachment"
-	    >
-	</action>
 
-	<action
-	    path="/ViewAttachmentResize"
-	    type="net.kukido.blog.action.ViewAttachmentResize"
-	    >
-	</action>
+        <action
+            path="/ViewAttachment"
+            type="net.kukido.blog.action.ViewAttachment"
+            >
+        </action>
 
-	<action
-	    path="/ViewMophoImage"
-	    type="net.kukido.blog.action.ViewMophoImage"
-	    >
-	</action>
+        <action
+            path="/GpsImportForm"
+            type="net.kukido.blog.action.GpsImportForm"
+            >
+            <forward name="success" path="/jsp/pages/GpsImportForm.jsp" />
+        </action>
+
+        <action
+            path="/GpsImport"
+            type="net.kukido.blog.action.GpsImport"
+            name="gpsImportForm"
+            scope="request"
+            validate="false"
+            >
+          <forward name="results" path="/jsp/json/GpsImportResults.jsp" />
+        </action>
+
+        <action
+            path="/ActivityIds"
+            type="net.kukido.blog.action.ActivityIds"
+            >
+            <forward name="success" path="/jsp/json/ActivityIds.jsp" />
+        </action>
+
+        <action
+            path="/StyleAttachment"
+            type="net.kukido.blog.action.StyleAttachment"
+            >
+        </action>
+
+        <action
+            path="/ViewAttachmentResize"
+            type="net.kukido.blog.action.ViewAttachmentResize"
+            >
+        </action>
+
+        <action
+            path="/ViewMophoImage"
+            type="net.kukido.blog.action.ViewMophoImage"
+            >
+        </action>
 
         <action
             path="/Login"
@@ -546,10 +575,10 @@
           type="net.kukido.blog.action.ThrowAction"
         />
              
-	<action
-	    path="/LoadMailAttachments"
-            type="net.kukido.blog.action.LoadMailAttachments"
-	    >
+        <action
+            path="/LoadMailAttachments"
+                type="net.kukido.blog.action.LoadMailAttachments"
+            >
           <forward name="success" path="/jsp/pages/SelectMailAttachments.jsp" />
         </action>
         

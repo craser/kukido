@@ -40,5 +40,4 @@ public class GpxParserTest
 			fail(e.toString());
 		}
 	}
-
 }

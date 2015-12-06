@@ -189,7 +189,9 @@ import java.text.*;
     {
         if (track.size() > 0) {
             GpsLocation end = track.getEnd();
-            return end.getDistance() + end.getMetersTo(trackPoint);
+            double total = end.getDistance();
+            double more = end.getMetersTo(trackPoint);
+            return total + more;
         }
         else {
             return 0d;

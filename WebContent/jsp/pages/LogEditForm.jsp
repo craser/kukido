@@ -127,11 +127,12 @@
                   <tr><td colspan="4" nowrap><i style="color: #777">No Attachments</i></td></tr>
                 </nested:equal>
                 <tr>
-                  <td colspan="4" nowrap>
+                  <td colspan="5" nowrap>
                     <nested:hidden property="entry.allowComments" />
                     <nested:submit value="Save"/>
                     <html:button onclick="<%= "window.location = 'AttachmentUploadForm.do?entryId=" + entryId + "'" %>" property="entry.entryId" value="Add Attachment" />
                     <html:button onclick="<%= "window.location = 'LoadMailAttachments.do?entryId=" + entryId + "'" %>" property="entry.entryId" value="Load Attachment" />
+                    <html:button onclick="<%= "window.location = 'GpsImportForm.do?entryId=" + entryId + "'" %>" property="entry.entryId" value="Import GPS" />
                   </td>	
                 </tr>
               </table>

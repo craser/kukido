@@ -7,6 +7,10 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Very quick-and-dirty formatter to turn a GpsTrack into GPX-formatted XML.
+ * FIXME: Come back and do this with properly, like a grown-up.
+ */
 public class GpxFormatter
 {
     static private final SimpleDateFormat gpxDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:sszz");
@@ -59,7 +63,7 @@ public class GpxFormatter
     private void printTrack(GpsTrack track, PrintWriter out)
     {
         out.println("<trk>");
-        out.println("<!-- NOT including 'name' element. -->");
+        out.println("<name>" + track.getName() + "</name>");
         out.println("<!-- NOT including 'number' element. -->");
         // FIXME: Making the whole thing into one trackseg, regardless 
         // of original segmentatation.
@@ -69,12 +73,11 @@ public class GpxFormatter
                 + "\n<time>{3}</time>" // 2012-08-12T17:35:12Z
                 + "\n</trkpt>";
         for (GpsLocation loc : track) {
-            String timestamp = gpxDateFormat.format(loc.getTimestamp());
-            String logString = MessageFormat.format(locFormat,
-                    loc.getLatitude(),
-                    loc.getLongitude(),
-                    loc.getElevation(),
-                    timestamp);
+            String timestamp = gpxDateFormat.format(loc.getTimestamp()).replace(" ", "T");
+            String lat = Float.toString(loc.getLatitude());
+            String lon = Float.toString(loc.getLongitude());
+            String elv = Float.toString(loc.getElevation());
+            String logString = MessageFormat.format(locFormat, lat, lon, elv, timestamp);
             out.println(logString);
         }
         out.println("</trkseg>");

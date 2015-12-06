@@ -159,6 +159,11 @@
 		<pattern>.*/trailmaps</pattern>
 		<template>/TrailheadMap.do</template>
 	</mapping>
+	<!-- Garmin Communicator Plugin Location -->
+	<mapping>
+		<pattern>.*/garmin/loader$</pattern>
+		<template>/jsp/pages/GarminLoader.jsp</template>
+	</mapping>
 	<!-- Trackback Processing -->
 	<mapping>
 		<pattern>.*/trackback/(\d+)\??(.*)$</pattern>

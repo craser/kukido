@@ -1,0 +1,112 @@
+.activity {
+  background: #fff;
+  padding: 5px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.uploading {
+  background: yellow;
+}
+
+.uploaded {
+  background: violet;
+  cursor: default;
+}
+
+.uploadfailed {
+  background: red;
+}
+
+#donelink {
+  background: url(../img/right-arrows-sm.png) no-repeat right top;
+  padding: 3px 30px 0 0;
+  text-align: right;
+  height: 30px;
+}
+
+#donelink a {
+  border: none;
+  font-size: 20px;
+  line-height: 25px;
+  float: right;
+}
+
+.status {
+  background: #fff;
+  padding: 5px;
+  border: 2px solid #555;
+  border-radius: 7px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+button {
+    border: 1px solid #555;
+    margin: 5px;
+}
+
+button.activity-submit {
+    display: inline;
+}
+
+.activity-filename {
+    display: inline;
+    border: none;
+    width: 80%;
+}
+
+.activity-filename:focus {
+    border: 1px solid red;
+}
+
+#showexisting::before {
+    content: "show existing items";
+}
+
+#showexisting.selected::before {
+    content: "hide existing items";
+}
+
+#showold::before {
+    content: "show older items";
+}
+
+#showold.selected::before {
+    content: "hide older items";
+}
+
+.old {
+    background: gold;
+    display: none;
+}
+
+.existing {
+    background: yellowgreen;
+    display: none;
+}
+
+#activityfilters {
+    height: 3em;
+}
+
+.activity .loadstatus {
+    font-variant: all-small-caps;
+    color: #000;
+    display: block;
+    float: right;
+}
+
+.activity.existing .loadstatus:before {
+    content: "(previously loaded)";
+}
+
+.activity.uploaded .loadstatus:before {
+    content: "(uploaded now)";
+}
+
+.activity.uploading .loadstatus:before {
+    content: "(loading...)";
+}

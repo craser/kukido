@@ -405,6 +405,14 @@
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/ThrowAction.do</url-pattern>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/GpsImport.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/GpsImportForm.do</url-pattern>
+  </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
   <!-- Action Servlet Configuration -->
   <servlet>

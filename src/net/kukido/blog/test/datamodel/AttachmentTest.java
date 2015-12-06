@@ -36,6 +36,7 @@ public class AttachmentTest
 		int entryId = 42;
 		boolean isGalleryImage = true;
 		String fileName = "FILE_NAME";
+		String activityId = "2015-12-14T19:22:04Z";
 		String mimeType = "MIME_TYPE";
 		String fileType = Attachment.TYPE_IMAGE;
 		int userId = 1138;
@@ -51,6 +52,7 @@ public class AttachmentTest
 		att.setEntryId(entryId);
 		att.setIsGalleryImage(isGalleryImage);
 		att.setFileName(fileName);
+		att.setActivityId(activityId);
 		att.setMimeType(mimeType);
 		att.setFileType(fileType);
 		att.setUserId(userId);
@@ -67,6 +69,7 @@ public class AttachmentTest
 		assertTrue(copy.getEntryId() == att.getEntryId());
 		assertTrue(copy.getIsGalleryImage() == att.getIsGalleryImage());
 		assertTrue(copy.getFileName().equals(att.getFileName()));
+		assertTrue(copy.getActivityId().equals(att.getActivityId()));
 		assertTrue(copy.getMimeType().equals(att.getMimeType()));
 		assertTrue(copy.getFileType().equals(att.getFileType()));
 		assertTrue(copy.getUserId() == att.getUserId());

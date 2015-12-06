@@ -5,6 +5,7 @@ import net.kukido.blog.datamodel.*;
 import java.sql.*;
 import java.text.MessageFormat;
 import javax.sql.*;
+import javax.xml.crypto.Data;
 import java.util.*;
 
 import net.kukido.blog.datamodel.*;
@@ -15,10 +16,11 @@ import net.kukido.blog.util.ImageTools;
 
 public class AttachmentDao extends Dao {
 	static private final String CREATE_SQL = "insert into ATTACHMENTS "
-			+ "(Entry_ID, Is_Gallery_Image, File_Name, Mime_Type, File_Type, User_ID, User_Name, Date_Posted, Title, Description, Date_Taken, Bytes)"
+			+ "(Entry_ID, Is_Gallery_Image, File_Name, Activity_ID, Mime_Type, File_Type, User_ID, User_Name, Date_Posted, Title, Description, Date_Taken, Bytes)"
 			+ " values " + "(:Entry_ID" // Entry_ID
 			+ ",:Is_Gallery_Image" // Is_Gallery_Image
 			+ ",:File_Name" // File_Name
+			+ ",:Activity_ID" // Activity_ID
 			+ ",:Mime_Type" // Mime_Type
 			+ ",:File_Type" + ",:User_ID" // User_ID
 			+ ",:User_Name" // User_Name
@@ -32,6 +34,7 @@ public class AttachmentDao extends Dao {
 			+ " Entry_ID = :Entry_ID" // Entry_ID
 			+ ",Is_Gallery_Image = :Is_Gallery_Image" // Is_Gallery_Image
 			+ ",File_Name = :File_Name" // File_Name
+			+ ",Activity_ID = :Activity_ID" // Activity_ID
 			+ ",Mime_Type = :Mime_Type" // Mime_Type
 			+ ",File_Type = :File_Type" + ",User_ID = :User_ID" // User_ID
 			+ ",User_Name = :User_Name" // User_Name
@@ -48,13 +51,13 @@ public class AttachmentDao extends Dao {
 
 	static private final String FIND_BY_FILE_TYPE_SQL = "select"
 			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
-			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
+			+ ",File_Name" + ",Activity_ID" + ",Mime_Type" + ",File_Type" + ",User_ID"
 			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
 			+ ",Date_Taken" + " from ATTACHMENTS where File_Type = :File_Type";
 
 	static private final String FIND_BY_FILE_NAME_SQL = "select"
 			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
-			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
+			+ ",File_Name" + ",Activity_ID" + ",Mime_Type" + ",File_Type" + ",User_ID"
 			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
 			+ ",Date_Taken" + " from ATTACHMENTS where File_Name = :File_Name";
 	
@@ -69,6 +72,7 @@ public class AttachmentDao extends Dao {
 			+ ",Entry_ID"
 			+ ",Is_Gallery_Image"
 			+ ",File_Name"
+			+ ",Activity_ID"
 			+ ",Mime_Type"
 			+ ",File_Type"
 			+ ",User_ID"
@@ -84,6 +88,7 @@ public class AttachmentDao extends Dao {
 			+ ",Entry_ID"
 			+ ",Is_Gallery_Image"
 			+ ",File_Name"
+			+ ",Activity_ID"
 			+ ",Mime_Type"
 			+ ",File_Type"
 			+ ",User_ID"
@@ -96,14 +101,14 @@ public class AttachmentDao extends Dao {
 
 	static private final String FIND_BY_ATTACHMENT_ID_SQL = "select"
 			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
-			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
+			+ ",File_Name" + ",Activity_ID" + ",Mime_Type" + ",File_Type" + ",User_ID"
 			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
 			+ ",Date_Taken"
 			+ " from ATTACHMENTS where Attachment_ID = :Attachment_ID";
 
 	static private final String FIND_MAPS_BY_YEAR_SQL = "select"
 			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
-			+ ",File_Name" + ",Mime_Type" + ",File_Type" + ",User_ID"
+			+ ",File_Name" + ",Activity_ID" + ",Mime_Type" + ",File_Type" + ",User_ID"
 			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
 			+ ",Date_Taken" + " from ATTACHMENTS where File_Type = 'map'"
 			+ " and year(Date_Posted) = :Year";
@@ -114,6 +119,8 @@ public class AttachmentDao extends Dao {
 
 	static private final String FIND_RECENT_IMAGES_SQL = "select * from ATTACHMENTS where Is_Gallery_Image = 'true'"
 			+ " order by Date_Posted desc limit :NumEntries";
+
+	static private final String FIND_ALL_ACTIVITY_IDS = "select Activity_ID from ATTACHMENTS where Activity_ID is not null";
 
 	public void delete(Attachment attachment) throws DataAccessException {
 		delete(attachment.getAttachmentId());
@@ -189,6 +196,7 @@ public class AttachmentDao extends Dao {
 			create.setString("Is_Gallery_Image", Boolean.toString(attachment
 					.getIsGalleryImage()));
 			create.setString("File_Name", attachment.getFileName());
+			create.setString("Activity_ID", attachment.getActivityId());
 			create.setString("Mime_Type", attachment.getMimeType());
 			create.setString("File_Type", attachment.getFileType());
 			create.setInt("User_ID", attachment.getUserId());
@@ -232,6 +240,7 @@ public class AttachmentDao extends Dao {
 			update.setString("Is_Gallery_Image", Boolean.toString(attachment
 					.getIsGalleryImage()));
 			update.setString("File_Name", attachment.getFileName());
+			update.setString("Activity_ID", attachment.getActivityId());
 			update.setString("Mime_Type", attachment.getMimeType());
 			update.setString("File_Type", attachment.getFileType());
 			update.setInt("User_ID", attachment.getUserId());
@@ -649,6 +658,27 @@ public class AttachmentDao extends Dao {
 		}
 	}
 
+	public Collection<String> findActivityIds() throws DataAccessException {
+		Connection conn = null;
+		NamedParamStatement findIds = null;
+		ResultSet results = null;
+		try {
+			conn = getConnection();
+			findIds = new NamedParamStatement(conn, FIND_ALL_ACTIVITY_IDS);
+			results = findIds.executeQuery();
+
+			List<String> ids = new ArrayList<String>();
+			while (results.next()) {
+				String id = results.getString("Activity_ID");
+				ids.add(id);
+			}
+			return ids;
+		}
+		catch (Exception e) {
+			throw new DataAccessException("Unable to find activity IDs:", e);
+		}
+	}
+
 	public Collection findRecentImages(int numEntries)
 			throws DataAccessException {
 		Connection conn = null;
@@ -714,6 +744,7 @@ public class AttachmentDao extends Dao {
 		attachment.setEntryId(results.getInt("Entry_ID"));
 		attachment.setIsGalleryImage(results.getBoolean("Is_Gallery_Image"));
 		attachment.setFileName(results.getString("File_Name"));
+		attachment.setActivityId(results.getString("Activity_ID"));
 		attachment.setMimeType(results.getString("Mime_Type"));
 		attachment.setFileType(results.getString("File_Type"));
 		attachment.setUserId(results.getInt("User_ID"));

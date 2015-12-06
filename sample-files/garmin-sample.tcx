@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/ActivityExtension/v2 http://www.garmin.com/xmlschemas/ActivityExtensionv2.xsd http://www.garmin.com/xmlschemas/FatCalories/v1 http://www.garmin.com/xmlschemas/fatcalorieextensionv1.xsd http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+
+  <Activities>
+    <Activity Sport="Biking">
+      <Id>2015-12-06T17:20:40Z</Id>
+      <Lap StartTime="2015-12-06T17:20:40Z">
+        <TotalTimeSeconds>8432.7724609</TotalTimeSeconds>
+        <DistanceMeters>27280.3203125</DistanceMeters>
+        <MaximumSpeed>11.5229998</MaximumSpeed>
+        <Calories>917</Calories>
+        <AverageHeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+          <Value>127</Value>
+        </AverageHeartRateBpm>
+        <MaximumHeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+          <Value>177</Value>
+        </MaximumHeartRateBpm>
+        <Intensity>Resting</Intensity>
+        <TriggerMethod>Time</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2015-12-06T17:20:40Z</Time>
+            <Position>
+              <LatitudeDegrees>33.8183600</LatitudeDegrees>
+              <LongitudeDegrees>-117.7840471</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>123.0000000</AltitudeMeters>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <Extensions>
+              <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Bike">
+                <Speed>0.0000000</Speed>
+              </TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2015-12-06T17:20:42Z</Time>
+            <Position>
+              <LatitudeDegrees>33.8183600</LatitudeDegrees>
+              <LongitudeDegrees>-117.7840471</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>123.0000000</AltitudeMeters>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>83</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Bike">
+                <Speed>0.0000000</Speed>
+              </TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2015-12-06T17:20:43Z</Time>
+            <Position>
+              <LatitudeDegrees>33.8183600</LatitudeDegrees>
+              <LongitudeDegrees>-117.7840471</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>123.0000000</AltitudeMeters>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>83</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Bike">
+                <Speed>0.0000000</Speed>
+              </TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2015-12-06T17:20:53Z</Time>
+            <Position>
+              <LatitudeDegrees>33.8183601</LatitudeDegrees>
+              <LongitudeDegrees>-117.7840474</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>123.5999756</AltitudeMeters>
+            <DistanceMeters>0.0100000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>82</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Bike">
+                <Speed>0.0000000</Speed>
+              </TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2015-12-06T17:21:06Z</Time>
+            <Position>
+              <LatitudeDegrees>33.8183522</LatitudeDegrees>
+              <LongitudeDegrees>-117.7840359</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>123.5999756</AltitudeMeters>
+            <DistanceMeters>0.8900000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>81</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Bike">
+                <Speed>0.0000000</Speed>
+              </TPX>
+            </Extensions>
+          </Trackpoint>
+        </Track>
+      </Lap>
+    </Activity>
+  </Activities>
+</TrainingCenterDatabase>

@@ -6,6 +6,8 @@
 
 package net.kukido.blog.action;
 
+import net.kukido.blog.log.Logging;
+import org.apache.log4j.Logger;
 import org.apache.struts.action.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -28,6 +30,8 @@ import net.kukido.maps.*;
  */
 public class GpxGmap extends Action {
 
+	private Logger log = Logging.getLogger(getClass());
+
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -42,6 +46,8 @@ public class GpxGmap extends Action {
 			GpsTrack track = tracks.get(0); // FIXME: Need to update this Action to deal with multiple tracks in a single file.
 			LogEntry entry = logDao.findByEntryId(map.getEntryId());
 
+			track.getThinnedTrack(); // FIXME: Remove this. It's just for debugging.
+
 			req.setAttribute("entry", entry);
 			req.setAttribute("map", map);
 			req.setAttribute("track", track);
@@ -50,7 +56,7 @@ public class GpxGmap extends Action {
 			return mapping.findForward("success");
 		} 
 		catch (Exception e) {
-			e.printStackTrace(System.err);
+			log.fatal(e);
 			throw new ServletException(e);
 		}
 	}

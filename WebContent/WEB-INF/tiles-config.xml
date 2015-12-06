@@ -12,6 +12,7 @@
     <put name="title" value="Chris Raser's Personal Weblog" />
     <put name="head" type="string" value="" />
     <put name="sidebar" value="/jsp/pages/DefaultSidebar.jsp" />
+    <put name="footer" type="string" value="" />
     <put name="analytics" value="/jsp/tiles/GoogleAnalyticsScript.jsp" />
   </definition>
 
