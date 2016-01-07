@@ -116,21 +116,6 @@
         </tiles:put>
       </tiles:insert>
     </logic:notEmpty>
-    
-    <logic:notEmpty name="entry" property="tags">
-      <tiles:insert definition="sidebarElement" flush="false">
-        <tiles:put type="string" name="title">Related Links</tiles:put>
-        <tiles:put type="string" name="content">
-            <nested:iterate name="entry" property="tags" id="tag" type="net.kukido.blog.datamodel.Tag">
-              <jsp:include page="/TaggedLinks" flush="false">
-                <jsp:param name="cacheUrl" value="<%= "https://api.del.icio.us/v1/posts/recent?tag=" + tag.getName() %>" />
-                <jsp:param name="fileName" value="<%= "delicious_links_by_tag_" + tag.getName() + ".html" %>" />
-                <jsp:param name="resourcePath" value="<%= "/delicious_links_by_tag_" + tag.getName() + ".html" %>" />
-              </jsp:include>
-            </nested:iterate>
-        </tiles:put>
-      </tiles:insert>
-    </logic:notEmpty>
 
   </tiles:put>
 
