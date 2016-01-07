@@ -551,42 +551,6 @@
     </init-param>
   </servlet>
   <servlet>
-    <servlet-name>DeliciousLinks</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>cacheUrl</param-name>
-      <param-value>https://api.del.icio.us/v1/posts/recent?count=10</param-value>
-    </init-param>
-    <init-param>
-      <param-name>fileName</param-name>
-      <param-value>deliciouslinks.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resourcePath</param-name>
-      <param-value>/deliciouslinks.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>14400</param-value>
-    </init-param>
-    <init-param>
-      <param-name>isPasswordProtected</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>username</param-name>
-      <param-value>DeathBeforeDecaf</param-value>
-    </init-param>
-    <init-param>
-      <param-name>password</param-name>
-      <param-value>vkfijtcG8yv8aX</param-value>
-    </init-param>
-    <init-param>
-      <param-name>xsltTemplate</param-name>
-      <param-value>/xsl/Delicious2Html.xslt</param-value>
-    </init-param>
-  </servlet>
-  <servlet>
     <servlet-name>GoogleShared</servlet-name>
     <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
     <init-param>
