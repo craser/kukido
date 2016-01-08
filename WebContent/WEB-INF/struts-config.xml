@@ -24,11 +24,6 @@
             name="commentForm"
             type="net.kukido.blog.forms.CommentForm"
             />
-            
-        <form-bean
-            name="dropBoxUploadForm"
-            type="net.kukido.blog.forms.DropBoxUploadForm"
-            />
 
 		<form-bean
 		    name="attachmentForm"
@@ -44,16 +39,6 @@
             name="entryListingForm"
             type="net.kukido.blog.forms.EntryListingForm"
             />
-            
-        <form-bean
-            name="mophoUploadForm"
-            type="net.kukido.blog.forms.MophoUploadForm"
-            />
-	            
-		<form-bean
-		    name="mophoListingForm"
-		    type="net.kukido.blog.forms.MophoListingForm"
-		    />
             
         <form-bean
             name="commentSearchForm"
@@ -181,22 +166,6 @@
 	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
 	</action>
 
-        <action 
-            path="/Gallery"
-            type="net.kukido.blog.action.Gallery"
-            validate="false"
-            scope="request"
-            >
-          <forward name="success" path="/jsp/pages/Gallery.jsp"/>
-        </action>
-        
-        <action
-            path="/GalleryThumbnails"
-            type="net.kukido.blog.action.GalleryThumbnails"
-            >
-          <forward name="success" path="/jsp/pages/GalleryThumbnails.jsp"/>
-        </action>
-
         <action
             path="/ViewLogEntry"
             type="net.kukido.blog.action.ViewLogEntry"
@@ -296,17 +265,6 @@
 	    >
 	  <forward name="success" path="/" redirect="true" />
 	</action>
-        
-        <action
-            path="/GalleryEntryUpload"
-            type="net.kukido.blog.action.GalleryEntryUpload"
-            name="galleryEntryUploadForm"
-            validate="true"
-            scope="request"
-            input="/jsp/pages/GalleryEntryUpload.jsp"
-            >
-          <forward name="success" path="/" redirect="true"/>
-        </action>
              
 	<action
 	    path="/ViewMap"
@@ -337,12 +295,6 @@
 	<action
 	    path="/ViewAttachmentResize"
 	    type="net.kukido.blog.action.ViewAttachmentResize"
-	    >
-	</action>
-
-	<action
-	    path="/ViewMophoImage"
-	    type="net.kukido.blog.action.ViewMophoImage"
 	    >
 	</action>
 
@@ -380,59 +332,6 @@
           <forward name="success" path="/" redirect="true" />
         </action>
             
-        
-        <action 
-            path="/DropBox"
-            type="net.kukido.blog.action.DropBox"
-            >
-          <forward name="success" path="/jsp/pages/DropBox.jsp"/>
-        </action>
-            
-        <action
-            path="/DropBoxUpload"
-            type="net.kukido.blog.action.DropBoxUpload"
-            validate="true"
-            name="dropBoxUploadForm"
-            scope="request"
-            input="/DropBox.do"
-            >
-          <forward name="success" path="/DropBox.do" redirect="true"/>
-        </action>
-        
-        <action
-            path="/DropBoxDelete"
-            type="net.kukido.blog.action.DropBoxDelete"
-            >
-          <forward name="success" path="/DropBox.do"/>
-        </action>
-        
-        <!-- Mopho Stuff -->
-        <action            
-            path="/MophoUploadForm"
-            forward="/jsp/pages/MophoUploadForm.jsp" 
-            />
-            
-        <action 
-            path="/MophoUpload"
-            type="net.kukido.blog.action.MophoUpload"
-            validate="true"
-            name="mophoUploadForm"
-            scope="request"
-            input="/jsp/pages/MophoUploadForm.jsp"
-            >
-          <forward name="success" path="/MophoEntryListing.do" redirect="true"/>
-        </action>
-        
-        <action
-            path="/MophoEntryListing"
-	    type="net.kukido.blog.action.MophoEntryListing"
-            name="mophoListingForm"
-            validate="false"
-            scope="request"
-            >
-          <forward name="success" path="/jsp/pages/MophoEntryListing.jsp"/>
-        </action>
-            
         <action
             path="/WhatsAllThis"
             forward="/jsp/pages/WhatsAllThis.jsp"
@@ -444,32 +343,6 @@
             >
           <forward name="success" path="/jsp/nav/RecentImages.jsp" />
         </action>
-        
-        <action
-            path="/RecentImagesNew"
-            type="net.kukido.blog.action.RecentImages"
-            >
-          <forward name="success" path="/jsp/pages/RecentImages.jsp" />
-        </action>
-        
-        <action
-            path="/MostUsedTagsNav"
-            type="net.kukido.blog.action.MostUsedTags"
-            >
-          <forward name="success" path="/jsp/nav/TagListNav.jsp" />
-        </action>
-        
-        <action
-            path="/RecentTagsNav"
-            type="net.kukido.blog.action.RecentTags"
-            >
-          <forward name="success" path="/jsp/nav/TagListNav.jsp" />
-        </action>
-        
-        <action
-            path="/Blogroll"
-            forward="/jsp/pages/blogroll.jsp" 
-            />
         
         <action
             path="/RecentCommentsNav"
@@ -516,6 +389,7 @@
           <forward name="success" path="/jsp/pages/ViewComments.jsp"/>          
         </action>
         
+        <!-- FIXME: Duplicated RSS feed? -->
         <action
             path="/CommentRss"
             type="net.kukido.blog.action.SearchComments"
@@ -542,18 +416,6 @@
             >
           <forward name="success" path="/jsp/pages/TrackbackResponse.jsp" />
         </action>
-        
-        <action
-        	path="/CyclingStats"
-        	type="net.kukido.blog.action.CyclingStats"
-        	>
-          <forward name="success" path="/jsp/nav/CyclingStatsNav.jsp" />
-        </action>
-        
-        <action
-          path="/ThrowAction"
-          type="net.kukido.blog.action.ThrowAction"
-        />
              
 	<action
 	    path="/LoadMailAttachments"
