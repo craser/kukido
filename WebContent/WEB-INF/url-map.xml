@@ -1,4 +1,5 @@
 <url-mappings>
+    <!-- JSON -->
 	<mapping>
 		<pattern>.*/json/maps/(.+.)$</pattern>
 		<template>/JsonGpsTrack.do?fileName=$1</template>
@@ -21,21 +22,6 @@
 		<pattern>.*/archive/(\d+)</pattern>
 		<template>/ViewLogEntry.do?entryId=$1</template>
 	</mapping>
-	<!-- Sections -->
-	<mapping>
-		<pattern>.*/sections/([^/]+)/?(\d*)$</pattern>
-		<template>/LogEntryListing.do?section=$1&amp;page=$2</template>
-	</mapping>
-	<!-- Topics -->
-	<mapping>
-		<pattern>.*/topics/([^/]+)/?(\d*)$</pattern>
-		<template>/SearchLogEntries.do?topic=$1&amp;page=$2</template>
-	</mapping>
-	<!-- Quick Links -->
-	<mapping>
-		<pattern>.*/quicklinks/?(\d*)$</pattern>
-		<template>/QuickLinkListing.do?page=$1</template>
-	</mapping>
 	<!-- RSS -->
 	<mapping>
 		<pattern>.*/monkeyfeed.xml$</pattern>
@@ -49,6 +35,7 @@
 		<pattern>.*/feeds/([^/]+).xml</pattern>
 		<template>/Monkeyfeed.do?tags=$1</template>
 	</mapping>
+    <!-- Used to provide default style for DMG RSS feed. -->
 	<mapping>
 		<pattern>.*/feeds/rss2html.xslt</pattern>
 		<template>/jsp/pages/Rss2Html.jsp</template>
@@ -84,24 +71,6 @@
 		<!-- Note that setting the maxWidth here will NOT affect the size of 
 			map thumnails. For that, see MapImage JSP tag impl. -->
 		<template>/ViewAttachmentResize.do?fileName=$1&amp;maxWidth=1920</template> <!-- 600 total, with 5px padding, and 1px border from CSS -->
-	</mapping>
-	<!-- Galleries -->
-	<mapping>
-		<pattern>.*/galleries/(.*)</pattern>
-		<template>/Gallery.do?attachmentId=$1</template>
-	</mapping>
-	<!-- Mopho Entries -->
-	<mapping>
-		<pattern>.*/mopho/(\d+)$</pattern>
-		<template>/MophoEntryListing.do?page=$1</template>
-	</mapping>
-	<mapping>
-		<pattern>.*/mopho/?$</pattern>
-		<template>/MophoEntryListing.do</template>
-	</mapping>
-	<mapping>
-		<pattern>.*/mopho/(.+)</pattern>
-		<template>/ViewMophoImage.do?fileName=$1</template>
 	</mapping>
 	<!-- About Me -->
 	<mapping>
@@ -154,9 +123,45 @@
 		<pattern>.*/trackback/(\d+)\??(.*)$</pattern>
 		<template>/ReceiveTrackback.do?entryId=$1&amp;$2</template>
 	</mapping>
-	<!-- Testing Error Handling -->
+
+    <!-- ================================================================================ -->
+    <!-- Old, supported for backward-compatibility -->
+	<!-- Sections -->
 	<mapping>
-		<pattern>.*/throw$</pattern>
-		<template>/ThrowAction.do</template>
+		<pattern>.*/sections/([^/]+)/?(\d*)$</pattern>
+		<template>/SearchLogEntries.do?tags=$1&amp;pageSize=30&amp;page=$3</template>
 	</mapping>
+	<!-- Topics -->
+	<mapping>
+		<pattern>.*/topics/([^/]+)/?(\d*)$</pattern>
+		<template>/SearchLogEntries.do?tags=$1&amp;pageSize=30&amp;page=$3</template>
+	</mapping>
+    
+    <!-- ================================================================================ -->
+    <!-- Old, with infrastructure removed. Need to be updated for backward-compatibility. -->
+    <!-- FIXME: update to be backward-compatible. -->
+	<!-- Quick Links -->
+	<mapping>
+		<pattern>.*/quicklinks/?(\d*)$</pattern>
+		<template>/QuickLinkListing.do?page=$1</template>
+	</mapping>
+	<!-- Galleries -->
+	<mapping>
+		<pattern>.*/galleries/(.*)</pattern>
+		<template>/Gallery.do?attachmentId=$1</template>
+	</mapping>
+	<!-- Mopho Entries -->
+	<mapping>
+		<pattern>.*/mopho/(\d+)$</pattern>
+		<template>/MophoEntryListing.do?page=$1</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/mopho/?$</pattern>
+		<template>/MophoEntryListing.do</template>
+	</mapping>
+	<mapping>
+		<pattern>.*/mopho/(.+)</pattern>
+		<template>/ViewMophoImage.do?fileName=$1</template>
+	</mapping>
+    <!-- /Obsolete -->
 </url-mappings>
