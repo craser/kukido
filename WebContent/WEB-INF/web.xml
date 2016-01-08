@@ -498,54 +498,7 @@
       <param-value>/xsl/TaggedLinks2Ul.xslt</param-value>
     </init-param>
   </servlet>
-  <servlet>
-    <servlet-name>Blogroll</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>cacheUrl</param-name>
-      <param-value>http://rpc.bloglines.com/blogroll?html=1&amp;id=DeathBeforeDecaf</param-value>
-    </init-param>
-    <init-param>
-      <param-name>fileName</param-name>
-      <param-value>blogroll.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resourcePath</param-name>
-      <param-value>/blogroll.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>43200</param-value>
-    </init-param>
-  </servlet>
-  <servlet>
-    <servlet-name>GoogleShared</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>cacheUrl</param-name>
-      <param-value>http://www.google.com/reader/public/atom/user%2F09291501630886345324%2Fstate%2Fcom.google%2Fbroadcast</param-value>
-    </init-param>
-    <init-param>
-      <param-name>fileName</param-name>
-      <param-value>google-shared.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resourcePath</param-name>
-      <param-value>/google-shared.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>5</param-value>
-    </init-param>
-    <init-param>
-      <param-name>isPasswordProtected</param-name>
-      <param-value>false</param-value>
-    </init-param>
-    <init-param>
-      <param-name>xsltTemplate</param-name>
-      <param-value>/xsl/Atom2Html.xsl</param-value>
-    </init-param>
-  </servlet>
+  
   <!-- Action Servlet Mapping -->
   <servlet-mapping>
     <servlet-name>action</servlet-name>
@@ -556,33 +509,12 @@
     <url-pattern>/TrainingLogSidebar</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>TwitterSidebar</servlet-name>
-    <url-pattern>/TwitterSidebar</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Blogroll</servlet-name>
-    <url-pattern>/Blogroll</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>DeliciousLinks</servlet-name>
-    <url-pattern>/DeliciousLinks</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>GoogleShared</servlet-name>
-    <url-pattern>/GoogleShared</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>TaggedLinks</servlet-name>
     <url-pattern>/TaggedLinks</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>foo</servlet-name>
-    <url-pattern>/foo</url-pattern>
   </servlet-mapping>
   <!-- Welcome files -->
   <welcome-file-list>
     <welcome-file>foo.html</welcome-file>
-    <welcome-file>Bling.jsp</welcome-file>
   </welcome-file-list>
   <!-- Struts Tag Library Descriptors -->
   <taglib>
