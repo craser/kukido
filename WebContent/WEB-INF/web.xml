@@ -475,38 +475,6 @@
     </init-param>
   </servlet>
   <servlet>
-    <servlet-name>foo</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>5</param-value>
-    </init-param>
-    <init-param>
-      <param-name>isPasswordProtected</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>username</param-name>
-      <param-value>DeathBeforeDecaf</param-value>
-    </init-param>
-    <init-param>
-      <param-name>password</param-name>
-      <param-value>vkfijtcG8yv8aX</param-value>
-    </init-param>
-    <init-param>
-      <param-name>fileName</param-name>
-      <param-value>foo.xml</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resourcePath</param-name>
-      <param-value>/foo.xml</param-value>
-    </init-param>
-    <init-param>
-      <param-name>cacheUrl</param-name>
-      <param-value>https://api.del.icio.us/v1/posts/recent?count=5&amp;tag=drm</param-value>
-    </init-param>
-  </servlet>
-  <servlet>
     <servlet-name>TaggedLinks</servlet-name>
     <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
     <init-param>
