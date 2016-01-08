@@ -4,6 +4,7 @@
   <!-- This is needed in order for net.kukido.blog.tags.BaseHrefTag to work correctly.  MUST MATCH WEB CONTEXT -->
   <display-name>home</display-name>
   
+  <!-- Filter Declarations -->
   <filter>
       <filter-name>LoggingFilter</filter-name>
       <filter-class>net.kukido.blog.servlet.filter.LoggingFilter</filter-class>
@@ -175,11 +176,12 @@
       <param-value>WEB-INF/url-map.xml</param-value>
     </init-param>
   </filter>
+  
   <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>net.kukido.blog.servlet.filter.LoginFilter</filter-class>
   </filter>
-  <!-- Filter Declarations -->
+  
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>net.kukido.blog.servlet.filter.SecurityFilter</filter-class>
@@ -188,6 +190,7 @@
       <param-value>/Login.do</param-value>
     </init-param>
   </filter>
+  
   <filter>
     <filter-name>MobileSecurityFilter</filter-name>
     <filter-class>net.kukido.blog.servlet.filter.SecurityFilter</filter-class>
@@ -196,7 +199,6 @@
       <param-value>/mobile/Login.do</param-value>
     </init-param>
   </filter>
-  
   
   <filter>
     <filter-name>DataSourceFilter</filter-name>
@@ -335,41 +337,10 @@
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/LogEdit.do</url-pattern>
   </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/DropBox.do</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/DropBoxUpload.do</url-pattern>
-  </filter-mapping>
+  <!-- FIXME: Just leaving this in place for now. -->
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/dropbox/**</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/MophoUploadForm.do</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/MophoUpload</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/QuickLinkEntryForm.do</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/QuickLinkEntry.do</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/PopUpQuickLinkEntryForm.do</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/PopUpQuickLinkEntry.do</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
@@ -395,10 +366,6 @@
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/logs/*</url-pattern>
   </filter-mapping>
-  <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
-    <url-pattern>/ThrowAction.do</url-pattern>
-  </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
   <!-- Action Servlet Configuration -->
   <servlet>
@@ -410,34 +377,6 @@
     </init-param>
   </servlet>
   <!-- Servlet Declarations -->  
-  <servlet>
-    <servlet-name>TrainingLogSidebar</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>cacheUrl</param-name>
-      <param-value>http://www.dreadedmonkeygod.net/training/feeds/index.xml</param-value>
-    </init-param>
-    <init-param>
-      <param-name>fileName</param-name>
-      <param-value>traininglog.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>resourcePath</param-name>
-      <param-value>/traininglog.html</param-value>
-    </init-param>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>1800</param-value>
-    </init-param>
-    <init-param>
-      <param-name>isPasswordProtected</param-name>
-      <param-value>false</param-value>
-    </init-param>
-    <init-param>
-      <param-name>xsltTemplate</param-name>
-      <param-value>Rss2Sidebar.xsl</param-value>
-    </init-param>
-  </servlet>
   <servlet>
     <servlet-name>TwitterSidebar</servlet-name>
     <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
@@ -474,43 +413,11 @@
       <param-value>/xsl/Twitter2Sidebar.xsl</param-value>
     </init-param>
   </servlet>
-  <servlet>
-    <servlet-name>TaggedLinks</servlet-name>
-    <servlet-class>net.kukido.blog.servlet.CacheServlet</servlet-class>
-    <init-param>
-      <param-name>timeout</param-name>
-      <param-value>1800</param-value>
-    </init-param>
-    <init-param>
-      <param-name>isPasswordProtected</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>username</param-name>
-      <param-value>DeathBeforeDecaf</param-value>
-    </init-param>
-    <init-param>
-      <param-name>password</param-name>
-      <param-value>vkfijtcG8yv8aX</param-value>
-    </init-param>
-    <init-param>
-      <param-name>xsltTemplate</param-name>
-      <param-value>/xsl/TaggedLinks2Ul.xslt</param-value>
-    </init-param>
-  </servlet>
   
   <!-- Action Servlet Mapping -->
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TrainingLogSidebar</servlet-name>
-    <url-pattern>/TrainingLogSidebar</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TaggedLinks</servlet-name>
-    <url-pattern>/TaggedLinks</url-pattern>
   </servlet-mapping>
   <!-- Welcome files -->
   <welcome-file-list>
