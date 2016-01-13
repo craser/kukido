@@ -8,6 +8,7 @@ package net.kukido.blog.action;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
+import net.kukido.blog.dataaccess.LogDao;
 import net.kukido.blog.datamodel.*;
 import net.kukido.blog.datamodel.Attachment;
 
@@ -69,10 +70,16 @@ public class GpsImport extends Action
     /**
      * Creates a GPX-formatted file attachment for the given entry.
      *
+     * @param user
      * @param entryId
+     * @param fileName
+     * @param activityId
+     * @param track
      * @param track
      */
     public void createAttachment(User user, int entryId, String fileName, String activityId, GpsTrack track) throws DataAccessException, IOException {
+        LogEntry entry = new LogDao().findByEntryId(entryId);
+
         Attachment a = new Attachment();
         a.setUserName(user.getUserName());
         a.setUserId(user.getUserId());
@@ -80,7 +87,7 @@ public class GpsImport extends Action
         a.setFileType("map");
         a.setFileName(fileName);
         a.setActivityId(activityId);
-        a.setTitle(fileName);
+        a.setTitle(entry.getTitle());
 
         GpxFormatter formatter = new GpxFormatter();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
