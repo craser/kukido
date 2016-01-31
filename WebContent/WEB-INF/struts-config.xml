@@ -280,6 +280,13 @@
         </action>
 
         <action
+            path="/GpsImportForm"
+            type="net.kukido.blog.action.GpsImportForm"
+            >
+            <forward name="success" path="/jsp/pages/GpsImportForm.jsp" />
+        </action>
+
+        <action
             path="/GpsImport"
             type="net.kukido.blog.action.GpsImport"
             name="gpsImportForm"
