@@ -324,8 +324,11 @@ function GarminLoader(Garmin, console) {
         control = new Garmin.DeviceControl();
         control.register(listeners);
         listeners.bind("onProgressReadFromDevice", logStatus);
-        if (!control.isUnlocked() && !control.unlock(null) ) {
-            throw "LOADING ERROR";
+        if (!control.isUnlocked()) {
+            var unlocked = control.unlock(["http://dreadedmonkeygod.net", "b04615cd30a946aa8c777371603d2cda"]);
+            if (!unlocked) {
+                throw "UNABLE TO UNLOCK GARMIN COMMUNICATOR PLUGIN. (In gpsimportui.js)";
+            }
         }
     }());
 
