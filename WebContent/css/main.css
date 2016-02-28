@@ -360,6 +360,15 @@ div.preventrylink a {
   border-bottom: 1px solid #aaa;
 }
 
+/* For now, this is fine. But if I ever decide to use iframes for anything,
+ * this will have to change.
+ */
+.entrycontent iframe {
+  position: relative;
+  left: -15px;
+  width: 630px;
+}
+
 a.titleimage {
   border: 0px;
 }

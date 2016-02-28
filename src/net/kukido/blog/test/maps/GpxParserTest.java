@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+import net.kukido.blog.test.TestConstants;
 import net.kukido.maps.GpsTrack;
 import net.kukido.maps.GpxParser;
 
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class GpxParserTest 
 {
-	private static final String TEST_FILE = "/Users/craser/Development/workspace/KukidoBlogTemp/sample-files/big-bear-cougar-bertha.gpx";
+	private static final String TEST_FILE = TestConstants.SAMPLE_FILES + "/big-bear-cougar-bertha.gpx";
 	
 	/**
 	 * Ensures that a file without timestamps (for instance, a gpx of a planned route, rather than a recorded ride)
