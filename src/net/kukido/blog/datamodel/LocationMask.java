@@ -37,11 +37,12 @@ public class LocationMask extends Location {
 	
 	public GpsTrack mask(GpsTrack track) {
 		GpsTrack t = new GpsTrack();
-		for (Location m : masks) {
-			for (GpsLocation loc : track) {
-				if (!m.contains(loc)) {
-					t.add(loc);
-				}
+		for (GpsLocation loc : track) {
+			if (this.contains(loc)) {
+				continue;
+			}
+			else {
+				t.add(loc);
 			}
 		}
 		return t;
