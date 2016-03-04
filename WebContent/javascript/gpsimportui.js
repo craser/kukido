@@ -14,30 +14,7 @@ function LoadManager(filters, container, entryId, loader) {
         });
     };
 
-    // MOCK. FIXME: DO NOT COMMIT TO CODE REPOSITORY!
-    this.upload = function(id, fileName, k, ek) {
-	console.log("upload(" + id + ", k, ek)");
-	loader.getActivityDetail(id, function(doc) {
-	    var postXml = formatDoc(doc);
-	    var data = {
-		"activityId": id,
-		"fileName": fileName,
-		"entryId": entryId,
-		"xml": postXml
-	    };
-	    console.log(data);
-	    var error = false;
-	    if (error) {
-		ek();
-	    }
-	    else {
-		k();
-	    }
-	    self.setStatus("MOCK UPLOAD COMPLETE");
-        });
-    };
-
-    this.upload_REAL = function(id, k, ek) {
+    this.upload = function(id, k, ek) {
         var url = "/home/GpsImport.do";
         var doc = loader.getActivityDetail(id, function(doc) {
 	    var postXml = formatDoc(doc);
@@ -439,63 +416,3 @@ function GarminLoader(Garmin, console) {
         }());        
     }
 }
-
-
-/**
- * FIXME: Move this to another file, NOT in the code that gets pushed to production.
- * @param console Errors/messages are logged to this console.
- */
-GarminLoader = MockGarminLoader; // Hijack the actual GarminLoader.
-function MockGarminLoader(Garmin, console) {
-    console.log("Creating MockGarminLoader.");
-    /**
-     * Asynchronously load the list of detected GPS devices.
-     * @param k function(object[])
-     */
-    this.findDevices = function(k) {
-	console.log("findDevices(k)");
-	var mockDevices = [{ displayName: "MOCK DEVICE" }];
-	k(mockDevices);
-    };
-    
-    /**
-     * Sets the device from which to read.
-     * @param id: Device id from findDevices.
-     */
-    this.setDevice = function(id) {
-	console.log("setDevice('" + id + "')");
-    };
-
-    /**
-     * Asynchronously load the list of activities (as an XML doc)
-     * @param k: function(doc)
-     */
-    this.getActivityListing = function(k) {
-	console.log("getActivityListing(k)");
-	var dates = [0,0,0,0,0,].map(function() { return new Date().toString() ; });
-	var xml = '<?xml version="1.0" encoding="UTF-8"?><activities><Id>' + dates.join('</Id><Id>') + '</Id></activities>';
-	var parser = new DOMParser();
-	var dom = parser.parseFromString(xml, "text/xml");
-	k(dom);
-    };
-
-    /**
-     * Asynchronously retrieve the activity detail as a TCX XML doc.
-     * @param id: ID of the activity from readActivityListing.
-     * @param k: function(doc)
-     */
-    this.getActivityDetail = function(id, k) {
-	console.log("getActivityDetail(" + id + ", k)");
-	var xml = '<?xml version="1.0" encoding="UTF-8"?><gpx version="1.0" creator="GPSBabel - http://www.gpsbabel.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/0" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd"><trk><name>2016-02-27T21:42:06Z</name><trkseg><trkpt lat="33.585423" lon="-117.745155"><ele>187.40002</ele><time>2016-02-27T13:42:06PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.40002</ele><time>2016-02-27T13:42:13PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:20PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:25PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:42PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:46PST</time></trkpt></trkseg></trk></gpx>';
-	var xmlParser = new DOMParser();
-	var dom = xmlParser.parseFromString(xml, "text/xml");
-	k(dom);
-    };
-
-    this.status = function(f) {
-	f({ text: ["MOCK STATUS"] });
-    };
-}
-
-
-
