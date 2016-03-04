@@ -10,32 +10,37 @@ function LoadManager(filters, container, entryId, loader) {
         container.html("");
         ids.map(function(id) {
             var row = buildActivityRow(id);
-            function success() {
-                row.off("click");
-                row.removeClass("uploading");
-                row.addClass("uploaded");
-                //setTimeout(function() { row.fadeOut(); }, 500);
-            }
-            function fail(message) {
-                row.removeClass("uploading");
-                row.addClass("uploadfailed");
-                var error = $("<div>");
-                error.html(message);
-                row.append(error);
-            }
-            row.click(function() {
-                row.addClass("uploading");
-                self.upload(id, success, fail);
-            });
-
             container.append(row);
         });
     };
 
-    this.upload = function(id, k, ek) {
+    // MOCK. FIXME: DO NOT COMMIT TO CODE REPOSITORY!
+    this.upload = function(id, fileName, k, ek) {
+	console.log("upload(" + id + ", k, ek)");
+	loader.getActivityDetail(id, function(doc) {
+	    var postXml = formatDoc(doc);
+	    var data = {
+		"activityId": id,
+		"fileName": fileName,
+		"entryId": entryId,
+		"xml": postXml
+	    };
+	    console.log(data);
+	    var error = false;
+	    if (error) {
+		ek();
+	    }
+	    else {
+		k();
+	    }
+	    self.setStatus("MOCK UPLOAD COMPLETE");
+        });
+    };
+
+    this.upload_REAL = function(id, k, ek) {
         var url = "/home/GpsImport.do";
         var doc = loader.getActivityDetail(id, function(doc) {
-            var postXml = formatDoc(doc);
+	    var postXml = formatDoc(doc);
             var data = {
                 "activityId": id,
                 "fileName": defaultFilename(id),
@@ -119,33 +124,20 @@ function LoadManager(filters, container, entryId, loader) {
     }
 
     function buildActivityRow(id) {
-        var row = $("<div>");
-        var name = $("<div>");
-        var status = $("<span>");
-        status.addClass("loadstatus");
-        row.append(status);
-        row.append(name);
-        row.addClass("activity");
-
-        // FIXME: STRICTLY FOR TESTING
-        if (new Date(id).getDay() == 2) {
-            row.addClass("existing");
-        }
-
+	var row = new ActivityRow(self, id, $("<div>"));
         if (previousIds.indexOf(id) > -1) {
             row.addClass("existing");
         }
-        if (isOld(id)) { // FIXME: Set back to 15 for production.
+        if (isOld(id)) {
             row.addClass("old");
         }
-        name.html(new Date(id).toString());
-        return row;
+        return row.getRow();
     }
 
     function isOld(id) {
-        var limit = Math.max.apply(null, previousIds.map(function(id) {
-            return new Date(id);
-        }));
+        var dates = previousIds.map(function(id) { return new Date(id); });
+        dates = dates.filter(function(date) { return (typeof date) != 'string'; });
+        var limit = Math.max.apply(null, dates);
 
         return new Date(id).getTime() < limit;
     }
@@ -171,15 +163,6 @@ function LoadManager(filters, container, entryId, loader) {
         var div = $("<div>");
         container.append(div);
         return div;
-    }
-
-    function defaultFilename(id) {
-        function pad(n) { return (n < 10) ? ("0" + n) : ("" + n); }
-        var d = new Date(id); // Garmin uses timestamps for IDs.
-        return d.getFullYear()
-            + pad(d.getMonth() + 1)
-            + pad(d.getDate())
-            + ".gpx";
     }
 
     // Just a basic fucntion for now. Not hooked up to anything.
@@ -231,6 +214,95 @@ function LoadManager(filters, container, entryId, loader) {
         });
         init();
     }());
+}
+
+/**
+ * UI component to manage behavior of individual Activity rows.
+ */
+function ActivityRow(ui, id, row) {
+    var self = this;
+    var fileName = null; // set in init() below.
+    var input = $("<input>");
+    var name = $("<div>");
+    var status = $("<span>");
+    var uploadButton = $('<button class="upload">upload</button>');
+    
+    this.addClass = function(cssClass) {
+	row.addClass(cssClass);
+    };
+
+    this.setFilename = function(fn) {
+        fileName = fn;
+        name.html(fileName);
+    };
+
+    this.editName = function() {
+        input.val(fileName);
+        name.hide();
+        input.show();
+        input.select();
+    };
+
+    this.doneEditingName = function() {
+        self.setFilename(input.val());
+        name.html(fileName);
+        name.show();
+        input.hide();
+    };
+
+    this.getRow = function() {
+        return row;
+    };
+
+    this.upload = function() {
+	row.addClass("uploading");
+        ui.upload(id, fileName,
+		  function success() {
+		      row.removeClass("uploading");
+		      row.addClass("uploaded");
+		      uploadButton.hide();
+		      uploadButton.off("click");
+		      name.off("click");
+		  },
+		  function fail(message) {
+		      row.removeClass("uploading");
+		      row.addClass("uploadfailed");
+		      uploadButton.show();
+		      status.html(message);
+		  });
+    };
+
+    function defaultFilename(id) {
+        function pad(n) { return (n < 10) ? ("0" + n) : ("" + n); }
+        var d = new Date(id); // Garmin uses timestamps for IDs.
+        return d.getFullYear()
+            + pad(d.getMonth() + 1)
+            + pad(d.getDate())
+            + ".gpx";
+    }
+
+    (function init() {
+        row.append(uploadButton);
+        row.append(status);
+        row.append(name);
+        row.append(input);
+        row.addClass("activity");
+
+        self.setFilename(defaultFilename(id));
+        
+        status.addClass("loadstatus");
+
+        input.addClass("nameedit");
+        input.blur(self.doneEditingName);
+        input.hide();
+
+        name.html(fileName);
+	name.css("display", "inline"); // FIXME: fix later with css
+        name.click(self.editName);
+
+        uploadButton.click(self.upload);
+    }());
+
 }
 
 /**
@@ -366,6 +438,63 @@ function GarminLoader(Garmin, console) {
             });
         }());        
     }
+}
+
+
+/**
+ * FIXME: Move this to another file, NOT in the code that gets pushed to production.
+ * @param console Errors/messages are logged to this console.
+ */
+GarminLoader = MockGarminLoader; // Hijack the actual GarminLoader.
+function MockGarminLoader(Garmin, console) {
+    console.log("Creating MockGarminLoader.");
+    /**
+     * Asynchronously load the list of detected GPS devices.
+     * @param k function(object[])
+     */
+    this.findDevices = function(k) {
+	console.log("findDevices(k)");
+	var mockDevices = [{ displayName: "MOCK DEVICE" }];
+	k(mockDevices);
+    };
+    
+    /**
+     * Sets the device from which to read.
+     * @param id: Device id from findDevices.
+     */
+    this.setDevice = function(id) {
+	console.log("setDevice('" + id + "')");
+    };
+
+    /**
+     * Asynchronously load the list of activities (as an XML doc)
+     * @param k: function(doc)
+     */
+    this.getActivityListing = function(k) {
+	console.log("getActivityListing(k)");
+	var dates = [0,0,0,0,0,].map(function() { return new Date().toString() ; });
+	var xml = '<?xml version="1.0" encoding="UTF-8"?><activities><Id>' + dates.join('</Id><Id>') + '</Id></activities>';
+	var parser = new DOMParser();
+	var dom = parser.parseFromString(xml, "text/xml");
+	k(dom);
+    };
+
+    /**
+     * Asynchronously retrieve the activity detail as a TCX XML doc.
+     * @param id: ID of the activity from readActivityListing.
+     * @param k: function(doc)
+     */
+    this.getActivityDetail = function(id, k) {
+	console.log("getActivityDetail(" + id + ", k)");
+	var xml = '<?xml version="1.0" encoding="UTF-8"?><gpx version="1.0" creator="GPSBabel - http://www.gpsbabel.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/0" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd"><trk><name>2016-02-27T21:42:06Z</name><trkseg><trkpt lat="33.585423" lon="-117.745155"><ele>187.40002</ele><time>2016-02-27T13:42:06PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.40002</ele><time>2016-02-27T13:42:13PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:20PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:25PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:42PST</time></trkpt><trkpt lat="33.585423" lon="-117.745155"><ele>187.79999</ele><time>2016-02-27T13:42:46PST</time></trkpt></trkseg></trk></gpx>';
+	var xmlParser = new DOMParser();
+	var dom = xmlParser.parseFromString(xml, "text/xml");
+	k(dom);
+    };
+
+    this.status = function(f) {
+	f({ text: ["MOCK STATUS"] });
+    };
 }
 
 
