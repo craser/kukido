@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+import net.kukido.blog.test.TestConstants;
 import net.kukido.maps.GarminLogbookParser;
 import net.kukido.maps.GpsTrack;
 
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class GarminLogbookParserTest 
 {
-	private static final String TEST_FILE = "/Users/craser/Development/workspace/KukidoBlogTemp/sample-files/garmin-logbook-sample.xml";
+	private static final String TEST_FILE = TestConstants.SAMPLE_FILES + "/garmin-logbook-sample.xml";
 	
 	@Test
 	public void test_parse()

@@ -198,9 +198,11 @@ function LoadManager(filters, container, entryId, loader) {
  */
 function ActivityRow(ui, id, row) {
     var self = this;
+    var title = null;
     var fileName = null; // set in init() below.
     var input = $("<input>");
-    var name = $("<div>");
+    var fileNameDiv = $("<div>");
+    var titleDiv = $("<div>");
     var status = $("<span>");
     var uploadButton = $('<button class="upload">upload</button>');
     
@@ -210,20 +212,20 @@ function ActivityRow(ui, id, row) {
 
     this.setFilename = function(fn) {
         fileName = fn;
-        name.html(fileName);
+        fileNameDiv.html(fileName);
     };
 
     this.editName = function() {
         input.val(fileName);
-        name.hide();
+        fileNameDiv.hide();
         input.show();
         input.select();
     };
 
     this.doneEditingName = function() {
         self.setFilename(input.val());
-        name.html(fileName);
-        name.show();
+        fileNameDiv.html(fileName);
+        fileNameDiv.show();
         input.hide();
     };
 
@@ -239,7 +241,7 @@ function ActivityRow(ui, id, row) {
 		      row.addClass("uploaded");
 		      uploadButton.hide();
 		      uploadButton.off("click");
-		      name.off("click");
+		      fileNameDiv.off("click");
 		  },
 		  function fail(message) {
 		      row.removeClass("uploading");
@@ -261,7 +263,7 @@ function ActivityRow(ui, id, row) {
     (function init() {
         row.append(uploadButton);
         row.append(status);
-        row.append(name);
+        row.append(fileNameDiv);
         row.append(input);
         row.addClass("activity");
 
@@ -273,9 +275,9 @@ function ActivityRow(ui, id, row) {
         input.blur(self.doneEditingName);
         input.hide();
 
-        name.html(fileName);
-	name.css("display", "inline"); // FIXME: fix later with css
-        name.click(self.editName);
+        fileNameDiv.html(fileName);
+	fileNameDiv.css("display", "inline"); // FIXME: fix later with css
+        fileNameDiv.click(self.editName);
 
         uploadButton.click(self.upload);
     }());
