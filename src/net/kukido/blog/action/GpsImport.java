@@ -46,13 +46,14 @@ public class GpsImport extends Action
             User user = (User) req.getSession().getAttribute("user");
             int entryId = gpsForm.getEntryId();
             String fileName = gpsForm.getFileName();
+            String title = gpsForm.getTitle();
             String activityId = gpsForm.getActivityId();
             String xml = gpsForm.getXml();
             log.debug(xml);
 
             List<GpsTrack> tracks = new TcxParser().parse(xml.getBytes());
             GpsTrack track = tracks.get(0); // Horrible hack.
-            createAttachment(user, entryId, fileName, activityId, track);
+            createAttachment(user, entryId, fileName, title, activityId, track);
 
             req.setAttribute("status", "success");
             req.setAttribute("message", "");
@@ -77,7 +78,7 @@ public class GpsImport extends Action
      * @param track
      * @param track
      */
-    public void createAttachment(User user, int entryId, String fileName, String activityId, GpsTrack track) throws DataAccessException, IOException {
+    public void createAttachment(User user, int entryId, String fileName, String title, String activityId, GpsTrack track) throws DataAccessException, IOException {
         LogEntry entry = new LogDao().findByEntryId(entryId);
 
         Attachment a = new Attachment();
@@ -87,7 +88,7 @@ public class GpsImport extends Action
         a.setFileType("map");
         a.setFileName(fileName);
         a.setActivityId(activityId);
-        a.setTitle(entry.getTitle());
+        a.setTitle(title);
 
         GpxFormatter formatter = new GpxFormatter();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

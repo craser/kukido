@@ -1,5 +1,7 @@
 package net.kukido.blog.action;
 
+import net.kukido.blog.dataaccess.LogDao;
+import net.kukido.blog.datamodel.LogEntry;
 import net.kukido.blog.datamodel.User;
 import net.kukido.blog.log.Logging;
 import net.kukido.maps.GpsTrack;
@@ -26,9 +28,11 @@ public class GpsImportForm extends Action
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
     {
         try {
-            String entryId = req.getParameter("entryId");
+            int entryId = Integer.parseInt(req.getParameter("entryId"));
             log.debug("entryId: " + entryId);
-            req.setAttribute("entryId", entryId);
+            LogEntry entry = new LogDao().findByEntryId(entryId);
+            req.setAttribute("entryId", Integer.toString(entryId));
+            req.setAttribute("entry", entry);
             return mapping.findForward("success");
         }
         catch (Exception e) {

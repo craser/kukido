@@ -1,8 +1,8 @@
-function LoadManager(filters, container, entryId, loader) {
+function LoadManager(filters, container, entryId, title, loader) {
     var self = this;
     var statusDiv = null;
     var ids = [];         // IDs of activities currently listed on device.
-    var previousIds = []; // IDs of previously uploaded activities.
+    var previousUploads = []; // IDs of previously uploaded activities.
     var showOld = false;
     var showExisting = false;
 
@@ -14,13 +14,14 @@ function LoadManager(filters, container, entryId, loader) {
         });
     };
 
-    this.upload = function(id, k, ek) {
+    this.upload = function(id, fileName, title, k, ek) {
         var url = "/home/GpsImport.do";
         var doc = loader.getActivityDetail(id, function(doc) {
 	    var postXml = formatDoc(doc);
             var data = {
                 "activityId": id,
-                "fileName": defaultFilename(id),
+                "fileName": fileName,
+                "title": title,
                 "entryId": entryId,
                 "xml": postXml
             };
@@ -101,8 +102,12 @@ function LoadManager(filters, container, entryId, loader) {
     }
 
     function buildActivityRow(id) {
-	var row = new ActivityRow(self, id, $("<div>"));
-        if (previousIds.indexOf(id) > -1) {
+	    var row = new ActivityRow(self, id, title, $("<div>"));
+	    var existing = previousUploads.reduce(function(p, a) {
+	            return (a.activityId == id) ? a : p;
+	        }, null);
+	    if (existing) {
+	        row.setTitle(existing.title);
             row.addClass("existing");
         }
         if (isOld(id)) {
@@ -112,8 +117,8 @@ function LoadManager(filters, container, entryId, loader) {
     }
 
     function isOld(id) {
-        var dates = previousIds.map(function(id) { return new Date(id); });
-        dates = dates.filter(function(date) { return (typeof date) != 'string'; });
+        var dates = previousUploads.map(function(a) { return new Date(a.activityId); })
+            .filter(function(date) { return (typeof date) != 'string'; });
         var limit = Math.max.apply(null, dates);
 
         return new Date(id).getTime() < limit;
@@ -143,12 +148,19 @@ function LoadManager(filters, container, entryId, loader) {
     }
 
     // Just a basic fucntion for now. Not hooked up to anything.
-    function loadPreviousIds(k) {
+    function loadPreviousUploads(k) {
         var url = "/home/ActivityIds.do";
 	    $.getJSON(url, function(ids) {
-	        previousIds = ids;
+	        console.log("Previous uploads retrieved.");
+	        previousUploads = ids;
+	    })
+	    .done(function() {
 	        if (k) k();
-	    });
+	    })
+	    .fail(function(req, status, e) {
+            console.log("Request Failed: " + status);
+            console.log(e);
+        });
     }
 
     function semaphore(n, k) {
@@ -181,7 +193,7 @@ function LoadManager(filters, container, entryId, loader) {
                 self.noDevicesFound();
             }
         });
-        loadPreviousIds(gate);
+        loadPreviousUploads(gate);
     }
 
     (function() {
@@ -196,37 +208,52 @@ function LoadManager(filters, container, entryId, loader) {
 /**
  * UI component to manage behavior of individual Activity rows.
  */
-function ActivityRow(ui, id, row) {
+function ActivityRow(ui, id, title, row) {
     var self = this;
-    var title = null;
-    var fileName = null; // set in init() below.
-    var input = $("<input>");
-    var fileNameDiv = $("<div>");
+    var titleInput = $("<input>");
     var titleDiv = $("<div>");
     var status = $("<span>");
     var uploadButton = $('<button class="upload">upload</button>');
     
     this.addClass = function(cssClass) {
-	row.addClass(cssClass);
+	    row.addClass(cssClass);
     };
 
-    this.setFilename = function(fn) {
-        fileName = fn;
-        fileNameDiv.html(fileName);
+    this.getFilename = function() {
+        function pad(n) { return (n < 10) ? ("0" + n) : ("" + n); }
+        var d = new Date(id); // Garmin uses timestamps for IDs.
+        var prefix = d.getFullYear()
+            + pad(d.getMonth() + 1)
+            + pad(d.getDate());
+
+        var name = title.toLowerCase()
+            .trim()
+            .replace(/[^\w\s]/g, "")
+            .replace(/\s/g, "-");
+        return prefix + "-" + name + ".gpx";
     };
 
-    this.editName = function() {
-        input.val(fileName);
-        fileNameDiv.hide();
-        input.show();
-        input.select();
+    this.setTitle = function(t) {
+        title = t;
+        titleDiv.html(title);
     };
 
-    this.doneEditingName = function() {
-        self.setFilename(input.val());
-        fileNameDiv.html(fileName);
-        fileNameDiv.show();
-        input.hide();
+    this.getTitle = function() {
+        return title;
+    };
+
+    this.editTitle = function() {
+        titleInput.val(self.getTitle());
+        titleDiv.hide();
+        titleInput.show();
+        titleInput.select();
+    };
+
+    this.doneEditingTitle = function() {
+        self.setTitle(titleInput.val());
+        titleDiv.html(self.getTitle());
+        titleDiv.show();
+        titleInput.hide();
     };
 
     this.getRow = function() {
@@ -234,14 +261,14 @@ function ActivityRow(ui, id, row) {
     };
 
     this.upload = function() {
-	row.addClass("uploading");
-        ui.upload(id, fileName,
+	    row.addClass("uploading");
+        ui.upload(id, self.getFilename(), title,
 		  function success() {
 		      row.removeClass("uploading");
 		      row.addClass("uploaded");
 		      uploadButton.hide();
 		      uploadButton.off("click");
-		      fileNameDiv.off("click");
+		      titleDiv.off("click");
 		  },
 		  function fail(message) {
 		      row.removeClass("uploading");
@@ -251,37 +278,26 @@ function ActivityRow(ui, id, row) {
 		  });
     };
 
-    function defaultFilename(id) {
-        function pad(n) { return (n < 10) ? ("0" + n) : ("" + n); }
-        var d = new Date(id); // Garmin uses timestamps for IDs.
-        return d.getFullYear()
-            + pad(d.getMonth() + 1)
-            + pad(d.getDate())
-            + ".gpx";
-    }
-
     (function init() {
         row.append(uploadButton);
         row.append(status);
-        row.append(fileNameDiv);
-        row.append(input);
+        row.append(titleDiv);
+        row.append(titleInput);
         row.addClass("activity");
-
-        self.setFilename(defaultFilename(id));
+        self.setTitle(title);
         
         status.addClass("loadstatus");
 
-        input.addClass("nameedit");
-        input.blur(self.doneEditingName);
-        input.hide();
+        titleInput.addClass("titleedit");
+        titleInput.blur(self.doneEditingTitle);
+        titleInput.hide();
 
-        fileNameDiv.html(fileName);
-	fileNameDiv.css("display", "inline"); // FIXME: fix later with css
-        fileNameDiv.click(self.editName);
+        titleDiv.html(title);
+        titleDiv.css("display", "inline");
+        titleDiv.click(self.editTitle);
 
         uploadButton.click(self.upload);
     }());
-
 }
 
 /**

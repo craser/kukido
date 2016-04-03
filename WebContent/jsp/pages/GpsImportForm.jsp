@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-nested" prefix="nested" %>
 <%@taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@taglib uri="/WEB-INF/dmg-util.tld" prefix="dmg" %>
-<jsp:useBean id="entryId" class="java.lang.String" scope="request" />
+<jsp:useBean id="entry" class="net.kukido.blog.datamodel.LogEntry" scope="request" />
 
 <tiles:insert definition="pageLayout">
 
@@ -25,7 +25,12 @@
           iframe.load(function() {
 	      var Garmin = iframe[0].contentWindow.Garmin;
 	      var loader = new GarminLoader(Garmin, console);
-              var loadManager = new LoadManager(filters, container, '<bean:write name="entryId"/>', loader, iframe);
+              var loadManager = new LoadManager(
+                filters,
+                container,
+                '<nested:write name="entry" property="entryId" />',
+                '<nested:write name="entry" property="title" />',
+                loader, iframe);
           });
           $("body").append(iframe);
       });

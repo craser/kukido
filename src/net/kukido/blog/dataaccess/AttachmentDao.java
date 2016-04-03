@@ -120,7 +120,13 @@ public class AttachmentDao extends Dao {
 	static private final String FIND_RECENT_IMAGES_SQL = "select * from ATTACHMENTS where Is_Gallery_Image = 'true'"
 			+ " order by Date_Posted desc limit :NumEntries";
 
-	static private final String FIND_ALL_ACTIVITY_IDS = "select Activity_ID from ATTACHMENTS where Activity_ID is not null";
+	static private final String FIND_WITH_ACTIVITY_IDS = "select"
+			+ " Attachment_ID" + ",Entry_ID" + ",Is_Gallery_Image"
+			+ ",File_Name" + ",Activity_ID" + ",Mime_Type" + ",File_Type" + ",User_ID"
+			+ ",User_Name" + ",Date_Posted" + ",Title" + ",Description"
+			+ ",Date_Taken"
+			+ " from ATTACHMENTS where Activity_ID is not null";
+
 
 	public void delete(Attachment attachment) throws DataAccessException {
 		delete(attachment.getAttachmentId());
@@ -658,21 +664,28 @@ public class AttachmentDao extends Dao {
 		}
 	}
 
-	public Collection<String> findActivityIds() throws DataAccessException {
+	/**
+	 * Find a list of all Attachments that have ActivityID populated.
+	 *
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public Collection<Attachment> findWithActivityIds() throws DataAccessException {
 		Connection conn = null;
 		NamedParamStatement findIds = null;
 		ResultSet results = null;
 		try {
 			conn = getConnection();
-			findIds = new NamedParamStatement(conn, FIND_ALL_ACTIVITY_IDS);
+			findIds = new NamedParamStatement(conn, FIND_WITH_ACTIVITY_IDS);
 			results = findIds.executeQuery();
 
-			List<String> ids = new ArrayList<String>();
+			List<Attachment> attachments = new ArrayList<Attachment>();
 			while (results.next()) {
-				String id = results.getString("Activity_ID");
-				ids.add(id);
+				Attachment a = populateAttachment(results);
+				attachments.add(a);
 			}
-			return ids;
+
+			return attachments;
 		}
 		catch (Exception e) {
 			throw new DataAccessException("Unable to find activity IDs:", e);

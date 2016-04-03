@@ -14,6 +14,7 @@ public class GpsImportForm extends ActionForm
     private int entryId;
     private String activityId;
     private String fileName;
+    private String title;
     private String xml;
 
     public void setEntryId(int entryId) {
@@ -38,6 +39,14 @@ public class GpsImportForm extends ActionForm
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getXml() {

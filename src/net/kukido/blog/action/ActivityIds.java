@@ -1,6 +1,7 @@
 package net.kukido.blog.action;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
+import net.kukido.blog.datamodel.Attachment;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,8 +23,8 @@ public class ActivityIds extends Action
     {
         try {
             AttachmentDao dao = new AttachmentDao();
-            Collection<String> activityIds = dao.findActivityIds();
-            req.setAttribute("activityIds", activityIds);
+            Collection<Attachment> attachments = dao.findWithActivityIds();
+            req.setAttribute("attachments", attachments);
             return mapping.findForward("success");
         }
         catch (Exception e) {
