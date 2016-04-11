@@ -30,10 +30,10 @@
         <logic:present name="user" scope="session">
           | <html:link onclick="return confirm('Delete this comment?');" action="DeleteComment" paramId="commentId" paramName="comment" paramProperty="commentId">delete</html:link>
           <logic:equal name="comment" property="spam" value="true">
-            | <html:link onclick="return confirm('Mark this comment as SPAM?');" action="UnmarkCommentSpam" paramId="commentId" paramName="comment" paramProperty="commentId">not spam</html:link>
+            | <html:link onclick="return confirm('Mark this comment as NOT SPAM?');" action="UnmarkCommentSpam" paramId="commentId" paramName="comment" paramProperty="commentId">not spam</html:link>
           </logic:equal>
           <logic:equal name="comment" property="spam" value="false">
-            | <html:link onclick="return confirm('Mark this comment as SPAM?');" action="MarkCommentSpam" paramId="commentId" paramName="comment" paramProperty="commentId">mark as spam</html:link>
+            | <html:link action="MarkCommentSpam" paramId="commentId" paramName="comment" paramProperty="commentId">mark as spam</html:link>
           </logic:equal>
         </logic:present>
       </div>
