@@ -30,8 +30,6 @@ public class MarkCommentSpam extends Action
             comment.setIsSpam(true);
             commentDao.update(comment);
             
-            submitSpam(req, comment);
-            
             ActionForward fw = mapping.findForward("success");
             String newPath = fw.getPath() + comment.getEntryId();
             ActionForward newFw = new ActionForward(fw);
@@ -43,64 +41,5 @@ public class MarkCommentSpam extends Action
 	    e.printStackTrace();
             throw new ServletException(e);
         }
-    }
-    
-    /**
-     * Sumbmits this comment to the spamtrab service (at the moment, Akismet)
-     * and let's them know it was WRONGLY tagged as spam.
-     */
-    private void submitSpam(HttpServletRequest req, Comment comment)
-        throws MalformedURLException
-    {
-        DmgConfig config = new DmgConfig();
-        String apiKey = config.getProperty("spam.akismet.apikey");
-        Akismet ak = new Akismet(apiKey, "http://www.dreadedmonkeygod.net");
-        String permalink = getPermalink(req, comment);        
-        ak.submitSpam(comment.getIpAddress()
-                ,comment.getUserAgent()
-                ,comment.getReferrer()
-                ,permalink
-                ,"comment"
-                ,comment.getUserName()
-                ,comment.getUserEmail()
-                ,comment.getUserUrl()
-                ,comment.getComment()
-                ,null);      
-    }   
-    
-    /**
-     * @return the base url of this page, including the trailing slash.
-     **/
-    private String getPermalink(HttpServletRequest req, Comment comment)
-	throws MalformedURLException
-    {
-	URL reqUrl = new URL(req.getRequestURL().toString());
-	String protocol = reqUrl.getProtocol();
-	int port = reqUrl.getPort();
-	String host = reqUrl.getHost();
-	String webContext = getServlet().getServletContext().getServletContextName();
-            
-
-	StringBuffer baseUrl = new StringBuffer();
-	baseUrl.append(protocol);
-	baseUrl.append("://");
-	baseUrl.append(host);
-	if (port >= 0) {
-	    baseUrl.append(":");
-	    baseUrl.append(port);
-	}
-	baseUrl.append(webContext.startsWith("/") ? "" : "/");
-	baseUrl.append(webContext);
-	baseUrl.append("/");
-        baseUrl.append("archive/");
-        baseUrl.append(comment.getEntryId());
-
-	return baseUrl.toString();
-    }
-    
-    private boolean isValid(CommentForm commentForm, ActionMapping mapping, HttpServletRequest req)
-    {
-        ActionErrors errors = commentForm.validate(mapping, req);
-        return (null != errors && !errors.isEmpty());
     }
 }
