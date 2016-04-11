@@ -7,8 +7,10 @@
 </jsp:include>
 --%>
 <logic:present name="user" scope="session">
+  <jsp:include page="/jsp/nav/CommentAdmin.jsp" />
   <jsp:include page="/RecentCommentsNav.do">
 	<jsp:param name="numComments" value="10" />
   </jsp:include>
+
 </logic:present>
 

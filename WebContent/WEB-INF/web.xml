@@ -372,6 +372,10 @@
     <filter-name>SecurityFilter</filter-name>
     <url-pattern>/logs/*</url-pattern>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/SetCommentsEnabled.do</url-pattern>
+  </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
   <!-- Action Servlet Configuration -->
   <servlet>

@@ -68,6 +68,13 @@ public class LogDao extends Dao implements Iterator
 
     private static final String FIND_BY_ENTRY_IDS_SQL_FORMAT = "select * from LOG_ENTRIES where Entry_ID in {0}";
 
+    private static final String DISABLE_COMMENTS = "update LOG_ENTRIES set "
+            + "Allow_Comments_Save = Allow_Comments"
+            + ",Allow_Comments = 'false';";
+
+    private static final String ENABLE_COMMENTS = "update LOG_ENTRIES set "
+            + "Allow_Comments = Allow_Comments_Save";
+
     /**
      * Creates a new LogEntry from the information in the given entry.
      */
@@ -192,6 +199,37 @@ public class LogDao extends Dao implements Iterator
         catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Unable to update Log Entry #" + logEntry.getEntryId(), e);
+        }
+        finally {
+            try {
+                update.close();
+            }
+            catch (Exception ignored) {
+            }
+            try {
+                conn.close();
+            }
+            catch (Exception ignored) {
+            }
+        }
+    }
+
+    /**
+     * Site-wide enabling/disabling of comments.
+     *
+     * @param enabled
+     * @throws DataAccessException
+     */
+    public void enableComments(boolean enabled) throws DataAccessException {
+        Connection conn = null;
+        NamedParamStatement update = null;
+        try {
+            conn = getConnection();
+            update = new NamedParamStatement(conn, enabled ? ENABLE_COMMENTS : DISABLE_COMMENTS);
+            update.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Unable to enable comments.", e);
         }
         finally {
             try {
