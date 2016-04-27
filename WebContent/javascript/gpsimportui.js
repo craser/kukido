@@ -129,25 +129,12 @@ function LoadManager(filters, container, entryId, title, loader) {
         return s;
     }
 
-    function select(id) {
-        selectedIds.push(id);
-        self.setStatus("Selected: " + id);
-    }
-
-    function unselect(id) {
-        selectedIds = selectedIds.filter(function(x) {
-            return x != id;
-        });
-        self.setStatus("Unselected: " + id);
-    }
-
     function createStatusDiv() {
         var div = $("<div>");
         container.append(div);
         return div;
     }
 
-    // Just a basic fucntion for now. Not hooked up to anything.
     function loadPreviousUploads(k) {
         var url = "/home/ActivityIds.do";
 	    $.getJSON(url, function(ids) {
