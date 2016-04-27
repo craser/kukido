@@ -250,8 +250,9 @@ function ActivityRow(ui, id, title, row) {
     };
 
     this.doneEditingTitle = function() {
-        self.setTitle(titleInput.val());
-        titleDiv.html(self.getTitle());
+        var title = titleInput.val().trim() || self.getTitle();
+        self.setTitle(title);
+        titleDiv.html(title);
         titleDiv.show();
         titleInput.hide();
     };
