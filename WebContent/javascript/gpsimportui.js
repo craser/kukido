@@ -211,6 +211,7 @@ function LoadManager(filters, container, entryId, title, loader) {
 function ActivityRow(ui, id, title, row) {
     var self = this;
     var titleInput = $("<input>");
+    var dateDiv = $("<div>");
     var titleDiv = $("<div>");
     var status = $("<span>");
     var uploadButton = $('<button class="upload">upload</button>');
@@ -220,7 +221,6 @@ function ActivityRow(ui, id, title, row) {
     };
 
     this.getFilename = function() {
-        function pad(n) { return (n < 10) ? ("0" + n) : ("" + n); }
         var d = new Date(id); // Garmin uses timestamps for IDs.
         var prefix = d.getFullYear()
             + pad(d.getMonth() + 1)
@@ -278,15 +278,50 @@ function ActivityRow(ui, id, title, row) {
 		  });
     };
 
+    function pad(n) {
+        return (n < 10) ? ("0" + n) : ("" + n);
+    }
+
+    function formatDate() {
+        var d = new Date(id); // Garmin uses timestamps for IDs.
+        var date = pad(d.getMonth() + 1)
+            + "/"
+            + pad(d.getDate())
+            + "/"
+            + d.getFullYear();
+        var time = "";
+        var ampm = "";
+        if (d.getHours() == 12) {
+            time += d.getHours();
+            ampm = "PM";
+        }
+        else if (d.getHours() > 12) {
+            time += d.getHours() % 12;
+            ampm = "PM";
+        }
+        else {
+            time = d.getHours();
+            ampm = "AM";
+        }
+        time += ":" + d.getMinutes();
+
+        return date + " " + time + " " + ampm;
+    }
+
     (function init() {
         row.append(uploadButton);
         row.append(status);
+        row.append(dateDiv);
         row.append(titleDiv);
         row.append(titleInput);
         row.addClass("activity");
         self.setTitle(title);
         
         status.addClass("loadstatus");
+
+        dateDiv.addClass("activitydate");
+        dateDiv.html(formatDate(id));
+
 
         titleInput.addClass("titleedit");
         titleInput.blur(self.doneEditingTitle);
