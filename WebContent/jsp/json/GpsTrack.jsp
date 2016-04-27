@@ -25,7 +25,7 @@ GpsLocation
     "duration": "<nested:write name="track" property="formattedDuration" />",
     "date": "<nested:write name="track" property="startTime" format="MM/dd/yyyy" />",
     "climbing": <nested:write name="track" property="climbingVertical" format="0.00" />,
-    "climbingFeet": <nested:write name="track" property="climbingVertical" format="0.00" />,
+    "climbingFeet": <nested:write name="track" property="climbingVerticalFeet" format="0.00" />,
     "miles": <nested:write name="track" property="miles" format="0.00" />,
     "kilometers": <nested:write name="track" property="kilometers" format="0.00" />,
     "center": {
