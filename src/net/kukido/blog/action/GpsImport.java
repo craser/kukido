@@ -8,6 +8,7 @@ package net.kukido.blog.action;
 
 import net.kukido.blog.dataaccess.AttachmentDao;
 import net.kukido.blog.dataaccess.DataAccessException;
+import net.kukido.blog.dataaccess.GeotagDao;
 import net.kukido.blog.dataaccess.LogDao;
 import net.kukido.blog.datamodel.*;
 import net.kukido.blog.datamodel.Attachment;
@@ -54,6 +55,7 @@ public class GpsImport extends Action
             List<GpsTrack> tracks = new TcxParser().parse(xml.getBytes());
             GpsTrack track = tracks.get(0); // Horrible hack.
             createAttachment(user, entryId, fileName, title, activityId, track);
+            createGeotag(fileName, track);
 
             req.setAttribute("status", "success");
             req.setAttribute("message", "");
@@ -69,6 +71,31 @@ public class GpsImport extends Action
     }
 
     /**
+     * Creates a new Geotag entry for the given attachment and track.
+     * NOTE: I'm basically ignoring errors here for now. Note that
+     * DataAccessExceptions do NOT actually propagate up the call
+     * stack from here. They are caught and logged, but do NOT stop
+     * or undo the creation of the attachment.
+     *
+     * @param fileName
+     * @param track
+     * @throws DataAccessException
+     */
+    public void createGeotag(String fileName, GpsTrack track) throws DataAccessException
+    {
+        try {
+            Attachment attachment = new AttachmentDao().findByFileName(fileName);
+            Geotag tag = new Geotag(track.getCenter());
+            tag.setAttachmentId(attachment.getAttachmentId());
+            tag.setMapId(attachment.getAttachmentId());
+            new GeotagDao().create(tag);
+        }
+        catch (Exception e) {
+            log.error("Unable to create geotag for attachment.", e);
+        }
+    }
+
+    /**
      * Creates a GPX-formatted file attachment for the given entry.
      *
      * @param user
@@ -78,9 +105,8 @@ public class GpsImport extends Action
      * @param track
      * @param track
      */
-    public void createAttachment(User user, int entryId, String fileName, String title, String activityId, GpsTrack track) throws DataAccessException, IOException {
-        LogEntry entry = new LogDao().findByEntryId(entryId);
-
+    public void createAttachment(User user, int entryId, String fileName, String title, String activityId, GpsTrack track) throws DataAccessException, IOException
+    {
         Attachment a = new Attachment();
         a.setUserName(user.getUserName());
         a.setUserId(user.getUserId());
