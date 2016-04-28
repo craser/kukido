@@ -30,19 +30,19 @@ public class TcxFormatterTest
         assertEquals("2015-11-06T18:56:39-08:00", formatted);
     }
 
-    @Test
-    public void outputSampleTrack() {
-        try {
-            TcxFormatter formatter = new TcxFormatter();
-            List<GpsTrack> tracks = buildTestGpsTracks(3);
-
-            System.out.println("Track:");
-            formatter.format(tracks, System.out);
-        }
-        catch (Exception e) {
-            fail("Exception: " + e);
-        }
-    }
+//    @Test
+//    public void outputSampleTrack() {
+//        try {
+//            TcxFormatter formatter = new TcxFormatter();
+//            List<GpsTrack> tracks = buildTestGpsTracks(3);
+//
+//            System.out.println("Track:");
+//            formatter.format(tracks, System.out);
+//        }
+//        catch (Exception e) {
+//            fail("Exception: " + e);
+//        }
+//    }
 
     @Test
     public void testRendering() {
