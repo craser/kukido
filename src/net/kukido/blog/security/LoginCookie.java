@@ -88,6 +88,6 @@ public class LoginCookie extends Cookie
 
     private String formatCookieValue(String username, String password)
     {
-        return cookieFormat.format(username, password);
+        return cookieFormat.format(new String[] { username, password });
     }
 }

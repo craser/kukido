@@ -1,4 +1,4 @@
-package net.kukido.blog.test.datamodel;
+package net.kukido.blog.test.security;
 
 import net.kukido.blog.security.LoginCookie;
 import javax.servlet.http.*;
