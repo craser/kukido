@@ -11,6 +11,7 @@ import net.kukido.blog.datamodel.*;
 import net.kukido.blog.forms.*;
 import net.kukido.blog.log.Logging;
 import net.kukido.blog.util.*;
+import net.kukido.maps.ActivityID;
 import net.kukido.maps.GpsLocation;
 import net.kukido.maps.GpsTrack;
 import net.kukido.maps.GpxParser;
@@ -132,8 +133,8 @@ public class UploadAttachment extends Action
                 attachment.setDateTaken(dateTaken);
             }
         }
-        catch (Exception ignored) { // Setting the date isn't vital.
-            ignored.printStackTrace(System.err);
+        catch (Exception e) { // Setting the date isn't vital.
+            log.debug("Unable to determine date taken for image upload.", e);
         }
 
         createAttachment(attachment);
@@ -148,7 +149,8 @@ public class UploadAttachment extends Action
 
         if (attachment.getIsMap()) {
             try {
-                Attachment map = new AttachmentDao().findByFileName(attachment.getFileName());
+                AttachmentDao dao = new AttachmentDao();
+                Attachment map = dao.findByFileName(attachment.getFileName());
                 log.debug("Geotagging map \"" + map.getFileName() + "\"");
                 GpsTrack t = parseMap(map);
                 GpsLocation location = t.getCenter();
@@ -158,11 +160,17 @@ public class UploadAttachment extends Action
                 geotag.setAttachmentId(map.getAttachmentId());
                 geotag.setMapId(map.getAttachmentId());
                 new GeotagDao().create(geotag);
+
+                ActivityID activityID = new ActivityID(t);
+                map.setActivityId(activityID.toString());
+                dao.update(map);
+
             }
             catch (Exception e) {
-                log.error("Unable to geotag newly uploaded map.", e);
+                log.error("Error setting geotag and activity ID for map.", e);
             }
         }
+
     }
 
     private GpsTrack parseMap(Attachment map) throws DataAccessException, SAXException, IOException
