@@ -74,27 +74,27 @@ function LoadManager(filters, container, entryId, title, loader) {
     this.showOld = function() {
         showOld = true;
         $("#showold").addClass("selected");
-        var selector = showOld ? ".old:not(.existing)" : ".old";
-        $(selector).fadeIn();
+        $(".old").fadeIn();
     };
 
     this.hideOld = function() {
         showOld = false;
         $("#showold").removeClass("selected");
-        $(".old").fadeOut();
+        var selector = showExisting ? ".old:not(.existing)" : ".old";
+        $(selector).fadeOut();
     };
 
     this.showExisting = function() {
         showExisting = true;
         $("#showexisting").addClass("selected");
-        var selector = showExisting ? ".existing:not(.old)" : ".existing";
-        $(selector).fadeIn();
+        $(".existing").fadeIn();
     };
 
     this.hideExisting = function() {
         showExisting = false;
         $("#showexisting").removeClass("selected");
-        $(".existing").fadeOut();
+        var selector = showOld ? ".existing:not(.old)" : ".existing";
+        $(selector).fadeOut();
     };
 
     function debug() {
@@ -284,14 +284,14 @@ function ActivityRow(ui, id, title, row) {
             ampm = "PM";
         }
         else if (d.getHours() > 12) {
-            time += d.getHours() % 12;
+            time += (d.getHours() % 12);
             ampm = "PM";
         }
         else {
             time = d.getHours();
             ampm = "AM";
         }
-        time += ":" + d.getMinutes();
+        time += ":" + pad(d.getMinutes());
 
         return date + " " + time + " " + ampm;
     }
