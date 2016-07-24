@@ -4,19 +4,10 @@
   <!-- This is needed in order for net.kukido.blog.tags.BaseHrefTag to work correctly.  MUST MATCH WEB CONTEXT -->
   <display-name>home</display-name>
 
+  <!-- Filter Declarations -->
   <filter>
     <filter-name>LocaleFilter</filter-name>
     <filter-class>net.kukido.blog.servlet.filter.LocaleFilter</filter-class>
-  </filter>
-  
-  <!-- Filter Declarations -->
-  <filter>
-      <filter-name>LoggingFilter</filter-name>
-      <filter-class>net.kukido.blog.servlet.filter.LoggingFilter</filter-class>
-      <init-param>
-          <param-name>configFile</param-name>
-          <param-value>WEB-INF/log4j.properties</param-value>
-      </init-param>
   </filter>
   
   <filter>
@@ -214,12 +205,6 @@
   <!-- # Filter Mappings                                          # -->
   <!-- ############################################################ -->
 
-  <!-- Initializing Logging -->
-  <filter-mapping>
-  	<filter-name>LoggingFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
   <!-- Exception Handling -->
   <filter-mapping>
       <filter-name>ExceptionHandler</filter-name>
@@ -377,6 +362,12 @@
     <url-pattern>/SetCommentsEnabled.do</url-pattern>
   </filter-mapping>
   <!-- GZip Filter applies to all Actions -->
+
+  <!-- Listener Declarations -->
+  <listener>
+    <listener-class>net.kukido.blog.log.LoggingInitializer</listener-class>
+  </listener>
+
   <!-- Action Servlet Configuration -->
   <servlet>
     <servlet-name>action</servlet-name>
