@@ -305,12 +305,6 @@
         </action>
 
         <action
-                path="/StyleAttachment"
-                type="net.kukido.blog.action.StyleAttachment"
-                >
-        </action>
-
-        <action
                 path="/ViewAttachmentResize"
                 type="net.kukido.blog.action.ViewAttachmentResize"
                 >
