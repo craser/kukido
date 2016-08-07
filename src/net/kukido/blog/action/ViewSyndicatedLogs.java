@@ -7,6 +7,10 @@ import javax.servlet.http.*;
 import java.util.*;
 import java.io.*;
 
+/**
+ * Provides an RSS feed of blog entries where I've checked syndicated=true. That feed
+ * gets picked up by IFTTT and cross-posted to Facebook, Twitter, etc.
+ */
 public class ViewSyndicatedLogs extends Action
 {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest req, HttpServletResponse res)
