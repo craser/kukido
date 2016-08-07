@@ -66,22 +66,6 @@
               <td class="inputlabel">Syndicate:</td>
               <td><nested:checkbox property="entry.syndicate" /></td>
             </tr>
-            <tr>
-              <td class="inputlabel" valign="top">Send Trackbacks:</td>
-              <td>
-                <table>
-                  <nested:iterate property="entry.trackbacks" id="trackback" type="net.kukido.blog.datamodel.Trackback">
-                    <tr>
-                      <td width="16"><a style="border: none" href="LogUpdateForm.do?deleteTrackback=<%= trackback.getUrl() %>"><img class="icon" src="img/icon_delete.png" title="Delete this trackback?" align="middle" /></a></td>
-                      <td><bean:write name="trackback" property="url" /></td>
-                    </tr>
-                  </nested:iterate>
-                  <tr>
-                    <td colspan="2"><nested:text property="trackback" onchange="window.location.replace('LogUpdateForm.do?trackback=' + escape(this.value));" /></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
           </table>
           
           <nested:textarea property="entry.intro" rows="20" cols="60"/>

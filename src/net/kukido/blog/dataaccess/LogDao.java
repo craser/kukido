@@ -113,8 +113,6 @@ public class LogDao extends Dao implements Iterator
 
             new TagLinkDao().assignTags(logEntry.getEntryId(), logEntry.getTags());
 
-            new TrackbackDao().sendTrackbacks(logEntry);
-
             return findByEntryId(logEntry.getEntryId());
         }
         catch (SQLException e) {
@@ -595,7 +593,6 @@ public class LogDao extends Dao implements Iterator
         // Attachments
         Map attachmentsById = new AttachmentDao().findByEntryIds(entryIds);
         Map commentsById = new CommentDao().findByEntryIds(entryIds);
-        Map trackbacksById = new TrackbackDao().findByEntryIds(entryIds);
         Map tagsById = new TagDao().findByObjectIds(entryIds);
 
         for (Iterator i = entries.iterator(); i.hasNext();) {
@@ -608,10 +605,6 @@ public class LogDao extends Dao implements Iterator
             if (commentsById.containsKey(id)) {
                 Collection comments = (Collection) commentsById.get(id);
                 entry.setComments(comments);
-            }
-            if (trackbacksById.containsKey(id)) {
-                List trackbacks = (List) trackbacksById.get(id);
-                entry.setTrackbacks(trackbacks);
             }
             if (tagsById.containsKey(id)) {
                 Collection tags = (Collection) tagsById.get(id);
@@ -648,9 +641,6 @@ public class LogDao extends Dao implements Iterator
 
         Collection comments = new CommentDao().findByEntryId(entry.getEntryId());
         entry.setComments(comments);
-
-        Collection trackbacks = new TrackbackDao().findByEntryId(entry.getEntryId());
-        entry.setTrackbacks(new ArrayList(trackbacks));
 
         return entry;
     }

@@ -17,8 +17,6 @@ public class LogEntry extends LogEntryHeader
 {
     private Collection<Attachment> attachments;
     private Collection<Comment> comments;
-    private List<Trackback> trackbacks; // Watch out!  Used both for sent and received Trackbacks!
-    
 
     /**
      * @return a list of valid values for displayClass property.
@@ -38,8 +36,6 @@ public class LogEntry extends LogEntryHeader
     {
 	this.attachments = new ArrayList<Attachment>();
         this.comments = new ArrayList<Comment>();
-        this.trackbacks = new ArrayList<Trackback>();
-        
     }
     
     public LogEntry(LogEntryHeader header)
@@ -47,7 +43,6 @@ public class LogEntry extends LogEntryHeader
         super(header);
         this.attachments = new ArrayList<Attachment>();
         this.comments = new ArrayList<Comment>();
-        this.trackbacks = new ArrayList<Trackback>();
     }
 
     public void setAttachments(Collection<Attachment> attachments)
@@ -132,23 +127,5 @@ public class LogEntry extends LogEntryHeader
     public int getNumComments()
     {
         return (comments == null) ? 0 : comments.size();
-    }
-    
-    public void setTrackbacks(List<Trackback> trackbacks)
-    {
-        if (trackbacks == null) { 
-            this.trackbacks.clear(); 
-        }
-        this.trackbacks = trackbacks;
-    }
-    
-    public List<Trackback> getTrackbacks()
-    {
-        return trackbacks;
-    }
-    
-    public int getNumTrackbacks()
-    {
-        return (trackbacks == null) ? 0 : trackbacks.size();
     }
 }

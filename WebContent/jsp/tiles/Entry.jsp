@@ -81,7 +81,6 @@
   <div class="entrymetainfo entryfooter" style="text-align: right;">
     <dmg:entrylink entry="entry">permalink</dmg:entrylink>
     &#8226; <a title="Follow comments via RSS" href="feeds/comments/<%= entry.getEntryId() %>.xml">RSS</a>
-    &#8226; <dmg:trackbackLink entry="entry">trackback (<bean:write name="entry" property="numTrackbacks" />)</dmg:trackbackLink>
   </div>
 </div>
 <!-- /Entry Tile -->

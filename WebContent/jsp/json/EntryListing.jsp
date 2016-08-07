@@ -25,7 +25,6 @@ LogEntry:
     private Collection attachments;
     private Collection tags;
     private Collection comments;
-    private List trackbacks;
 */
 logEntries = [
     <nested:iterate name="entries" id="entry" type="net.kukido.blog.datamodel.LogEntry">

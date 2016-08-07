@@ -47,11 +47,6 @@
                 />
 
         <form-bean
-                name="trackbackForm"
-                type="net.kukido.blog.forms.TrackbackForm"
-                />
-
-        <form-bean
                 name="userSettingsForm"
                 type="net.kukido.blog.forms.UserSettingsForm"
                 />
@@ -430,16 +425,6 @@
                 type="net.kukido.blog.action.RecentComments"
                 >
             <forward name="success" path="/jsp/pages/CommentRss.jsp"/>
-        </action>
-
-        <action
-                path="/ReceiveTrackback"
-                type="net.kukido.blog.action.ReceiveTrackback"
-                name="trackbackForm"
-                validate="false"
-                scope="request"
-                >
-            <forward name="success" path="/jsp/pages/TrackbackResponse.jsp"/>
         </action>
 
         <action

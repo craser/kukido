@@ -138,11 +138,6 @@
 		<pattern>.*/garmin/loader$</pattern>
 		<template>/jsp/pages/GarminLoader.jsp</template>
 	</mapping>
-	<!-- Trackback Processing -->
-	<mapping>
-		<pattern>.*/trackback/(\d+)\??(.*)$</pattern>
-		<template>/ReceiveTrackback.do?entryId=$1&amp;$2</template>
-	</mapping>
 
     <!-- ================================================================================ -->
     <!-- Old, supported for backward-compatibility -->

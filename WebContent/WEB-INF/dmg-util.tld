@@ -250,43 +250,6 @@
         <example></example>
     </tag>
     <tag>
-        <name>trackbackLink</name>
-        <tag-class>net.kukido.blog.tags.TrackbackLink</tag-class>
-        <body-content>JSP</body-content>
-        <display-name></display-name>
-        <description></description>
-        <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
-        <tldx>
-            <packagename>net.kukido.blog.tags</packagename>
-            <extendsSupportClass>TRUE</extendsSupportClass>
-            <supportClass>BodyTagSupport</supportClass>
-            <implementsTryCatchFinally>FALSE</implementsTryCatchFinally>
-            <findparent>FALSE</findparent>
-        </tldx>
-        -->
-        <attribute>
-            <name>entry</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-            <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
-            <tldx>
-                
-                
-                <IsReferenceID>FALSE</IsReferenceID>
-                <ReferencesTag>FALSE</ReferencesTag>
-                <ReferenceScope>Session</ReferenceScope>
-                
-                
-                
-                
-                <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
-            </tldx>
-            -->
-        </attribute>
-        <example></example>
-    </tag>
-    <tag>
         <name>image</name>
         <tag-class>net.kukido.blog.tags.Image</tag-class>
         <body-content>JSP</body-content>

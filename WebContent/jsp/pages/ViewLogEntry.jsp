@@ -102,20 +102,6 @@
           </tiles:put>
         </tiles:insert>
     </logic:equal>
-    
-    <logic:notEmpty name="entry" property="trackbacks">
-      <tiles:insert definition="sidebarElement" flush="false">
-        <tiles:put type="string" name="title">Trackbacks</tiles:put>
-        <tiles:put type="string" name="content">
-          <ul class="navmenu">
-            <nested:iterate name="entry" property="trackbacks" id="trackback" type="net.kukido.blog.datamodel.Trackback">
-              <li><a href="<%= trackback.getUrl() %>"><bean:write name="trackback" property="title"/></a>
-              </li>
-            </nested:iterate>
-          </ul>
-        </tiles:put>
-      </tiles:insert>
-    </logic:notEmpty>
 
   </tiles:put>
 

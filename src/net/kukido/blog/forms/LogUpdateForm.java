@@ -56,23 +56,6 @@ public class LogUpdateForm extends ActionForm
         
         return tagList.toString();
     }
-    
-    public void setTrackback(String trackbackUrl)
-    {
-        if (trackbackUrl != null && !"".equals(trackbackUrl.trim())) {
-            this.entry.getTrackbacks().add(new Trackback(trackbackUrl));
-        }
-    }
-    
-    public void setDeleteTrackback(String trackbackUrl)
-    {
-        this.entry.getTrackbacks().remove(new Trackback(trackbackUrl));
-    }
-    
-    public String getTrackback()
-    {
-        return "";
-    }
 
     public void setEntry(LogEntry entry)
     {

@@ -32,7 +32,6 @@ public class LogEntryHeader implements Serializable
     
     
     // Summary info for detail-level items
-    private int numTrackbacks;
     private int numComments;
     private boolean hasGalleryImages;
     private boolean hasAttachments;
@@ -64,7 +63,6 @@ public class LogEntryHeader implements Serializable
         this.viaTitle = h.viaTitle;
         this.viaText = h.viaText;
         this.viaUrl = h.viaUrl;
-        this.numTrackbacks = h.numTrackbacks;
         this.numComments = h.numComments;
         this.hasGalleryImages = h.hasGalleryImages;
         this.hasAttachments = h.hasAttachments;
@@ -229,16 +227,6 @@ public class LogEntryHeader implements Serializable
     public int getNumComments()
     {
         return numComments;
-    }
-    
-    public void setNumTrackbacks(int numTrackbacks)
-    {
-        this.numTrackbacks = numTrackbacks;
-    }
-    
-    public int getNumTrackbacks()
-    {
-        return numTrackbacks;
     }
     
     public void setTags(Collection<Tag> tags)

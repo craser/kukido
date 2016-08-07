@@ -289,11 +289,6 @@
   </filter-mapping>
   
   <filter-mapping>
-    <filter-name>Throttle</filter-name>
-    <url-pattern>/ReceiveTrackback.do</url-pattern>
-  </filter-mapping>
-  
-  <filter-mapping>
     <filter-name>UrlRedirect</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
