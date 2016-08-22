@@ -22,7 +22,7 @@
         </logic:iterate>
       </div>
     </logic:notEmpty>
-  
+    <%-- dmg.locale is initialized in LocaleInitializer, which just sets it to en_US. --%>
     <bean:write name="entry" property="datePosted" format="EEE, MM/dd/yy" locale="dmg.locale"/>
 
     <logic:present name="entry" property="viaText">
