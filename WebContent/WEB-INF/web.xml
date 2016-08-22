@@ -6,11 +6,6 @@
 
   <!-- Filter Declarations -->
   <filter>
-    <filter-name>LocaleFilter</filter-name>
-    <filter-class>net.kukido.blog.servlet.filter.LocaleFilter</filter-class>
-  </filter>
-  
-  <filter>
       <filter-name>ExceptionHandler</filter-name>
       <filter-class>net.kukido.blog.servlet.filter.ExceptionHandler</filter-class>
       <init-param>
@@ -211,12 +206,6 @@
       <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- Setting default locale for Session. -->
-  <filter-mapping>
-    <filter-name>LocaleFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
   <!-- Provide ONE connection per request.  -->
   <filter-mapping>
     <filter-name>DataSourceFilter</filter-name>
@@ -363,6 +352,10 @@
     <listener-class>net.kukido.blog.log.LoggingInitializer</listener-class>
   </listener>
 
+  <listener>
+    <listener-class>net.kukido.blog.config.LocaleInitializer</listener-class>
+  </listener>
+  
   <!-- Action Servlet Configuration -->
   <servlet>
     <servlet-name>action</servlet-name>
