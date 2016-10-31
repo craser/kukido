@@ -249,6 +249,16 @@
         </action>
 
         <action
+                path="/UploadFile"
+                type="net.kukido.blog.action.UploadAttachment"
+                name="attachmentForm"
+                scope="request"
+                >
+            <forward name="success" path="/jsp/pages/FileUploadSuccess.jsp" />
+        </action>
+
+
+        <action
                 path="/DeleteAttachment"
                 type="net.kukido.blog.action.DeleteAttachment"
                 >

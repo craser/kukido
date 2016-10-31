@@ -339,6 +339,14 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/UploadAttachment.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/UploadFile.do</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
     <url-pattern>/logs/*</url-pattern>
   </filter-mapping>
   <filter-mapping>

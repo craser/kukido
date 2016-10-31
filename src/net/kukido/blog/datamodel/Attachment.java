@@ -233,7 +233,7 @@ public class Attachment implements Serializable
      * ATTACHMENTS.File_Type field will cause problems when you 
      * try to save this object to the database.
      *
-     * @param Either "document", "map", or "image"
+     * @param fileType Either "document", "map", or "image"
      */
     public void setFileType(String fileType) {
         this.fileType = fileType;

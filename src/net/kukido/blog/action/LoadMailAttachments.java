@@ -74,7 +74,6 @@ public class LoadMailAttachments extends Action {
             
             store = session.getStore("pop3"); // FIXME: Should be configurable by user.
             store.connect("dreadedmonkeygod.net", 110, "uploads@dreadedmonkeygod.net", "m3t@b0l1zm");
-            //store.connect("pop.gmail.com", 995, "chris.raser@gmail.com", "c0r0gati0n");
             
             folder = store.getDefaultFolder();
             folder = folder.getFolder("INBOX");
