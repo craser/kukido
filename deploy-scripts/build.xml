@@ -183,11 +183,18 @@
 		<input addproperty="database.host" message="Database host:" />
 		<input addproperty="database.user" message="Database user for ${database.host}:" />
 		<input addproperty="database.pass" message="Password for database user ${database.user}@${database.host}:" />
+		<input addproperty="mail.upload.address" message="Email address for uploads:" />
+		<input addproperty="mail.upload.pass" message="Password for ${mail.upload.address}:" />
+
 		<echo append="false" file="${db.props.file}">database.host=${database.host}
 </echo>
 		<echo append="true" file="${db.props.file}">database.user=${database.user}
 </echo>
 		<echo append="true" file="${db.props.file}">database.pass=${database.pass}
+</echo>
+		<echo append="true" file="${db.props.file}">mail.upload.address=${mail.uploads.address}
+</echo>
+		<echo append="true" file="${db.props.file}">mail.upload.pass=${mail.upload.pass}
 </echo>
 	</target>
 	
@@ -200,7 +207,10 @@
 			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
 			<replacefilter token="{database.pass}" property="database.pass" />
-	    </replace>
+			<replacefilter token="{mail.upload.host}" property="mail.upload.host" />
+			<replacefilter token="{mail.upload.address}" property="mail.upload.address" />
+			<replacefilter token="{mail.upload.pass}" property="mail.upload.pass" />
+		</replace>
 		<jar destfile="${local.build.dir}/${kukido.jar.file}">
 			<fileset dir="${local.classes.dir}" />
 		</jar>

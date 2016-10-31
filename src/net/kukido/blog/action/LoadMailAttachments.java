@@ -6,6 +6,7 @@
 package net.kukido.blog.action;
 
 
+import net.kukido.blog.config.DmgConfig;
 import org.apache.struts.action.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -68,12 +69,16 @@ public class LoadMailAttachments extends Action {
         try
         {   
             Properties p = System.getProperties();
-            //p.setProperty("mail.store.protocol", "pop3");
-            //p.setProperty("mail.debug", "true");
             Session session = Session.getDefaultInstance(p);
-            
-            store = session.getStore("pop3"); // FIXME: Should be configurable by user.
-            store.connect("dreadedmonkeygod.net", 110, "uploads@dreadedmonkeygod.net", "m3t@b0l1zm");
+
+            DmgConfig config = new DmgConfig();
+            String mailAccountType = config.getProperty("mail.upload.protocol");
+            String mailHost = config.getProperty("mail.upload.host");
+            int mailPort = Integer.parseInt(config.getProperty("mail.upload.port"));
+            String mailAddress = config.getProperty("mail.upload.address");
+            String mailPass = config.getProperty("mail.upload.pass");
+            store = session.getStore(mailAccountType); // FIXME: Should be configurable by user.
+            store.connect(mailHost, mailPort, mailAddress, mailPass);
             
             folder = store.getDefaultFolder();
             folder = folder.getFolder("INBOX");
