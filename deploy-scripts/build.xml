@@ -156,7 +156,7 @@
 		</war>
 	</target>	
 	
-	<target name="build-war-template" depends="jar-kukido, create-database-properties">
+	<target name="build-war-template" depends="jar-kukido, create-login-properties">
 		<copy todir="${local.war.template}">
 			<fileset dir="${local.web.dir}">
 				<exclude name="**/.svn" />
@@ -165,49 +165,48 @@
 		<copy file="${local.build.dir}/${kukido.jar.file}"
 			todir="${local.war.template}/WEB-INF/lib" 
 			/>
-		<replace file="${local.war.template}/WEB-INF/resin-web.xml" propertyFile="${db.props.file}">
+		<replace file="${local.war.template}/WEB-INF/resin-web.xml" propertyFile="${login.props.file}">
 			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
 			<replacefilter token="{database.pass}" property="database.pass" />
 	    </replace>
 	</target>
 	
-	<target name="check-database-properties">
-		<condition property="database.properties.exists" value="true">
-			<available file="${db.props.file}" />
+	<target name="check-login-properties">
+		<condition property="login.properties.exists" value="true">
+			<available file="${login.props.file}" />
 		</condition>
-		<echo message="${db.props.file} exists: ${database.properties.exists}" />
+		<echo message="${login.props.file} exists: ${login.properties.exists}" />
 	</target>
 	
-	<target name="create-database-properties" depends="check-database-properties" unless="database.properties.exists">
+	<target name="create-login-properties" depends="check-login-properties" unless="login.properties.exists">
 		<input addproperty="database.host" message="Database host:" />
 		<input addproperty="database.user" message="Database user for ${database.host}:" />
 		<input addproperty="database.pass" message="Password for database user ${database.user}@${database.host}:" />
 		<input addproperty="mail.upload.address" message="Email address for uploads:" />
 		<input addproperty="mail.upload.pass" message="Password for ${mail.upload.address}:" />
 
-		<echo append="false" file="${db.props.file}">database.host=${database.host}
+		<echo append="false" file="${login.props.file}">database.host=${database.host}
 </echo>
-		<echo append="true" file="${db.props.file}">database.user=${database.user}
+		<echo append="true" file="${login.props.file}">database.user=${database.user}
 </echo>
-		<echo append="true" file="${db.props.file}">database.pass=${database.pass}
+		<echo append="true" file="${login.props.file}">database.pass=${database.pass}
 </echo>
-		<echo append="true" file="${db.props.file}">mail.upload.address=${mail.uploads.address}
+		<echo append="true" file="${login.props.file}">mail.upload.address=${mail.uploads.address}
 </echo>
-		<echo append="true" file="${db.props.file}">mail.upload.pass=${mail.upload.pass}
+		<echo append="true" file="${login.props.file}">mail.upload.pass=${mail.upload.pass}
 </echo>
 	</target>
 	
-	<target name="clear-database-properties">
-		<delete file="${db.props.file}" />
+	<target name="clear-login-properties">
+		<delete file="${login.props.file}" />
 	</target>
 	
-	<target name="jar-kukido" depends="compile-all, create-database-properties">
-		<replace file="${local.classes.dir}/net/kukido/blog/config/dmg.properties" propertyFile="${db.props.file}">
+	<target name="jar-kukido" depends="compile-all, create-login-properties">
+		<replace file="${local.classes.dir}/net/kukido/blog/config/dmg.properties" propertyFile="${login.props.file}">
 			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
 			<replacefilter token="{database.pass}" property="database.pass" />
-			<replacefilter token="{mail.upload.host}" property="mail.upload.host" />
 			<replacefilter token="{mail.upload.address}" property="mail.upload.address" />
 			<replacefilter token="{mail.upload.pass}" property="mail.upload.pass" />
 		</replace>
