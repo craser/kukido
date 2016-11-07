@@ -192,7 +192,7 @@
 </echo>
 		<echo append="true" file="${login.props.file}">database.pass=${database.pass}
 </echo>
-		<echo append="true" file="${login.props.file}">mail.upload.address=${mail.uploads.address}
+		<echo append="true" file="${login.props.file}">mail.upload.address=${mail.upload.address}
 </echo>
 		<echo append="true" file="${login.props.file}">mail.upload.pass=${mail.upload.pass}
 </echo>
