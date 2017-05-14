@@ -1,5 +1,6 @@
 package net.kukido.blog.test.maps;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -53,7 +54,9 @@ public class TcxFormatterTest
             dao.populateBytes(attachment);
             List<GpsTrack> tracks = new GpxParser().parse(attachment.getBytes());
             TcxFormatter formatter = new TcxFormatter();
-            formatter.format(tracks, System.out);
+
+            PrintStream out = new PrintStream(new ByteArrayOutputStream()); // Just somewhere to dump the result.
+            formatter.format(tracks, out);
         }
         catch (Exception e) {
             fail("Error: " + e);

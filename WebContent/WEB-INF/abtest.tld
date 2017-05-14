@@ -19,7 +19,7 @@
     -->
     <tag>
         <name>test</name>
-        <tag-class>net.kukido.blog.tags.ABTest</tag-class>
+        <tag-class>net.kukido.blog.tags.ABTestTag</tag-class>
         <body-content>JSP</body-content>
         <display-name></display-name>
         <description>Wraps an A/B control and alternative.</description>

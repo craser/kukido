@@ -14,12 +14,12 @@ public class ABControl extends TagSupport
                 : SKIP_BODY;
     }
 
-    public ABTest getTest() {
+    public ABTestTag getTest() {
         for (Tag p = this; p != null; p = p.getParent()) {
-            if (p instanceof ABTest) {
-                return (ABTest)p;
+            if (p instanceof ABTestTag) {
+                return (ABTestTag)p;
             }
         }
-        throw new IllegalStateException("No parent ABTest found.");
+        throw new IllegalStateException("No parent ABTestTag found.");
     }
 }
