@@ -146,6 +146,17 @@
             <forward name="success" path="/jsp/json/TagNames.jsp"/>
         </action>
 
+	<!-- Braindead attempt at RSS.  Hope nothing 'splodes. -->
+	<action
+	    path="/Monkeyfeed"
+	    type="net.kukido.blog.action.LogEntryListing"
+	    name="entryListingForm"
+	    validate="false"
+	    scope="request"
+	    >
+	  <forward name="success" path="/jsp/pages/Monkeyfeed.jsp"/>
+	</action>
+
 
         <!-- RSS Feed so I can cross-post only what I want cross-posted. -->
         <action
