@@ -12,8 +12,7 @@
     <jsp:useBean id="entries" type="java.util.Collection" scope="request"/>
     <jsp:useBean id="entryListingForm" type="net.kukido.blog.forms.SearchForm" scope="request" />
     <logic:greaterThan name="entryListingForm" property="page" value="1">
-      <bean:define id="prevPageUrl"><%= "/" + entryListingForm.getPreviousPage() %></bean:define>
-      <html:link styleClass="paginglink prevpagelink" page="${prevPageUrl}">newer stuff</html:link>
+      <html:link styleClass="paginglink prevpagelink" page="<%= "/" + entryListingForm.getPreviousPage() %>">newer stuff</html:link>
     </logic:greaterThan>
     <logic:iterate name="entries" id="entry" type="net.kukido.blog.datamodel.LogEntryHeader">
       <tiles:insert definition="entry" flush="false">
@@ -23,8 +22,7 @@
       </tiles:insert>
     </logic:iterate>
     <logic:lessEqual name="entryListingForm" property="pageSize" value="<%= String.valueOf(entries.size()) %>">
-      <bean:define id="nextPageUrl"><%= "/" + entryListingForm.getNextPage() %></bean:define>
-      <html:link styleClass="paginglink nextpagelink" page="${nextPageUrl}">older stuff</html:link>
+      <html:link styleClass="paginglink nextpagelink" page="<%= "/" + entryListingForm.getNextPage() %>">older stuff</html:link>
     </logic:lessEqual>
     <!-- End of LogEntryListing.jsp -->
   </tiles:put>
