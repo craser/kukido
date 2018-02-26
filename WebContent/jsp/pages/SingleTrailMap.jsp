@@ -19,11 +19,11 @@
     <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <script type="text/JavaScript" src="javascript/jquery.canvasjs.min.js"> </script>
     <script type="text/JavaScript" src="javascript/canvasjs.min.js"> </script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.28&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"> </script>
     <script type="text/JavaScript" src="javascript/mapui.js"> </script>
     <script type="text/JavaScript" src="javascript/elevation.js"> </script>
     <script type="text/JavaScript" src="javascript/map.js"> </script>
     <script type="text/JavaScript" src="javascript/colors.js"> </script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.0&sensor=false&key=AIzaSyBOUra7aNY509z2Z8mitJjK4FUpU_oOy1A"></script>
     <script type="text/JavaScript">
       $(window).load(function() {
     	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />',
