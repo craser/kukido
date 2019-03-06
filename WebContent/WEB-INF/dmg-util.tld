@@ -696,6 +696,23 @@
         </attribute>
         <example></example>
     </tag>
+    <tag>
+        <name>mapScript</name>
+        <tag-class>net.kukido.blog.tags.GoogleMapScript</tag-class>
+        <body-content>NONE</body-content>
+        <display-name></display-name>
+        <description>Creates a &lt;script&gt; tag.</description>
+        <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
+        <tldx>
+            <packagename>net.kukido.blog.tags</packagename>
+            <extendsSupportClass>TRUE</extendsSupportClass>
+            <supportClass>BodyTagSupport</supportClass>
+            <implementsTryCatchFinally>FALSE</implementsTryCatchFinally>
+            <findparent>FALSE</findparent>
+        </tldx>
+        -->
+        <example></example>
+    </tag>
     
     <!-- Validators are new in JSP1.2. You may have zero or one validator
          in a tag library. They look like this:
