@@ -1,6 +1,6 @@
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
-	var map = new Map(mapDiv);
+	var map = new DmgMap(mapDiv);
 	var sidebar = new Sidebar(sidebarDiv);
 
 

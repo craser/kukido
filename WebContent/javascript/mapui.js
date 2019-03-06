@@ -56,7 +56,7 @@ function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summary
 	function init(gpxTracks) {
 		$("body").css("height", $(window).innerHeight());
 		var gpxTrack = gpxTracks[0]; // brain dead hack.
-		self.map = new Map(mapDiv[0]);
+		self.map = new DmgMap(mapDiv[0]);
     	self.map.renderTrack(gpxTrack);
     	self.routeInfo = new RouteInfo(self, routeInfoDiv, elevationDiv, summaryDiv, gpxTrack);
 		self.map.zoomToBounds(gpxTrack.bounds);

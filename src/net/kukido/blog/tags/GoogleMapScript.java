@@ -38,7 +38,6 @@ public class GoogleMapScript extends TagSupport
         String url = new StringBuffer()
                 .append("https://maps.googleapis.com/maps/api/js")
                 .append("?v=").append(apiVersion)
-                .append("&sensor=false")
                 .append("&key=").append(apiKey)
                 .toString();
         return url;

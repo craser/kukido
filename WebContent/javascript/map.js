@@ -1,4 +1,4 @@
-function Map(div) {
+function DmgMap(div) {
     var descriptions = {};
     var markers = {};
     var map = null;
@@ -76,17 +76,18 @@ function Map(div) {
 	
 	function bind(div) {
 	    var options = {
-	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
-	    	mapTypeControlOptions: {
-	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
-	    		position: google.maps.ControlPosition.TOP_LEFT,
-	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-	    	},
-	    	scroll: true,
-	    	panControl: false,
-	    	scaleControl: true,
-	    	streetViewControl: false, // FIXME: Configure this.
-	    	center: new google.maps.LatLng(0, 0, false) // FIXME: Pass in the actual center of the route.	    		
+	    	zoom: 4, // FIXME: Cargo cult from Google HOWTO
+//	    	mapTypeId: google.maps.MapTypeId.TERRAIN,
+//	    	mapTypeControlOptions: {
+//	    		mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE],
+//	    		position: google.maps.ControlPosition.TOP_LEFT,
+//	    		style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+//	    	},
+//	    	scroll: true,
+//	    	panControl: false,
+//	    	scaleControl: true,
+//	    	streetViewControl: false, // FIXME: Configure this.
+	    	center: { lat: 0, lng: 0 } // FIXME: Pass in the actual center of the route.
 	    };
 	    var gmap = new google.maps.Map($(div)[0], options);
 
