@@ -8,7 +8,7 @@
  
 .trackInfoTitle {
     cursor: pointer;
-    background: url(../img/iw_close.gif) no-repeat scroll 220px 2px;
+    background: url(../img/iw_close.gif) no-repeat scroll right 2px;
     padding: 2px;
 }
 
@@ -33,10 +33,11 @@
 
 #sidebar {
   position: absolute;
-  top: 80px;
+  top: 81px;
   right: 0px;
   width: 250px;
   height: auto;
-  max-height: 100%;
-  overflow: hidden; /* We monkey with this in sidebar.js */
+  max-height: calc(100% - 81px);
+  overflow: hidden;
+  overflow-y: auto;
 }

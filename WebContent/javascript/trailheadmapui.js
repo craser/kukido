@@ -3,11 +3,6 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var map = new DmgMap(mapDiv);
 	var sidebar = new Sidebar(sidebarDiv);
 
-
-//	    sidebar.setHeight(map.getHeight());
-//	    sidebar.setTop(map.getTop());
-
-	
 	function init(mapLocations) {
 		markMaps(mapLocations.locations);
 		map.zoomToBounds(mapLocations.bounds);

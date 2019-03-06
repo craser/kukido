@@ -3,14 +3,6 @@ function Sidebar(div) {
 	var trackInfos = {};
 	var height;
 	
-	this.setHeight = function(h) {
-		height = h; // Used later in updateScrolling.
-	};
-	
-	this.setTop = function(t) {
-		$(div).css("top", t + "px");
-	};
-	
 	this.hideTrackInfo = function(track) {
 		console.log("hideTrackInfo(" + track.fileName + ")");
 		var infoDiv = trackInfos[track.fileName];
@@ -30,15 +22,7 @@ function Sidebar(div) {
 		var trackInfo = buildTrackInfo(track, conf);
 	    trackInfos[track.fileName] = trackInfo;
 	    $(div).append(trackInfo);
-	    updateScrolling();
 	};
-	
-	function updateScrolling() {
-		var tall = $(div).height() >= height;
-		console.log("updateScrolling() tall: " + tall);
-		$(div).css("maxHeight", (tall ? (height + "px") : ""));
-		$(div).css("overflowY", (tall ? "scroll" : "hidden"));
-	}
 	
 	function buildTrackInfo(track, conf) {
 		color = conf.color || Colors.getDefaultColor();
