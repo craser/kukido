@@ -80,3 +80,5 @@ function Sidebar(div) {
 	    return tr;
 	}
 }
+
+module.exports = Sidebar;

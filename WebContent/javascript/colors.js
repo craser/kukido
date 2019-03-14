@@ -43,3 +43,5 @@ Colors = (function() {
 		getDefaultColor: function() { return colors[0]; }
 	};
 })();
+
+module.exports = Colors;

@@ -15,16 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/trailheadmap.css" />
     <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <dmg:mapScript />
-    <script type="text/JavaScript" src="javascript/map.js"> </script>
-    <script type="text/JavaScript" src="javascript/colors.js"> </script>
-    <script type="text/JavaScript" src="javascript/sidebar.js"> </script>
-    <script type="text/JavaScript" src="javascript/trailheadmapui.js"> </script>
-    <script type="text/JavaScript">
-      // Assign the actual Google Map obj. to the global var.
-      $(window).load(function() {
-          new TrailheadMapUI($("#map"), $("#sidebar"));
-      });
-    </script>
+    <script type="text/JavaScript" src="js/trailmaps.js"> </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- TrailheadMap.jsp -->

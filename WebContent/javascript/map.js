@@ -1,3 +1,5 @@
+var Colors = require('./colors');
+
 function DmgMap(div) {
     var descriptions = {};
     var markers = {};
@@ -98,6 +100,7 @@ function DmgMap(div) {
 	map = bind(div);
 }
 
+module.exports = DmgMap;
 
 
 

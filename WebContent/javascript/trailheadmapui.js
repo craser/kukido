@@ -1,3 +1,6 @@
+var DmgMap = require('./map');
+var Sidebar = require('./sidebar');
+
 function TrailheadMapUI(mapDiv, sidebarDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 	var map = new DmgMap(mapDiv);
@@ -55,3 +58,5 @@ function TrailheadMapUI(mapDiv, sidebarDiv) {
 			.always(function() { console.log("Ajax call to json/maplocations complete.")});
 	})();
 }
+
+module.exports = TrailheadMapUI;
