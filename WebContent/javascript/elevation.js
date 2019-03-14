@@ -117,3 +117,5 @@ function Elevation(mapUi, div, gpxTrack) {
 		renderGraph(div, mapUi.units.imperial)
 	}())
 }
+
+module.exports = Elevation;

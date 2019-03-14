@@ -1,3 +1,6 @@
+var DmgMap = require('./map');
+var Elevation = require('./elevation');
+
 function MapUI(gpxFileName, mapDiv, routeInfoDiv, unitDiv, elevationDiv, summaryDiv) {
 	var self = this; // private reference to avoid magical "this" bugs.
 
@@ -165,3 +168,5 @@ function Summary(mapUi, summaryDiv, gpxTrack) {
 		render(mapUi.units.imperial);
 	}());
 }
+
+module.exports = MapUI;

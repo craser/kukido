@@ -20,24 +20,11 @@
     <script type="text/JavaScript" src="javascript/jquery.canvasjs.min.js"> </script>
     <script type="text/JavaScript" src="javascript/canvasjs.min.js"> </script>
     <dmg:mapScript />
-    <script type="text/JavaScript" src="javascript/mapui.js"> </script>
-    <script type="text/JavaScript" src="javascript/elevation.js"> </script>
-    <script type="text/JavaScript" src="javascript/map.js"> </script>
-    <script type="text/JavaScript" src="javascript/colors.js"> </script>
-    <script type="text/JavaScript">
-      $(window).load(function() {
-    	  window.mapui = new MapUI('<nested:write name="map" property="fileName" />',
-    	    $("#map"),
-    	    $("#routeinfo"),
-    	    $("#unitselection"),
-    	    $("#elevationgraph"),
-    	    $("#routesummary"));
-      });
-    </script>
+    <script type="text/JavaScript" src="js/gpxmap.js"> </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- GpxGmap.jsp -->
-    <div id="map"></div>
+    <div id="map" data-map="<nested:write name="map" property="fileName" />"></div>
     <div id="routeinfo">
       <div id="routeinfohandle">
         Details
