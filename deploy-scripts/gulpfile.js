@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var del = require('del');
 var nconf = require('nconf');
 var browserify = require('gulp-browserify');
 var Q = require('q');
@@ -12,7 +13,11 @@ var jsDst = workingPath + '/../WebContent/js';
 
 nconf.use('file', { file: workingPath + '/config.json' });
 
-gulp.task('default', () => {
+gulp.task('clean',  function() {
+	return del(jsDst);
+});
+
+gulp.task('js', function() {
 	var pages = nconf.get('pages');
 	console.log('pages: ' + pages);
 	var promises = [];

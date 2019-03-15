@@ -61,11 +61,6 @@
                 type="net.kukido.blog.forms.UnattachedAttachmentsForm"
                 />
 
-        <form-bean
-                name="gpsImportForm"
-                type="net.kukido.blog.forms.GpsImportForm"
-                />
-
     </form-beans>
 
     <!-- == Action Mappings ===============================================  -->
@@ -294,23 +289,6 @@
                 path="/ViewAttachment"
                 type="net.kukido.blog.action.ViewAttachment"
                 >
-        </action>
-
-        <action
-                path="/GpsImportForm"
-                type="net.kukido.blog.action.GpsImportForm"
-                >
-            <forward name="success" path="/jsp/pages/GpsImportForm.jsp"/>
-        </action>
-
-        <action
-                path="/GpsImport"
-                type="net.kukido.blog.action.GpsImport"
-                name="gpsImportForm"
-                scope="request"
-                validate="false"
-                >
-            <forward name="results" path="/jsp/json/GpsImportResults.jsp"/>
         </action>
 
         <action

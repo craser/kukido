@@ -15,11 +15,6 @@
     <link rel="stylesheet" type="text/css" href="css/frontpage.css" />
     <link rel="stylesheet" type="text/css" href="css/lightbox.css"/>
     <link rel="alternate" type="application/rss+xml" href="monkeyfeed.xml" title="RSS feed for dreadedmonkeygod.net"/>
-<%--<script src="javascript/header.js"> </script>
-    <script type="text/JavaScript">
-    window.addEventListener("load", function() { new Header(document.getElementById("headerdiv")); });
-    </script>
---%>    
     <tiles:get name="analytics" />
     <script src="javascript/jquery-1.11.3.js"></script>
     <!-- page-specific header information -->
