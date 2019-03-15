@@ -2,13 +2,13 @@ var gulp = require('gulp');
 var del = require('del');
 var nconf = require('nconf');
 var browserify = require('gulp-browserify');
+var sass = require('gulp-sass');
 var Q = require('q');
 
 var argv = require('yargs').argv;
 
 var workingPath = argv.basedir;
-var jsSrc = workingPath + '/../WebContent/javascript';
-var jsDst = workingPath + '/../WebContent/js';
+var webContent = workingPath + '/../WebContent';
 
 
 nconf.use('file', { file: workingPath + '/config.json' });
@@ -18,9 +18,10 @@ gulp.task('clean',  function() {
 });
 
 gulp.task('js', function() {
-	var pages = nconf.get('pages');
-	console.log('pages: ' + pages);
+	var pages = nconf.get('js-pages');
 	var promises = [];
+	var jsSrc = webContent + '/javascript';
+	var jsDst = webContent + '/js';
 	pages.forEach((p) => {
 		var srcFile = jsSrc + '/' + p.name + '.js';
 		console.log({ name: p.name, src: srcFile, dst: jsDst });
@@ -33,5 +34,21 @@ gulp.task('js', function() {
 		promises.push(promise);
 	});
 
+	return Q.all(promises);
+});
+
+gulp.task('css', function() {
+	var pages = nconf.get('css-pages');
+	var promises = [];
+	var srcDir = webContent + '/sass';
+	var dstDir = webContent + '/css';
+	pages.forEach((p) => {
+		var srcFile = srcDir + '/' + p.name + '.scss';
+		console.log({ name: p.name, src: srcFile, dst: dstDir });
+		var promise = gulp.src(srcFile)
+			.pipe(sass().on('error', sass.logError))
+			.pipe(gulp.dest(dstDir));
+		promises.push(promise);
+	});
 	return Q.all(promises);
 });

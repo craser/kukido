@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "js-pages": [
     {
       "name": "trailmaps"
     },
@@ -8,6 +8,11 @@
     },
     {
       "name": "tags-typeahead"
+    }
+  ],
+  "css-pages": [
+    {
+      "name": "main"
     }
   ]
 }
