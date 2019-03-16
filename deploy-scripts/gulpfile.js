@@ -46,7 +46,7 @@ gulp.task('css', function() {
 		var srcFile = srcDir + '/' + p.name + '.scss';
 		console.log({ name: p.name, src: srcFile, dst: dstDir });
 		var promise = gulp.src(srcFile)
-			.pipe(sass().on('error', sass.logError))
+			.pipe(sass({ file: srcFile }).on('error', sass.logError))
 			.pipe(gulp.dest(dstDir));
 		promises.push(promise);
 	});
