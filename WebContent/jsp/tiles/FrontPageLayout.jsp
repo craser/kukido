@@ -25,11 +25,11 @@
     <h1 id="titlebanner"><html:link page="/">dreadedmonkeygod . net</html:link></h1>
     <div id="headerdiv" class="header">
       <ul class="sitenav">
-        <li><html:link href="trailmaps">trail maps</html:link></li>
-        <li><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
-        <li><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
+        <li class="trailmaps-link"><html:link href="trailmaps">trail maps</html:link></li>
+        <li class="twitter-link"><html:link href="https://twitter.com/DeathB4Decaf">@DeathB4Decaf</html:link></li>
+        <li class="rss-link"><html:link href="monkeyfeed.xml"><img src="img/feed-icon.gif" /> DMG</html:link></li>
         <jsp:include page="/jsp/nav/UserNav.jsp" /><%-- includes admin elements --%>
-    	<li>
+    	<li class="search-form">
     		<html:form action="SearchLogEntries" method="GET">
             	<html:text property="searchTerm" size="10" value="Search" onfocus="this.value=''" />
             	<input type="hidden" name="pageSize" value="30" />

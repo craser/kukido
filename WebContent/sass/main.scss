@@ -1,20 +1,26 @@
 @import "viewports";
+@import "fonts";
 
 /**********************************************************************
  * Questionable
  */
 
-
-/**********************************************************************
- * General Guidelines
- */
 body {
-  font-family: HelveticaNeue-condensed, sans-serif;
-  color: #222;
-  margin: 0px;
-  width: 800px;
-  margin-left: auto;
-  margin-right: 100px;
+
+  	font-family: $font-main, HelveticaNeue-condensed, sans-serif;
+	color: #222;
+	margin: 0px;
+	margin-left: auto;
+
+	/* Desktops and laptops */
+	@include respond('not-small') {
+		background: url(../img/gold-rush-desktop.jpg);
+		background-size: cover;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		width: 800px;
+		margin-right: 100px;
+	}
 }
 
 img {
@@ -66,6 +72,9 @@ p {
   text-decoration: none;
   color: #000;
   border: 0;
+  @include respond('small') {
+  	padding: 5px;
+  }
 }
 
 .title a:hover {
@@ -85,8 +94,20 @@ p {
 /**********************************************************************
  * Header and Footer
  */
-.header, .footer {
-  margin: 10px 0px 10px 0px;
+.header {
+	@include respond('small') {
+		margin: 2px 0px 2px 0px;
+		background: url(../img/clouds-bg.jpg);
+	}
+	@include respond('not-small') {
+		margin: 10px 0px 10px 0px;
+	}
+
+	@include respond('small') {
+		.search-form {
+			display: none;
+		}
+	}
 }
 
 .footer {
@@ -118,6 +139,9 @@ p {
   vertical-align: middle;
   margin: 0;
   padding: 0;
+  @include respond('small') {
+  	font-size: 2em;
+  }
 }
 
 .sitenav li {
@@ -138,11 +162,18 @@ p {
 }
 
 #titlebanner {
-  font: bold 80px sans-serif;
-  line-height: 120px;
-  letter-spacing: -10px;
-  margin: 0;
-  padding: 0;
+	@include respond('small') {
+		font-family: $font-title;
+		letter-spacing: -2px;
+		margin: 0;
+	}
+	@include respond('not-small') {
+		font: bold 80px $font-title, sans-serif;
+		line-height: 120px;
+		letter-spacing: -10px;
+		margin: 0;
+		padding: 0;
+	}
 }
 
 #titlebanner a, #titlebanner img {
@@ -165,15 +196,25 @@ p {
   padding-top: 0;
   border-right: 0;
   margin-right: 170px;
-  width: 630px;
+  @include respond('small') {
+  	width: 100%;
+  }
+  @include respond('not-small') {
+  	width: 630px;
+  }
 }
 
 /* Still used when I'm logged in. */
 .sidebar {
-  font-size: 0.8em;
-  float: right;
-  width: 150px;
-  padding: 3px;
+	@include respond('small') {
+		display: none;
+	}
+	@include respond('not-small') {
+		font-size: 0.8em;
+		float: right;
+		width: 150px;
+		padding: 3px;
+	}
 }
 
 .traversallinks {
@@ -284,11 +325,12 @@ div.preventrylink a {
   text-align: justify;
   margin-bottom: 2em;
   background-color: #fff;
-  padding: 15px;
   border-radius: 7px;
+  padding: 15px;
 }
 
 .title {
+  font-family: $font-title;
   border-bottom: 1px solid #555;
   font-size: 1.6em;
   font-weight: normal;
@@ -328,21 +370,22 @@ div.preventrylink a {
 }
 
 .entrycontent {
-  display: block;
-  line-height: 1.5em;
-  margin: 0;
-}
+	display: block;
+	line-height: 1.5em;
+	margin: 0;
 
-.entrycontent img {
-  border: 1px solid #555;
-}
+	img {
+		border: 1px solid #555;
+	}
 
-.entrycontent img.titleimage {
-  position: relative;
-  left: -15px;
-  border: 0px;
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
+	img.titleimage {
+		border: 0px;
+		border-top: 1px solid #aaa;
+		border-bottom: 1px solid #aaa;
+		position: relative;
+		left: -15px;
+		width: calc(100% + 30px);
+	}
 }
 
 /* For now, this is fine. But if I ever decide to use iframes for anything,
@@ -433,25 +476,36 @@ p.postcard {
 
 a.paginglink {
   display: block;
-  height: 45px;
   border: 0;
   margin-bottom: 1em;
-  font: bold 2em sans-serif;
   color: #000;
   opacity: 0.8;
   letter-spacing: -1px;
+  @include respond('small') {
+    font: bold 1.5em sans-serif;
+  }
+  @include respond('not-small') {
+	height: 45px;
+    font: bold 2em sans-serif;
+  }
 }
 
 a.nextpagelink {
   background: url(../img/right-arrows-lg.png) no-repeat right top;
   padding: 10px 60px 0 0;
   text-align: right;
+  @include respond('small') {
+  	background-size: contain;
+  }
 }
 
 a.prevpagelink {
   background: url(../img/left-arrows-lg.png) no-repeat left top;
   padding: 10px 0 0 60px;
   text-align: left;
+  @include respond('small') {
+  	background-size: contain;
+  }
 }
 
 /*
