@@ -12,6 +12,11 @@ body {
 	margin: 0px;
 	margin-left: auto;
 
+	/* Mobile */
+	@include respond('small') {
+		background: url(../img/clouds-bg.jpg);
+	}
+
 	/* Desktops and laptops */
 	@include respond('not-small') {
 		background: url(../img/gold-rush-desktop.jpg);
@@ -96,8 +101,7 @@ p {
  */
 .header {
 	@include respond('small') {
-		margin: 2px 0px 2px 0px;
-		background: url(../img/clouds-bg.jpg);
+		margin: 0px 0px 2px 0px;
 	}
 	@include respond('not-small') {
 		margin: 10px 0px 10px 0px;
@@ -382,9 +386,14 @@ div.preventrylink a {
 		border: 0px;
 		border-top: 1px solid #aaa;
 		border-bottom: 1px solid #aaa;
+		width: calc(100% + 30px);
+	}
+
+
+	a.titleimage, a.maplink {
+		border: 0px;
 		position: relative;
 		left: -15px;
-		width: calc(100% + 30px);
 	}
 }
 
@@ -395,10 +404,6 @@ div.preventrylink a {
   position: relative;
   left: -15px;
   width: 630px;
-}
-
-a.titleimage {
-  border: 0px;
 }
 
 .postcard {
