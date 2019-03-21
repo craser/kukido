@@ -29,6 +29,7 @@
 			action="put"
 			remotedir="${prod.war.dir}"
 			verbose="true"
+			passive="true"
 			>
 			<fileset dir="${local.build.dir}">
 				<include name="${local.war.file}" />
