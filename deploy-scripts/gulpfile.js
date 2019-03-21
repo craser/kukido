@@ -9,7 +9,8 @@ var argv = require('yargs').argv;
 
 var workingPath = argv.basedir;
 var webContent = workingPath + '/../WebContent';
-
+console.log("basedir: " + workingPath);
+console.log("webContent: " + webContent);
 
 nconf.use('file', { file: workingPath + '/config.json' });
 

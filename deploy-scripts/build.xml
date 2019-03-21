@@ -216,7 +216,10 @@
 		</jar>
 	</target>
 	
-	<target name="compile-all" depends="clean">
+	<target name="compile-all" depends="clean, compile-java, compile-css, compile-js">
+	</target>
+
+	<target name="compile-java">
 		<javac 
 			classpathref="project.class.path"
 			srcdir="${local.src.dir}"
@@ -226,6 +229,22 @@
 		<copy todir="${local.classes.dir}">
 			<fileset dir="${local.src.dir}" includes="**/*.properties" />
 		</copy>
+	</target>
+
+	<target name="compile-css">
+		<exec executable="${gulp.executable}">
+			<arg value="css" />
+			<arg value="--basedir" />
+			<arg value="." />
+		</exec>
+	</target>
+
+	<target name="compile-js">
+		<exec executable="${gulp.executable}">
+			<arg value="js" />
+			<arg value="--basedir" />
+			<arg value="." />
+		</exec>
 	</target>
 	
 	<target name="clean">
