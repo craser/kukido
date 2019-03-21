@@ -84,7 +84,7 @@
 	
 	<target name="coverage-report" depends="jar-coverage, test-java">
 		<echo message="Generating test coverage report in ${local.coverage.dir}" />
-		<cobertura-report format="html" destdir="${local.coverage.dir}" srcdir="${local.src.dir}">
+		<cobertura-report format="html" destdir="${local.coverage.dir}" srcdir="${local.src.java.dir}">
 			<fileset file="${local.build.dir}/${kukido.jar.file}" />
 		</cobertura-report>
 		<echo message="Report: ${local.coverage.dir}/index.html" />
@@ -98,7 +98,7 @@
 			<!-- classpath location="${local.classes.dir}" / -->
 			<batchtest>
 				<formatter type="plain" usefile="false" />
-				<fileset dir="${local.src.dir}" includes="**/*Test.java" />
+				<fileset dir="${local.src.java.dir}" includes="**/*Test.java" />
 			</batchtest>
 		</junit>
 	</target>
@@ -203,7 +203,7 @@
 		<delete file="${login.props.file}" />
 	</target>
 	
-	<target name="jar-kukido" depends="compile-all, create-login-properties">
+	<target name="jar-kukido" depends="compile-java, create-login-properties">
 		<replace file="${local.classes.dir}/net/kukido/blog/config/dmg.properties" propertyFile="${login.props.file}">
 			<replacefilter token="{database.host}" property="database.host" />
 			<replacefilter token="{database.user}" property="database.user" />
@@ -222,16 +222,16 @@
 	<target name="compile-java">
 		<javac 
 			classpathref="project.class.path"
-			srcdir="${local.src.dir}"
+			srcdir="${local.src.java.dir}"
 			destdir="${local.classes.dir}"
 			debug="true">
 		</javac>
 		<copy todir="${local.classes.dir}">
-			<fileset dir="${local.src.dir}" includes="**/*.properties" />
+			<fileset dir="${local.src.java.dir}" includes="**/*.properties" />
 		</copy>
 	</target>
 
-	<target name="compile-css">
+	<target name="compile-css" depends="build-war-template">
 		<exec executable="${gulp.executable}">
 			<arg value="css" />
 			<arg value="--basedir" />

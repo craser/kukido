@@ -41,8 +41,8 @@ gulp.task('js', function() {
 gulp.task('css', function() {
 	var pages = nconf.get('css-pages');
 	var promises = [];
-	var srcDir = webContent + '/sass';
-	var dstDir = webContent + '/css';
+	var srcDir = workingPath + '/../src/sass';
+	var dstDir = workingPath + '/../build/war-template/css';
 	pages.forEach((p) => {
 		var srcFile = srcDir + '/' + p.name + '.scss';
 		console.log({ name: p.name, src: srcFile, dst: dstDir });
