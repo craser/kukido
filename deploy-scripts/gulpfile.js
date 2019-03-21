@@ -8,9 +8,7 @@ var Q = require('q');
 var argv = require('yargs').argv;
 
 var workingPath = argv.basedir;
-var webContent = workingPath + '/../WebContent';
 console.log("basedir: " + workingPath);
-console.log("webContent: " + webContent);
 
 nconf.use('file', { file: workingPath + '/config.json' });
 
@@ -21,8 +19,8 @@ gulp.task('clean',  function() {
 gulp.task('js', function() {
 	var pages = nconf.get('js-pages');
 	var promises = [];
-	var jsSrc = webContent + '/javascript';
-	var jsDst = webContent + '/js';
+	var jsSrc = workingPath + '/../src/javascript';
+	var jsDst = workingPath + '/../build/war-template/javascript'
 	pages.forEach((p) => {
 		var srcFile = jsSrc + '/' + p.name + '.js';
 		console.log({ name: p.name, src: srcFile, dst: jsDst });

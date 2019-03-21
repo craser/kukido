@@ -20,7 +20,7 @@
     <script type="text/JavaScript" src="javascript/jquery.canvasjs.min.js"> </script>
     <script type="text/JavaScript" src="javascript/canvasjs.min.js"> </script>
     <dmg:mapScript />
-    <script type="text/JavaScript" src="js/gpxmap.js"> </script>
+    <script type="text/JavaScript" src="javascript/gpxmap.js"> </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- GpxGmap.jsp -->

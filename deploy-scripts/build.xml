@@ -155,9 +155,12 @@
 		<war destfile="${local.build.dir}/${local.war.file}">
 			<fileset dir="${local.war.template}" />
 		</war>
-	</target>	
+	</target>
+
+	<target name="build-war-template" depends="clean, init-war-template, compile-all">
+	</target>
 	
-	<target name="build-war-template" depends="jar-kukido, create-login-properties">
+	<target name="init-war-template" depends="jar-kukido, create-login-properties">
 		<copy todir="${local.war.template}">
 			<fileset dir="${local.web.dir}">
 				<exclude name="**/.svn" />
@@ -216,7 +219,7 @@
 		</jar>
 	</target>
 	
-	<target name="compile-all" depends="clean, compile-java, compile-css, compile-js">
+	<target name="compile-all" depends="compile-java, compile-css, compile-js">
 	</target>
 
 	<target name="compile-java">
@@ -231,7 +234,7 @@
 		</copy>
 	</target>
 
-	<target name="compile-css" depends="build-war-template">
+	<target name="compile-css" depends="init-war-template">
 		<exec executable="${gulp.executable}">
 			<arg value="css" />
 			<arg value="--basedir" />
@@ -239,7 +242,7 @@
 		</exec>
 	</target>
 
-	<target name="compile-js">
+	<target name="compile-js" depends="init-war-template">
 		<exec executable="${gulp.executable}">
 			<arg value="js" />
 			<arg value="--basedir" />

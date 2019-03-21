@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/trailheadmap.css" />
     <script type="text/JavaScript" src="javascript/jquery-1.11.3.js"></script>
     <dmg:mapScript />
-    <script type="text/JavaScript" src="js/trailmaps.js"> </script>
+    <script type="text/JavaScript" src="javascript/trailmaps.js"> </script>
   </tiles:put>
   <tiles:put name="content" type="string">
     <!-- TrailheadMap.jsp -->

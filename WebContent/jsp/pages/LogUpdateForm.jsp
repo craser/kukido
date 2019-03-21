@@ -11,7 +11,7 @@
 
   <tiles:put type="string" name="head">
     <link rel="stylesheet" type="text/css" href="css/logedit.css">
-    <script type="text/JavaScript" src="js/tags-typeahead.js"> </script>
+    <script type="text/JavaScript" src="javascript/tags-typeahead.js"> </script>
     <script type="text/JavaScript">
     window.addEventHandler("load", TagsTypeAhead.init("tagsInput"));
     </script>
